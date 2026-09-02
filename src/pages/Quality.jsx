@@ -11,7 +11,7 @@ export default function Quality() {
       <Seo
         path="/quality"
         title="Quality"
-        description="Quality starts with the specification. Ventura Exports coordinates specification matching, supplier communication, documentation and inspection — within what the partner supports."
+        description="Every Ventura Exports order is built around an agreed specification — from the buyer’s requirements and manufacturing through to the batch documentation that accompanies each shipment."
       />
       <PageHeader
         label="Quality"
@@ -36,7 +36,7 @@ export default function Quality() {
           <div className="mt-16 grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <p className="text-label font-semibold uppercase tracking-label text-gold">
-                Stated plainly
+                In every order
               </p>
             </div>
             <div className="lg:col-span-8">
@@ -53,8 +53,8 @@ export default function Quality() {
       </section>
 
       <CtaBand
-        title="Need inspection or documentation coordinated?"
-        body="Note the requirement in your enquiry — third-party inspection, specific certificates, or destination documentation — and we will arrange it with the partner."
+        title="Inspection and documentation, coordinated."
+        body="Note any requirement in your enquiry — third-party inspection, specific certificates or destination documentation — and Ventura arranges it with the manufacturing partner."
       />
     </>
   )

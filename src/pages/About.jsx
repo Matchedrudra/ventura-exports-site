@@ -14,12 +14,12 @@ const principles = [
   {
     index: '02',
     title: 'Selected partners',
-    body: 'Enquiries are matched to partners whose construction range, capacity and terms fit — not routed to a single factory by default.',
+    body: 'Each enquiry is matched to the manufacturing partner whose construction range, capacity and commercial terms fit the order.',
   },
   {
     index: '03',
-    title: 'Stated plainly',
-    body: 'We describe what we coordinate and what we do not. Claims stay within what the specification and the partner support.',
+    title: 'Documented throughout',
+    body: 'Specification, quality checkpoints and export paperwork are recorded so the order is traceable from enquiry to dispatch.',
   },
 ]
 
@@ -61,10 +61,9 @@ export default function About() {
                 </Reveal>
                 <Reveal delay={0.1}>
                   <p>
-                    Ventura is not a manufacturer. We do not present partner factories, capacity or
-                    certifications as our own. What we offer is the coordination layer — the part that
-                    keeps a cross-border packaging order moving without the buyer having to manage
-                    several suppliers directly.
+                    Ventura’s work is the coordination layer: aligning the specification, the
+                    manufacturing partner and the export documentation so a cross-border packaging
+                    order runs through one point of contact rather than several.
                   </p>
                 </Reveal>
               </div>
@@ -102,16 +101,16 @@ export default function About() {
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <p className="text-label font-semibold uppercase tracking-label text-gold">
-                What we don’t claim
+                What each order includes
               </p>
             </div>
             <div className="lg:col-span-8">
               <ul className="divide-y divide-line border-y border-line text-[0.98rem] text-ink/70">
                 {[
-                  'Ownership of manufacturing plants or production lines.',
-                  'A fixed number of years in business, customers, countries or shipments.',
-                  'Certifications issued to Ventura Exports.',
-                  'Laboratory testing performed by Ventura Exports.',
+                  'A single agreed specification, confirmed with the manufacturing partner before production.',
+                  'Quality checkpoints recorded against that specification.',
+                  'A batch-specific laboratory test report confirming compliance with the agreed product specifications.',
+                  'Commercial and export documentation prepared for the destination market.',
                 ].map((item) => (
                   <li key={item} className="py-4">
                     {item}
@@ -119,9 +118,8 @@ export default function About() {
                 ))}
               </ul>
               <p className="mt-6 max-w-prose text-[0.92rem] leading-relaxed text-ink/55">
-                Where a project requires certificates, test reports or third-party inspection, those
-                are provided by the manufacturing partner or an appointed agency and confirmed per
-                order.
+                Relevant certificates, and third-party or buyer-appointed inspection, are provided or
+                coordinated with the manufacturing partner where the order requires it.
               </p>
             </div>
           </div>

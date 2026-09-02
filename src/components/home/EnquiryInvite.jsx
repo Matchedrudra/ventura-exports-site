@@ -25,8 +25,8 @@ export function EnquiryInvite() {
           <Reveal as="blockquote" className="max-w-md bg-ink/85 px-5 py-5 sm:px-7 sm:py-6">
             <span aria-hidden="true" className="mb-4 block h-px w-10 bg-gold" />
             <span className="font-serif text-[1.1rem] leading-[1.5] text-ivory/90 sm:text-[1.3rem]">
-              The bag that arrives should match the filling line, the product and the route —
-              decided before production, not discovered on delivery.
+              Every bag is matched to the filling line, the product and the route — and agreed in
+              the specification before production begins.
             </span>
           </Reveal>
         </Container>

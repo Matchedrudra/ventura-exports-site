@@ -1,5 +1,5 @@
 export const qualityIntro =
-  'Ventura Exports does not operate a laboratory or issue certifications. What we do is keep the specification consistent — from the buyer’s enquiry, through the manufacturing partner, to the documents that travel with the shipment.'
+  'Every order is built around an agreed specification — from the buyer’s requirements and manufacturing through to the documentation accompanying each shipment.'
 
 export const qualityPillars = [
   {
@@ -12,24 +12,24 @@ export const qualityPillars = [
     index: '02',
     title: 'Supplier coordination',
     body:
-      'We stay between the buyer and the partner through the order: confirming the specification is understood, raising questions early, and keeping one version of the requirement in circulation.',
+      'Ventura stays between the buyer and the partner through the order: confirming the specification is understood, raising questions early, and keeping one version of the requirement in circulation.',
   },
   {
     index: '03',
     title: 'Documentation',
     body:
-      'Commercial and export documentation is coordinated to the destination market and the agreed incoterms, so the paperwork matches the goods.',
+      'Each batch is accompanied by a batch-specific laboratory test report confirming compliance with the agreed product specifications. Commercial and export documentation is prepared for the destination market and the agreed incoterms, so the paperwork matches the goods.',
   },
   {
     index: '04',
-    title: 'Inspection coordination',
+    title: 'Certificates & inspection',
     body:
-      'Where a project requires it, third-party or buyer-appointed inspection is arranged with the partner before dispatch. Partner certifications, such as ISO 9001, are confirmed per project as part of selection.',
+      'Relevant certificates and supporting documentation are provided by the manufacturing partner or appointed third party where required by the order. Third-party or buyer-appointed inspection can be coordinated before dispatch where required.',
   },
 ]
 
 export const qualityNotes = [
-  'Product specifications are confirmed against buyer requirements.',
-  'Test reports and certificates, where applicable, are those issued by the manufacturing partner or an appointed third party.',
-  'Claims are limited to what the specification and the partner support.',
+  'The specification is confirmed with the manufacturing partner before production begins.',
+  'Each batch is accompanied by a batch-specific laboratory test report against the agreed product specifications.',
+  'Certificates, test reports and inspection are provided or coordinated with the manufacturing partner as the order requires.',
 ]

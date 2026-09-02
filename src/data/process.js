@@ -5,7 +5,7 @@ export const processSteps = [
     summary:
       'Identify suitable Indian manufacturing partners for the buyer’s product and commercial requirements.',
     detail:
-      'We match the enquiry to partners whose construction capability, capacity and commercial terms fit — rather than pushing every enquiry to a single factory.',
+      'Ventura matches the enquiry to the partner whose construction capability, capacity and commercial terms fit the order.',
   },
   {
     index: '02',

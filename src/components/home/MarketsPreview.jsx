@@ -9,7 +9,7 @@ export function MarketsPreview() {
     <section className="border-y border-line bg-ivory-deep/40 py-20 lg:py-28">
       <Container>
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading label="Markets" title="Supplying B2B buyers across five regions." />
+          <SectionHeading label="Markets" title="Supplying B2B buyers across global markets." />
           <Link
             to="/markets"
             className="group inline-flex items-center gap-2 text-[0.82rem] font-medium uppercase tracking-widelabel text-ink/60 transition-colors hover:text-ink"

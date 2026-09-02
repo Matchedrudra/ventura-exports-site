@@ -62,8 +62,8 @@ export default function Contact() {
 
               <Reveal>
                 <p className="mt-8 max-w-prose text-[0.88rem] leading-relaxed text-ink/50">
-                  Ventura Exports operates as a sourcing and export coordination business. We do not
-                  publish a street address; correspondence is by email, phone or WhatsApp.
+                  Ventura Exports operates as a sourcing and export coordination business.
+                  Correspondence is by email, phone or WhatsApp.
                 </p>
               </Reveal>
             </div>

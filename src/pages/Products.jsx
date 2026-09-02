@@ -86,8 +86,8 @@ export default function Products() {
           <Reveal>
             <p className="mt-20 max-w-prose border-t border-line pt-6 text-[0.86rem] leading-relaxed text-ink/50">
               Dimensions, fabric weights and other values shown as “confirmed per specification” are
-              set against the buyer’s requirement at enquiry stage. Ventura does not publish fixed
-              figures it cannot hold across every partner and order.
+              set against your requirement at enquiry stage and agreed with the manufacturing partner
+              before production.
             </p>
           </Reveal>
         </Container>

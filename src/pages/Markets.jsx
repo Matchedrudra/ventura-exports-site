@@ -11,7 +11,7 @@ export default function Markets() {
       <Seo
         path="/markets"
         title="Markets"
-        description="Ventura Exports supports international B2B buyers across Europe, the Middle East, North America, Africa and Asia & Oceania sourcing industrial packaging from India."
+        description="Ventura Exports supports international B2B buyers sourcing industrial packaging from India. Europe, the Middle East, North America, Africa and Asia & Oceania are among the key market regions."
       />
       <PageHeader label="Markets" title="Indian supply, coordinated to the destination." lead={marketsIntro} />
 
@@ -43,8 +43,8 @@ export default function Markets() {
 
           <Reveal>
             <p className="mt-14 max-w-prose text-[0.9rem] leading-relaxed text-ink/55">
-              Regional notes describe the kinds of enquiry Ventura is set up to handle. They are not
-              claims about shipment volumes, customer counts or market share.
+              These are key market regions; supply is evaluated according to product requirements,
+              destination and order specifications.
             </p>
           </Reveal>
         </Container>

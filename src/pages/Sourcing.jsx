@@ -12,12 +12,12 @@ export default function Sourcing() {
       <Seo
         path="/sourcing"
         title="Sourcing"
-        description="How Ventura Exports works: source, specify, quality, pack, ship — a plain coordination process between international buyers and Indian manufacturing partners."
+        description="How Ventura Exports works: source, specify, quality, pack, ship — the coordination process between international buyers and Indian manufacturing partners."
       />
       <PageHeader
         label="How we work"
         title="Source. Specify. Quality. Pack. Ship."
-        lead="Five stages, described the way they actually run. No stage promises more than Ventura coordinates."
+        lead="Five stages that carry an order from the buyer’s requirement through to dispatch."
       />
 
       <section className="py-16 lg:py-24">
@@ -27,15 +27,15 @@ export default function Sourcing() {
               <div className="max-w-prose space-y-5 text-[1.02rem] leading-[1.8] text-ink/75">
                 <Reveal>
                   <p>
-                    A cross-border packaging order goes wrong in predictable places: a specification
-                    that means different things to buyer and factory, a print or liner detail agreed
-                    late, a packing plan that does not survive the container.
+                    A cross-border packaging order turns on a few details: a specification both sides
+                    read the same way, print and liner decisions taken early, and a packing plan
+                    built for the container.
                   </p>
                 </Reveal>
                 <Reveal delay={0.05}>
                   <p>
-                    Ventura’s process is built to close those gaps early — by writing the
-                    specification down, confirming it with the partner, and staying with the order
+                    Ventura’s process settles those details up front — writing the specification
+                    down, confirming it with the manufacturing partner, and staying with the order
                     through dispatch.
                   </p>
                 </Reveal>

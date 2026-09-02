@@ -61,7 +61,7 @@ export function GlobalReach() {
             <Reveal delay={0.1}>
               <p className="mt-5 max-w-sm text-[1rem] leading-[1.7] text-ivory/60">
                 Production runs from Indian manufacturing partners; Ventura coordinates
-                specification, documentation and dispatch to buyers across five regions.
+                specification, documentation and dispatch to buyers in markets worldwide.
               </p>
             </Reveal>
             <Reveal delay={0.14}>
