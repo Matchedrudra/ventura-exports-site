@@ -58,7 +58,7 @@ export function Header() {
           : 'border-b border-transparent',
       )}
     >
-      <Container className="flex h-[72px] items-center justify-between gap-4 lg:h-[84px] lg:gap-6">
+      <Container className="flex h-[84px] items-center justify-between gap-4 sm:h-[100px] lg:gap-6 xl:h-[116px]">
         <Link to="/" aria-label="Ventura Exports — home" className="shrink-0">
           <Logo variant="row" />
         </Link>
@@ -148,7 +148,7 @@ export function Header() {
           open ? 'block' : 'hidden',
         )}
       >
-        <div className="flex h-full flex-col px-6 pt-[88px] pb-10">
+        <div className="flex h-full flex-col px-6 pt-[116px] pb-10">
           <nav
             className="flex flex-col divide-y divide-line border-y border-line"
             aria-label="Mobile"

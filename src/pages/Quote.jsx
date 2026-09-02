@@ -21,24 +21,24 @@ export default function Quote() {
         description="Send Ventura Exports a B2B enquiry for FIBC, PP woven, HDPE woven or customized woven packaging. The form reaches us with the specification structured."
       />
 
-      <header className="border-b border-line pt-16 pb-14 sm:pt-24 sm:pb-16">
+      <header className="bg-ink text-ivory pt-16 pb-14 sm:pt-24 sm:pb-16">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7">
               <Reveal>
-                <p className="mb-6 text-label font-semibold uppercase tracking-label text-gold">
+                <p className="mb-6 text-label font-semibold uppercase tracking-label text-gold-soft">
                   Request a Quote
                 </p>
               </Reveal>
               <Reveal delay={0.05}>
-                <h1 className="text-[2.1rem] leading-[1.08] sm:text-[2.8rem] lg:text-[3.2rem]">
+                <h1 className="text-[2.1rem] leading-[1.08] text-ivory sm:text-[2.8rem] lg:text-[3.2rem]">
                   Send us a specification.
                 </h1>
               </Reveal>
             </div>
             <div className="lg:col-span-5 lg:pt-2">
               <Reveal delay={0.1}>
-                <p className="text-[1.02rem] leading-[1.75] text-ink/70">
+                <p className="text-[1.02rem] leading-[1.75] text-ivory/65">
                   The more detail you provide, the more precise the quotation. If you are still
                   scoping the requirement, send what you have — we will follow up with the open
                   questions.

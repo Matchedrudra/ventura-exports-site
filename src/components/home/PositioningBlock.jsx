@@ -5,7 +5,7 @@ import { Reveal } from '../ui/Reveal'
 
 export function PositioningBlock() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="border-y border-line bg-ivory-deep/50 py-20 lg:py-28">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6 lg:pt-4">

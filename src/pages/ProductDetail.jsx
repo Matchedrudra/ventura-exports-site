@@ -38,33 +38,33 @@ export default function ProductDetail() {
       />
 
       {/* Header */}
-      <header className="border-b border-line pt-12 pb-14 sm:pt-16 sm:pb-16">
+      <header className="bg-ink text-ivory pt-12 pb-14 sm:pt-16 sm:pb-16">
         <Container>
-          <nav className="text-[0.78rem] uppercase tracking-widelabel text-ink/45" aria-label="Breadcrumb">
-            <Link to="/products" className="transition-colors hover:text-ink">
+          <nav className="text-[0.78rem] uppercase tracking-widelabel text-ivory/45" aria-label="Breadcrumb">
+            <Link to="/products" className="transition-colors hover:text-ivory">
               Products
             </Link>
-            <span className="mx-2 text-ink/25">/</span>
-            <span className="text-ink/70">{product.shortName}</span>
+            <span className="mx-2 text-ivory/25">/</span>
+            <span className="text-ivory/75">{product.shortName}</span>
           </nav>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7">
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-sm text-gold">{product.index}</span>
-                <span className="text-label font-semibold uppercase tracking-label text-ink/45">
+                <span className="font-serif text-sm text-gold-soft">{product.index}</span>
+                <span className="text-label font-semibold uppercase tracking-label text-ivory/45">
                   {product.kicker}
                 </span>
               </div>
               <Reveal delay={0.04}>
-                <h1 className="mt-4 text-[2.1rem] leading-[1.08] sm:text-[2.8rem] lg:text-[3.1rem]">
+                <h1 className="mt-4 text-[2.1rem] leading-[1.08] text-ivory sm:text-[2.8rem] lg:text-[3.1rem]">
                   {product.name}
                 </h1>
               </Reveal>
             </div>
             <div className="lg:col-span-5 lg:pt-2">
               <Reveal delay={0.08}>
-                <p className="text-[1.05rem] leading-[1.75] text-ink/70">{product.tagline}</p>
+                <p className="text-[1.05rem] leading-[1.75] text-ivory/65">{product.tagline}</p>
               </Reveal>
             </div>
           </div>
