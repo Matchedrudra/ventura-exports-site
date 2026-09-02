@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    @apply bg-ivory text-ink font-sans;
+    font-synthesis-weight: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-sans font-semibold tracking-[-0.02em] text-ink;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: #17233a;
+    color: #f5f2ea;
+  }
+
+  :focus-visible {
+    outline: 2px solid #17233a;
+    outline-offset: 3px;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .u-label {
+    @apply text-label font-semibold uppercase tracking-label text-ink/55;
+  }
+
+  .u-label-gold {
+    @apply text-label font-semibold uppercase tracking-label text-gold;
+  }
+
+  .u-rule {
+    @apply border-0 border-t border-line;
+  }
+
+  .u-link {
+    @apply relative inline-flex items-center gap-2 text-ink transition-colors duration-300 ease-editorial hover:text-gold;
+  }
+
+  /* Editorial link with animated underline */
+  .u-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .u-underline:hover,
+  a:hover > .u-underline {
+    background-size: 100% 1px;
+  }
+
+  .prose-editorial {
+    @apply text-[1.0625rem] leading-[1.7] text-ink/75;
+  }
+  .prose-editorial p + p {
+    @apply mt-5;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .hairline-t {
+    @apply border-t border-line;
+  }
+  .hairline-b {
+    @apply border-b border-line;
+  }
+}
