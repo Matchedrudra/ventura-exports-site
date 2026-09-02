@@ -72,7 +72,7 @@ The handler (`api/enquiry.js`):
 
 1. rejects non‑POST, checks an optional shared‑secret header,
 2. drops honeypot submissions silently (`200`),
-3. validates with the same rules the client uses (`src/lib/validation.js`),
+3. validates the payload (rules mirror `src/lib/validation.js`),
 4. builds a structured HTML + plain‑text email,
 5. sends it via **Resend** with `Reply‑To` set to the buyer's address,
 6. returns `200 { ok: true }` on success; the form only shows the success

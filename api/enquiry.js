@@ -10,7 +10,35 @@
 //   ENQUIRY_TOKEN    — shared secret; if set, request must send header x-ventura-token
 
 import { Resend } from 'resend'
-import { validateEnquiry } from '../src/lib/validation.js'
+
+// Validation is intentionally inlined (not imported from src/) so this
+// function is fully self-contained for the Vercel Node runtime. It mirrors
+// src/lib/validation.js — keep the two in sync.
+const PRODUCT_OPTIONS = [
+  'FIBC / Jumbo Bags',
+  'PP Woven Bags',
+  'HDPE Woven Bags',
+  'Customized Woven Packaging',
+  'Other',
+]
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+const blank = (v) => String(v || '').trim().length === 0
+
+function validateEnquiry(data = {}) {
+  const errors = {}
+  if (blank(data.fullName)) errors.fullName = 'Please enter your full name.'
+  if (blank(data.company)) errors.company = 'Please enter your company name.'
+  if (blank(data.email)) errors.email = 'Please enter your business email.'
+  else if (!EMAIL_RE.test(String(data.email).trim()))
+    errors.email = 'Please enter a valid email address.'
+  if (blank(data.country)) errors.country = 'Please enter your country.'
+  if (blank(data.product)) errors.product = 'Please select a product.'
+  else if (!PRODUCT_OPTIONS.includes(data.product))
+    errors.product = 'Please select a valid product.'
+  if (String(data.message || '').length > 4000)
+    errors.message = 'Please keep the message under 4000 characters.'
+  return errors
+}
 
 const FIELD_LABELS = {
   fullName: 'Name',
