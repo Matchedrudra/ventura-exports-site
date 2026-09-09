@@ -261,12 +261,6 @@ export function GlobalReach() {
 
                   {/* origin: India */}
                   <g opacity={originOn}>
-                    {!reduced && (
-                      <circle cx={ox} cy={oy} r="3" fill="none" stroke="#c2a06a" strokeWidth="0.8">
-                        <animate attributeName="r" values="3;12;3" dur="3.6s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.9;0;0.9" dur="3.6s" repeatCount="indefinite" />
-                      </circle>
-                    )}
                     <circle cx={ox} cy={oy} r="3.4" fill="none" stroke="#c2a06a" strokeWidth="1" />
                     <circle cx={ox} cy={oy} r="1.7" fill="#a8814a" />
                     <text x={ox + 7} y={oy + 3} fill="#e9dcc0" fontSize="9" letterSpacing="0.14em" style={{ textTransform: 'uppercase' }}>
