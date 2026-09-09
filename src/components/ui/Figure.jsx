@@ -9,6 +9,7 @@ export function Figure({
   src,
   alt,
   ratio = '4 / 3',
+  fit = 'cover',
   className,
   imgClassName,
   caption,
@@ -16,10 +17,11 @@ export function Figure({
   sizes = '(min-width: 1024px) 50vw, 100vw',
 }) {
   const [loaded, setLoaded] = useState(false)
+  const contain = fit === 'contain'
   return (
     <figure className={cn('m-0', className)}>
       <div
-        className="relative overflow-hidden bg-ivory-deep"
+        className={cn('relative overflow-hidden', contain ? 'bg-paper' : 'bg-ivory-deep')}
         style={{ aspectRatio: ratio }}
       >
         <img
@@ -31,8 +33,9 @@ export function Figure({
           fetchpriority={priority ? 'high' : 'auto'}
           onLoad={() => setLoaded(true)}
           className={cn(
-            'absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[900ms] ease-editorial',
-            loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.03]',
+            'absolute inset-0 h-full w-full transition-[opacity,transform] duration-[900ms] ease-editorial',
+            contain ? 'object-contain p-2 sm:p-4' : 'object-cover',
+            loaded ? 'opacity-100 scale-100' : contain ? 'opacity-0' : 'opacity-0 scale-[1.03]',
             imgClassName,
           )}
         />

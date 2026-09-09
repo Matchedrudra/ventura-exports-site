@@ -110,7 +110,13 @@ export default function ProductDetail() {
             </div>
             <div className="lg:col-span-6">
               <Reveal>
-                <Figure src={product.image} alt={product.imageAlt} ratio="4 / 3" priority />
+                <Figure
+                  src={product.image}
+                  alt={product.imageAlt}
+                  ratio={product.heroRatio || '4 / 3'}
+                  fit={product.heroFit || 'cover'}
+                  priority
+                />
               </Reveal>
             </div>
           </div>

@@ -210,6 +210,8 @@ export const products = [
       'Standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative construction — configured with the loop, filling, discharge, liner, coating and printing your operation needs.',
     image: '/images/ventura_fibc_types.jpg',
     imageAlt: 'FIBC construction types — standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative',
+    heroRatio: '2 / 1',
+    heroFit: 'contain',
     catalogueBacked: true,
     intro: [
       'FIBC — flexible intermediate bulk containers, or jumbo bags — move dry, flowable products in volumes of roughly half a tonne to two tonnes per unit. The right bag is a set of decisions: body construction, safe working load, safety factor, how it is lifted, how it is filled, how it is discharged, whether it needs a liner, and how it is printed.',
