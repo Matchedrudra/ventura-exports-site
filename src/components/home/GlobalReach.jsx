@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Container } from '../ui/Container'
 import { Reveal } from '../ui/Reveal'
 import { useScrollProgress, slice, easeInOut } from '../../hooks/useScrollProgress'
@@ -7,7 +8,10 @@ import { WORLD_VIEWBOX, WORLD_LAND_D } from './worldLand'
  * "From India to global markets." An accurate equirectangular world map
  * (Natural Earth 110m land, public domain) in deep navy. As the section
  * scrolls, supply routes draw outward from India and market regions
- * activate in turn. Scroll-linked, transform/opacity, reduced-motion safe.
+ * activate in turn. Once a route is revealed it stays drawn, and a small
+ * gold dot then travels its path continuously — India → destination, on a
+ * loop, lightly staggered — independent of further scrolling. Reduced
+ * motion keeps the routes and points but drops the travelling dots.
  * Regions shown are market groupings, not claims of active supply.
  */
 
@@ -38,12 +42,92 @@ function routeD(to) {
 }
 
 const ROUTE_LEN = 640
+const TRAVEL = 4600 // ms for one India → destination pass
+const STAGGER = 620 // ms offset between routes
+const PULSE = 700 // ms destination pulse
 
 export function GlobalReach() {
   const { ref, progress, reduced } = useScrollProgress({ start: 0.82, end: 0.28 })
   const ox = px(ORIGIN.lon)
   const oy = py(ORIGIN.lat)
   const originOn = reduced ? 1 : slice(progress, 0.02, 0.12)
+
+  // Latch each route on once it has finished drawing — it then stays visible
+  // and its dot keeps travelling regardless of later scrolling.
+  const [revealed, setRevealed] = useState(() => NODES.map(() => reduced))
+  const revealedRef = useRef(revealed)
+  revealedRef.current = revealed
+
+  useEffect(() => {
+    if (reduced) return
+    setRevealed((prev) => {
+      let changed = false
+      const next = prev.map((was, i) => {
+        if (was) return true
+        if (slice(progress, 0.12 + i * 0.1, 0.32 + i * 0.1) >= 0.98) {
+          changed = true
+          return true
+        }
+        return false
+      })
+      return changed ? next : prev
+    })
+  }, [progress, reduced])
+
+  // Continuous dot travel along the real SVG paths.
+  const pathRefs = useRef([])
+  const dotRefs = useRef([])
+  const pulseRefs = useRef([])
+
+  useEffect(() => {
+    if (reduced) return
+    let raf = 0
+    const t0 = performance.now()
+    const lastU = NODES.map(() => 0)
+    const pulseAt = NODES.map(() => -1)
+
+    const tick = (now) => {
+      for (let i = 0; i < NODES.length; i += 1) {
+        const dot = dotRefs.current[i]
+        const path = pathRefs.current[i]
+        if (!dot || !path) continue
+
+        if (!revealedRef.current[i]) {
+          dot.style.opacity = '0'
+          continue
+        }
+        const local = now - t0 - i * STAGGER
+        if (local < 0) {
+          dot.style.opacity = '0'
+          continue
+        }
+        const u = (local % TRAVEL) / TRAVEL
+        if (u < lastU[i]) pulseAt[i] = now // wrapped → arrived
+        lastU[i] = u
+
+        const len = path.getTotalLength()
+        const pt = path.getPointAtLength(easeInOut(u) * len)
+        dot.setAttribute('transform', `translate(${pt.x} ${pt.y})`)
+        // appear near India, dissolve at the destination, seamless restart
+        dot.style.opacity = String(0.9 * Math.sin(Math.PI * u))
+
+        const pulse = pulseRefs.current[i]
+        if (pulse) {
+          const age = now - pulseAt[i]
+          if (pulseAt[i] >= 0 && age < PULSE) {
+            const k = age / PULSE
+            pulse.setAttribute('r', String(2.4 + 9 * k))
+            pulse.style.opacity = String(0.4 * (1 - k))
+          } else {
+            pulse.style.opacity = '0'
+          }
+        }
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [reduced])
 
   return (
     <section ref={ref} className="bg-ink text-ivory">
@@ -67,7 +151,7 @@ export function GlobalReach() {
             </Reveal>
             <ul className="mt-7 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.9rem] text-ivory/80">
               {NODES.map((r, i) => {
-                const on = reduced || progress > 0.14 + i * 0.11
+                const on = reduced || revealed[i] || progress > 0.14 + i * 0.11
                 return (
                   <li key={r.name} className="flex items-center gap-2.5">
                     <span
@@ -96,16 +180,19 @@ export function GlobalReach() {
                 >
                   <path d={WORLD_LAND_D} fill="#26344d" stroke="#3a4a68" strokeWidth="0.5" strokeLinejoin="round" />
 
-                  {/* routes — drawn by scroll */}
+                  {/* routes — draw on scroll, then stay */}
                   <g fill="none" stroke="#c2a06a" strokeLinecap="round">
                     {NODES.map((n, i) => {
-                      const seg = easeInOut(slice(progress, 0.12 + i * 0.1, 0.32 + i * 0.1))
+                      const seg = revealed[i]
+                        ? 1
+                        : easeInOut(slice(progress, 0.12 + i * 0.1, 0.32 + i * 0.1))
                       return (
                         <path
                           key={n.name}
+                          ref={(el) => { pathRefs.current[i] = el }}
                           d={routeD(n)}
                           strokeWidth="1.1"
-                          opacity="0.85"
+                          opacity="0.8"
                           strokeDasharray={ROUTE_LEN}
                           strokeDashoffset={reduced ? 0 : ROUTE_LEN * (1 - seg)}
                         />
@@ -117,7 +204,7 @@ export function GlobalReach() {
                   {NODES.map((n, i) => {
                     const x = px(n.lon)
                     const y = py(n.lat)
-                    const dotOn = reduced ? 1 : slice(progress, 0.28 + i * 0.1, 0.36 + i * 0.1)
+                    const dotOn = reduced || revealed[i] ? 1 : slice(progress, 0.28 + i * 0.1, 0.36 + i * 0.1)
                     const anchor = n.place === 'end' ? 'end' : n.place === 'start' ? 'start' : 'middle'
                     const dx = n.place === 'end' ? -7 : n.place === 'start' ? 7 : 0
                     const ly = y - 9
@@ -125,6 +212,17 @@ export function GlobalReach() {
                     const lx = x + dx - (anchor === 'end' ? w - 4 : anchor === 'start' ? 4 : w / 2)
                     return (
                       <g key={`m-${n.name}`}>
+                        {/* subtle arrival pulse */}
+                        <circle
+                          ref={(el) => { pulseRefs.current[i] = el }}
+                          cx={x}
+                          cy={y}
+                          r="2.6"
+                          fill="none"
+                          stroke="#d8c6a0"
+                          strokeWidth="0.9"
+                          style={{ opacity: 0 }}
+                        />
                         <circle cx={x} cy={y} r={2.6} fill="none" stroke="#d8c6a0" strokeWidth="1" opacity={dotOn} />
                         <circle cx={x} cy={y} r="1.1" fill="#e9dcc0" opacity={dotOn} />
                         <rect x={lx} y={ly - 8} width={w} height={11} rx="1.5" fill="#0f1826" fillOpacity="0.82" />
@@ -143,6 +241,22 @@ export function GlobalReach() {
                       </g>
                     )
                   })}
+
+                  {/* travelling dots — one per route, positioned each frame along the real path */}
+                  {!reduced && (
+                    <g aria-hidden="true">
+                      {NODES.map((n, i) => (
+                        <g
+                          key={`d-${n.name}`}
+                          ref={(el) => { dotRefs.current[i] = el }}
+                          style={{ opacity: 0 }}
+                        >
+                          <circle r="3.4" fill="#c2a06a" opacity="0.16" />
+                          <circle r="1.7" fill="#e2d2ae" />
+                        </g>
+                      ))}
+                    </g>
+                  )}
 
                   {/* origin: India */}
                   <g opacity={originOn}>
