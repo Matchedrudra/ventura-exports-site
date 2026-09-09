@@ -1,26 +1,28 @@
 import { Container } from '../ui/Container'
 import { Reveal } from '../ui/Reveal'
-import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
+import { useScrollProgress, slice, easeInOut } from '../../hooks/useScrollProgress'
 import { WORLD_VIEWBOX, WORLD_LAND_D } from './worldLand'
 
 /*
- * Editorial trade map: an accurate equirectangular world (Natural Earth
- * 110m land, public domain) in deep navy, with thin gold supply routes
- * running from India to the regions Ventura serves. No globe, no glow.
+ * "From India to global markets." An accurate equirectangular world map
+ * (Natural Earth 110m land, public domain) in deep navy. As the section
+ * scrolls, supply routes draw outward from India and market regions
+ * activate in turn. Scroll-linked, transform/opacity, reduced-motion safe.
+ * Regions shown are market groupings, not claims of active supply.
  */
 
-// equirectangular lon/lat -> the 1000 x 500 space the land path is drawn in
 const px = (lon) => ((lon + 180) / 360) * 1000
 const py = (lat) => ((90 - lat) / 180) * 500
 
 const ORIGIN = { lon: 79, lat: 22 }
 
 const NODES = [
-  { name: 'North America', lon: -92, lat: 39, place: 'end' },
-  { name: 'Europe', lon: 9, lat: 50, place: 'mid' },
-  { name: 'Middle East', lon: 46, lat: 25, place: 'end' },
-  { name: 'Africa', lon: 18, lat: 4, place: 'end' },
-  { name: 'Asia', lon: 116, lat: 32, place: 'start' },
+  { name: 'North America', lon: -96, lat: 40, place: 'end' },
+  { name: 'Latin America', lon: -61, lat: -12, place: 'end' },
+  { name: 'Europe', lon: 10, lat: 50, place: 'mid' },
+  { name: 'Middle East', lon: 46, lat: 26, place: 'end' },
+  { name: 'Africa', lon: 20, lat: 2, place: 'end' },
+  { name: 'Asia Pacific', lon: 120, lat: 14, place: 'start' },
 ]
 
 function routeD(to) {
@@ -31,49 +33,60 @@ function routeD(to) {
   const mx = (x1 + x2) / 2
   const my = (y1 + y2) / 2
   const dist = Math.hypot(x2 - x1, y2 - y1)
-  // bow the arc "north" (upward) for a great-circle feel
   const cy = my - Math.min(dist * 0.32, 120) - 6
   return `M${x1} ${y1} Q${mx} ${cy} ${x2} ${y2}`
 }
 
+const ROUTE_LEN = 640
+
 export function GlobalReach() {
-  const reduced = usePrefersReducedMotion()
+  const { ref, progress, reduced } = useScrollProgress({ start: 0.82, end: 0.28 })
   const ox = px(ORIGIN.lon)
   const oy = py(ORIGIN.lat)
+  const originOn = reduced ? 1 : slice(progress, 0.02, 0.12)
 
   return (
-    <section className="bg-ink text-ivory">
-      <Container className="py-12 lg:py-16">
-        <div className="grid items-center gap-x-12 gap-y-8 lg:grid-cols-12">
+    <section ref={ref} className="bg-ink text-ivory">
+      <Container className="py-16 lg:py-24">
+        <div className="grid items-center gap-x-12 gap-y-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Reveal>
               <p className="text-label font-semibold uppercase tracking-label text-gold-soft">
-                Global reach
+                Global markets
               </p>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 text-[1.7rem] leading-[1.15] text-ivory sm:text-[2.05rem]">
-                Sourced in India.
-                <br />
-                Supplied worldwide.
+              <h2 className="mt-5 text-[1.9rem] leading-[1.14] text-ivory sm:text-[2.3rem]">
+                From India to global markets.
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-5 max-w-sm text-[1rem] leading-[1.7] text-ivory/60">
-                Production runs from Indian manufacturing partners; Ventura coordinates
-                specification, documentation and dispatch to buyers in markets worldwide.
+                Connecting international buyers with capable Indian manufacturing partners.
               </p>
             </Reveal>
-            <Reveal delay={0.14}>
-              <ul className="mt-7 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.9rem] text-ivory/70">
-                {['Europe', 'Middle East', 'Africa', 'Asia', 'North America'].map((r) => (
-                  <li key={r} className="flex items-center gap-2.5">
-                    <span aria-hidden="true" className="h-px w-3.5 bg-gold" />
-                    {r}
+            <ul className="mt-7 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.9rem]">
+              {NODES.map((r, i) => {
+                const on = reduced || progress > 0.14 + i * 0.11
+                return (
+                  <li
+                    key={r.name}
+                    className="flex items-center gap-2.5 transition-colors duration-500"
+                    style={{ color: on ? 'rgba(245,242,234,0.8)' : 'rgba(245,242,234,0.32)' }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="h-px w-3.5 transition-colors duration-500"
+                      style={{ background: on ? '#a8814a' : 'rgba(255,255,255,0.2)' }}
+                    />
+                    {r.name}
                   </li>
-                ))}
-              </ul>
-            </Reveal>
+                )
+              })}
+            </ul>
+            <p className="mt-6 text-[0.78rem] leading-relaxed text-ivory/40">
+              Market regions, not a claim of active supply in every territory.
+            </p>
           </div>
 
           <div className="lg:col-span-8">
@@ -83,74 +96,37 @@ export function GlobalReach() {
                   viewBox={WORLD_VIEWBOX}
                   className="block w-full"
                   role="img"
-                  aria-label="World map with supply routes running from India to Europe, the Middle East, Africa, Asia and North America"
+                  aria-label="World map with supply routes from India to North America, Latin America, Europe, the Middle East, Africa and Asia Pacific"
                 >
-                  {/* landmass */}
-                  <path
-                    d={WORLD_LAND_D}
-                    fill="#26344d"
-                    stroke="#3a4a68"
-                    strokeWidth="0.5"
-                    strokeLinejoin="round"
-                  />
+                  <path d={WORLD_LAND_D} fill="#26344d" stroke="#3a4a68" strokeWidth="0.5" strokeLinejoin="round" />
 
-                  {/* routes */}
+                  {/* routes — drawn by scroll */}
                   <g fill="none" stroke="#c2a06a" strokeLinecap="round">
                     {NODES.map((n, i) => {
-                      const d = routeD(n)
+                      const seg = easeInOut(slice(progress, 0.12 + i * 0.1, 0.32 + i * 0.1))
                       return (
                         <path
                           key={n.name}
-                          d={d}
+                          d={routeD(n)}
                           strokeWidth="1.1"
                           opacity="0.85"
-                          style={
-                            reduced
-                              ? undefined
-                              : {
-                                  strokeDasharray: 560,
-                                  strokeDashoffset: 560,
-                                  animation: `vx-draw 1.5s cubic-bezier(0.22,1,0.36,1) ${0.2 + i * 0.16}s forwards`,
-                                }
-                          }
+                          strokeDasharray={ROUTE_LEN}
+                          strokeDashoffset={reduced ? 0 : ROUTE_LEN * (1 - seg)}
                         />
                       )
                     })}
                   </g>
 
-                  {/* travelling pulse */}
-                  {!reduced &&
-                    NODES.map((n, i) => (
-                      <circle key={`p-${n.name}`} r="1.8" fill="#e6d6b4">
-                        <animateMotion
-                          dur="5s"
-                          begin={`${1.4 + i * 0.4}s`}
-                          repeatCount="indefinite"
-                          path={routeD(n)}
-                          keyPoints="0;1"
-                          keyTimes="0;1"
-                          calcMode="linear"
-                        />
-                        <animate
-                          attributeName="opacity"
-                          values="0;1;1;0"
-                          keyTimes="0;0.08;0.9;1"
-                          dur="5s"
-                          begin={`${1.4 + i * 0.4}s`}
-                          repeatCount="indefinite"
-                        />
-                      </circle>
-                    ))}
-
-                  {/* destination markers */}
-                  {NODES.map((n) => {
+                  {/* destination markers — activate after their route lands */}
+                  {NODES.map((n, i) => {
                     const x = px(n.lon)
                     const y = py(n.lat)
+                    const on = reduced ? 1 : slice(progress, 0.28 + i * 0.1, 0.36 + i * 0.1)
                     const dx = n.place === 'end' ? -6 : n.place === 'start' ? 6 : 0
                     const anchor = n.place === 'end' ? 'end' : n.place === 'start' ? 'start' : 'middle'
                     return (
-                      <g key={`m-${n.name}`}>
-                        <circle cx={x} cy={y} r="2.4" fill="none" stroke="#d8c6a0" strokeWidth="0.9" />
+                      <g key={`m-${n.name}`} opacity={on}>
+                        <circle cx={x} cy={y} r={2.4} fill="none" stroke="#d8c6a0" strokeWidth="0.9" />
                         <circle cx={x} cy={y} r="0.9" fill="#e9dcc0" />
                         <text
                           x={x + dx}
@@ -168,52 +144,25 @@ export function GlobalReach() {
                   })}
 
                   {/* origin: India */}
-                  {!reduced && (
-                    <circle cx={ox} cy={oy} r="3" fill="none" stroke="#c2a06a" strokeWidth="0.8">
-                      <animate
-                        attributeName="r"
-                        values="3;11;3"
-                        dur="3.4s"
-                        repeatCount="indefinite"
-                        calcMode="spline"
-                        keyTimes="0;0.5;1"
-                        keySplines="0.4 0 0.2 1;0.4 0 0.2 1"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        values="0.9;0;0.9"
-                        dur="3.4s"
-                        repeatCount="indefinite"
-                        keyTimes="0;0.5;1"
-                      />
-                    </circle>
-                  )}
-                  <circle cx={ox} cy={oy} r="3.4" fill="none" stroke="#c2a06a" strokeWidth="1" />
-                  <circle cx={ox} cy={oy} r="1.7" fill="#a8814a" />
-                  <text
-                    x={ox + 7}
-                    y={oy + 3}
-                    textAnchor="start"
-                    fill="#e9dcc0"
-                    fontSize="9"
-                    letterSpacing="0.14em"
-                    style={{ textTransform: 'uppercase' }}
-                  >
-                    India
-                  </text>
+                  <g opacity={originOn}>
+                    {!reduced && (
+                      <circle cx={ox} cy={oy} r="3" fill="none" stroke="#c2a06a" strokeWidth="0.8">
+                        <animate attributeName="r" values="3;12;3" dur="3.6s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.9;0;0.9" dur="3.6s" repeatCount="indefinite" />
+                      </circle>
+                    )}
+                    <circle cx={ox} cy={oy} r="3.4" fill="none" stroke="#c2a06a" strokeWidth="1" />
+                    <circle cx={ox} cy={oy} r="1.7" fill="#a8814a" />
+                    <text x={ox + 7} y={oy + 3} fill="#e9dcc0" fontSize="9" letterSpacing="0.14em" style={{ textTransform: 'uppercase' }}>
+                      India
+                    </text>
+                  </g>
                 </svg>
               </figure>
             </Reveal>
           </div>
         </div>
       </Container>
-
-      <style>{`
-        @keyframes vx-draw { to { stroke-dashoffset: 0; } }
-        @media (prefers-reduced-motion: reduce) {
-          [style*="vx-draw"] { animation: none !important; stroke-dashoffset: 0 !important; }
-        }
-      `}</style>
     </section>
   )
 }

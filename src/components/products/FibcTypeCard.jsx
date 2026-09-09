@@ -1,12 +1,18 @@
 import { RevealGroup } from '../ui/Reveal'
+import { FibcIcon } from './FibcIcon'
 
 export function FibcTypeGrid({ types = [] }) {
   return (
     <RevealGroup className="grid gap-px border border-line bg-line sm:grid-cols-2">
       {types.map((t) => (
         <RevealGroup.Item key={t.slug} className="flex flex-col bg-ivory p-6 lg:p-8">
-          <h3 className="text-[1.15rem] font-medium tracking-[-0.01em] text-ink">{t.name}</h3>
-          <p className="mt-1 text-[0.82rem] uppercase tracking-label text-ink/45">{t.construction}</p>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h3 className="text-[1.15rem] font-medium tracking-[-0.01em] text-ink">{t.name}</h3>
+              <p className="mt-1 text-[0.82rem] uppercase tracking-label text-ink/45">{t.construction}</p>
+            </div>
+            <FibcIcon type={t.slug} className="h-16 w-auto shrink-0 text-ink" />
+          </div>
 
           <dl className="mt-5 grid grid-cols-2 gap-4 border-y border-line py-4 text-[0.85rem]">
             <div>

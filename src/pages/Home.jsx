@@ -3,9 +3,8 @@ import { Hero } from '../components/home/Hero'
 import { ProductIndex } from '../components/home/ProductIndex'
 import { OneStop } from '../components/home/OneStop'
 import { ContainerConcept } from '../components/home/ContainerConcept'
-import { ProcessStrip } from '../components/home/ProcessStrip'
+import { FromSpecToSupply } from '../components/home/FromSpecToSupply'
 import { GlobalReach } from '../components/home/GlobalReach'
-import { MarketsPreview } from '../components/home/MarketsPreview'
 import { EnquiryInvite } from '../components/home/EnquiryInvite'
 import { CertificationsCompliance } from '../components/ui/CertificationsCompliance'
 
@@ -21,10 +20,9 @@ export default function Home() {
       <ProductIndex />
       <OneStop />
       <ContainerConcept />
-      <ProcessStrip />
+      <FromSpecToSupply />
       <CertificationsCompliance />
       <GlobalReach />
-      <MarketsPreview />
       <EnquiryInvite />
     </>
   )

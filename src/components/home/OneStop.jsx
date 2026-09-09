@@ -17,10 +17,16 @@ export function OneStop() {
             <SectionHeading
               label="One-stop supply"
               title="One source. Multiple packaging solutions."
-              lead="International buyers can work around their overall packaging requirements with Ventura — rather than managing a separate supplier for every format. We coordinate suitable products from Indian manufacturing partners, built around your specifications."
+              lead="Tell us what you need. Ventura coordinates suitable sourcing options from India around your product specifications, quantities and shipment requirements — so international buyers can work with one relationship rather than a separate supplier for every format."
             />
-            <Reveal delay={0.15}>
-              <div className="mt-9">
+            <Reveal delay={0.12}>
+              <p className="mt-5 max-w-md text-[0.92rem] leading-relaxed text-ink/55">
+                Where product compatibility, quantities and logistics allow, multiple packaging
+                requirements can be coordinated into a consolidated supply plan.
+              </p>
+            </Reveal>
+            <Reveal delay={0.18}>
+              <div className="mt-8">
                 <Link
                   to="/request-a-quote"
                   className="group inline-flex items-center gap-2 text-[0.82rem] font-medium uppercase tracking-widelabel text-ink transition-colors hover:text-gold"
