@@ -208,8 +208,8 @@ export const products = [
     tagline: 'Flexible bulk packaging built around application, load and handling requirements.',
     summary:
       'Standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative construction — configured with the loop, filling, discharge, liner, coating and printing your operation needs.',
-    image: '/images/product-fibc.jpg',
-    imageAlt: 'A plant worker opening a filled FIBC bulk bag during discharge',
+    image: '/images/ventura_fibc_types.jpg',
+    imageAlt: 'FIBC construction types — standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative',
     catalogueBacked: true,
     intro: [
       'FIBC — flexible intermediate bulk containers, or jumbo bags — move dry, flowable products in volumes of roughly half a tonne to two tonnes per unit. The right bag is a set of decisions: body construction, safe working load, safety factor, how it is lifted, how it is filled, how it is discharged, whether it needs a liner, and how it is printed.',
@@ -249,8 +249,8 @@ export const products = [
     tagline: 'Durable woven packaging for agricultural, industrial and commercial applications.',
     summary:
       'Woven PP and HDPE sacks for granular and powdered products in retail and industrial pack sizes, configured with fabric weight, lamination, liner, print and closure to suit the packing line and the destination.',
-    image: '/images/product-pp-woven.jpg',
-    imageAlt: 'Filled woven polypropylene sacks stacked on a pallet',
+    image: '/images/ventura_pp_plain_bag_blue.jpg',
+    imageAlt: 'A plain woven polypropylene sack',
     catalogueBacked: false,
     intro: [
       'PP and HDPE woven sacks carry granular and powdered products in retail and industrial pack sizes. PP gives a strong, economical sack; HDPE tape yarn gives a stiffer, tighter weave for sharp or dense products and high stacking. Both hold print well and can be laminated or lined where the product needs a closer barrier.',
@@ -287,8 +287,8 @@ export const products = [
     tagline: 'High-quality printed woven packaging combining durability with strong product presentation.',
     summary:
       'Woven PP sacks with a BOPP film laminate carrying high-resolution print — for products where shelf presentation, branding and surface protection matter alongside strength.',
-    image: '/images/product-customized.jpg',
-    imageAlt: 'Rolls of BOPP-laminated printed woven packaging material',
+    image: '/images/ventura_bopp_waller_bags.jpg',
+    imageAlt: 'Printed BOPP-laminated woven sacks — a laminated woven packaging example',
     catalogueBacked: false,
     intro: [
       'A BOPP laminate bonds a printed biaxially-oriented polypropylene film to a woven PP sack. The result carries near-photographic print, resists scuffing and moisture on the surface, and keeps the load strength of a woven bag.',
@@ -325,8 +325,8 @@ export const products = [
     tagline: 'Packaging configured around dimensions, material, printing, construction and application requirements.',
     summary:
       'Where a standard bag does not fit, Ventura works from a written brief — dimensions, material, construction, print, lamination, liner, filling and discharge, packing and destination requirements — coordinated as a single specification.',
-    image: '/images/warehouse-aisle.jpg',
-    imageAlt: 'Palletised woven packaging held in a distribution warehouse',
+    image: '/images/ventura_pp_bag_rice_front.jpg',
+    imageAlt: 'A printed woven sack — a customized woven packaging example',
     catalogueBacked: false,
     intro: [
       'Not every requirement matches a catalogue item. Customized woven packaging starts from a written brief and is coordinated with the manufacturing partner as a single specification.',
