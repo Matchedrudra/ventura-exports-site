@@ -212,6 +212,7 @@ export const products = [
     imageAlt: 'FIBC construction types — standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative',
     heroRatio: '2 / 1',
     heroFit: 'contain',
+    cardFit: 'contain',
     catalogueBacked: true,
     intro: [
       'FIBC — flexible intermediate bulk containers, or jumbo bags — move dry, flowable products in volumes of roughly half a tonne to two tonnes per unit. The right bag is a set of decisions: body construction, safe working load, safety factor, how it is lifted, how it is filled, how it is discharged, whether it needs a liner, and how it is printed.',
@@ -327,7 +328,7 @@ export const products = [
     tagline: 'Packaging configured around dimensions, material, printing, construction and application requirements.',
     summary:
       'Where a standard bag does not fit, Ventura works from a written brief — dimensions, material, construction, print, lamination, liner, filling and discharge, packing and destination requirements — coordinated as a single specification.',
-    image: '/images/ventura_pp_bag_rice_front.jpg',
+    image: '/images/ventura_pp_bag_green_front.jpg',
     imageAlt: 'A printed woven sack — a customized woven packaging example',
     catalogueBacked: false,
     intro: [
@@ -495,7 +496,7 @@ export const productGalleries = {
   'customized-woven-packaging': [
     { src: '/images/ventura_pp_bag_rice_front.jpg', caption: 'Custom print — front' },
     { src: '/images/ventura_pp_bag_rice_back.jpg', caption: 'Custom print — reverse' },
-    { src: '/images/ventura_pp_bag_green_front.jpg', caption: 'Custom print' },
+    { src: '/images/ventura_pp_bag_inner_liner.jpg', caption: 'Liner detail' },
     { src: '/images/ventura_bopp_waller_bags.jpg', caption: 'BOPP-laminated finish example' },
   ],
 }

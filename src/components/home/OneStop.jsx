@@ -6,7 +6,7 @@ import { products } from '../../data/products'
 
 const tiles = products
   .filter((p) => p.slug !== 'industrial-commercial-packaging')
-  .map((p) => ({ slug: p.slug, name: p.shortName, image: p.image, alt: p.imageAlt }))
+  .map((p) => ({ slug: p.slug, name: p.shortName, image: p.image, alt: p.imageAlt, fit: p.cardFit || 'cover' }))
 
 export function OneStop() {
   return (
@@ -54,7 +54,11 @@ export function OneStop() {
                         alt={t.alt}
                         loading="lazy"
                         decoding="async"
-                        className="absolute inset-0 h-full w-full object-cover opacity-90 transition duration-500 ease-editorial group-hover:scale-[1.04] group-hover:opacity-100"
+                        className={
+                          t.fit === 'contain'
+                            ? 'absolute inset-0 h-full w-full object-contain p-3 opacity-95 transition duration-500 ease-editorial group-hover:scale-[1.03] group-hover:opacity-100'
+                            : 'absolute inset-0 h-full w-full object-cover opacity-90 transition duration-500 ease-editorial group-hover:scale-[1.04] group-hover:opacity-100'
+                        }
                       />
                     </div>
                     <p className="px-3 py-3 text-[0.8rem] font-medium tracking-[-0.01em] text-ink">

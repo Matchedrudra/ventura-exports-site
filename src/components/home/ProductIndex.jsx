@@ -33,6 +33,7 @@ export function ProductIndex() {
                     src={p.image}
                     alt={p.imageAlt}
                     ratio="4 / 3"
+                    fit={p.cardFit || 'cover'}
                     imgClassName="transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.04]"
                   />
                 </div>
