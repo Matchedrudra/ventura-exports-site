@@ -255,30 +255,23 @@ export default function ProductDetail() {
         </Container>
       </section>
 
-      {/* Representative packaging photography */}
+      {/* Packaging examples */}
       {productGalleries[slug]?.length > 0 && (
         <section className="border-t border-line bg-ivory-deep/40 py-16 lg:py-24">
           <Container>
             <div className="max-w-2xl">
               <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
-                Representative packaging
+                Packaging examples
               </h2>
               <p className="mt-4 text-[0.98rem] leading-relaxed text-ink/60">
-                Examples of packaging formats, constructions and finishes that can be coordinated
-                according to product requirements.
+                Selected examples of available formats, constructions and finishes.
               </p>
             </div>
             <RevealGroup className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
               {productGalleries[slug].map((g) => (
-                <RevealGroup.Item
-                  key={g.src}
-                  className={g.wide ? 'sm:col-span-2 lg:col-span-3' : ''}
-                >
+                <RevealGroup.Item key={g.src}>
                   <figure className="group m-0">
-                    <div
-                      className="overflow-hidden bg-ivory-deep"
-                      style={{ aspectRatio: g.wide ? '16 / 7' : '4 / 3' }}
-                    >
+                    <div className="overflow-hidden bg-ivory-deep" style={{ aspectRatio: '4 / 3' }}>
                       <img
                         src={g.src}
                         alt={g.caption}
@@ -294,12 +287,6 @@ export default function ProductDetail() {
                 </RevealGroup.Item>
               ))}
             </RevealGroup>
-            <p className="mt-8 max-w-prose text-[0.8rem] leading-relaxed text-ink/45">
-              Photographs are representative packaging examples only. Any third-party branding shown
-              belongs to the respective brand owners; it does not indicate that those companies are
-              Ventura customers or partners, or that Ventura manufactured or supplied the items
-              pictured.
-            </p>
           </Container>
         </section>
       )}

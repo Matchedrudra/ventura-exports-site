@@ -476,16 +476,8 @@ export const products = [
   },
 ]
 
-/**
- * Representative packaging photographs per category. Shown on the product
- * detail page as examples only — not customer references, and no claim
- * that Ventura manufactured or supplied the items shown. Third-party
- * branding visible in some frames belongs to the respective brand owners.
- */
+/** Selected packaging-example photographs per category, shown on the product detail page. */
 export const productGalleries = {
-  'fibc-jumbo-bags': [
-    { src: '/images/ventura_fibc_types.jpg', caption: 'FIBC construction reference — standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative', wide: true },
-  ],
   'pp-hdpe-woven-bags': [
     { src: '/images/ventura_pp_plain_bag_blue.jpg', caption: 'Plain woven polypropylene sack' },
     { src: '/images/ventura_pp_bag_green_front.jpg', caption: 'Printed woven sack' },
