@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { Seo } from '../components/ui/Seo'
 import { Container } from '../components/ui/Container'
 import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 import { Figure } from '../components/ui/Figure'
+import { Lightbox } from '../components/ui/Lightbox'
 import { SpecTable } from '../components/products/SpecTable'
 import { OptionGroups } from '../components/products/OptionGroup'
 import { FibcTypeGrid } from '../components/products/FibcTypeCard'
@@ -29,10 +31,15 @@ const SLUG_ALIASES = {
 
 export default function ProductDetail() {
   const { slug } = useParams()
+  const [lightbox, setLightbox] = useState(null)
   if (SLUG_ALIASES[slug]) return <Navigate to={`/products/${SLUG_ALIASES[slug]}`} replace />
 
   const product = getProduct(slug)
   if (!product) return <Navigate to="/products" replace />
+
+  const gallery = productGalleries[slug] || []
+  const galleryImages = gallery.map((g) => ({ src: g.src, alt: g.caption }))
+  const heroImages = [{ src: product.image, alt: product.imageAlt }]
 
   const idx = products.findIndex((p) => p.slug === slug)
   const prev = products[(idx - 1 + products.length) % products.length]
@@ -110,13 +117,29 @@ export default function ProductDetail() {
             </div>
             <div className="lg:col-span-6">
               <Reveal>
-                <Figure
-                  src={product.image}
-                  alt={product.imageAlt}
-                  ratio={product.heroRatio || '4 / 3'}
-                  fit={product.heroFit || 'cover'}
-                  priority
-                />
+                <button
+                  type="button"
+                  onClick={() => setLightbox({ images: heroImages, index: 0 })}
+                  aria-label={`View image full screen: ${product.imageAlt}`}
+                  className="group relative block w-full cursor-zoom-in overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+                >
+                  <Figure
+                    src={product.image}
+                    alt={product.imageAlt}
+                    ratio={product.heroRatio || '4 / 3'}
+                    fit={product.heroFit || 'cover'}
+                    imgClassName="transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.03]"
+                    priority
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute bottom-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-ink/70 text-ivory opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5" />
+                    </svg>
+                  </span>
+                </button>
               </Reveal>
             </div>
           </div>
@@ -262,7 +285,7 @@ export default function ProductDetail() {
       </section>
 
       {/* Packaging examples */}
-      {productGalleries[slug]?.length > 0 && (
+      {gallery.length > 0 && (
         <section className="border-t border-line bg-ivory-deep/40 py-16 lg:py-24">
           <Container>
             <div className="max-w-2xl">
@@ -274,10 +297,16 @@ export default function ProductDetail() {
               </p>
             </div>
             <RevealGroup className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-              {productGalleries[slug].map((g) => (
+              {gallery.map((g, gi) => (
                 <RevealGroup.Item key={g.src}>
-                  <figure className="group m-0">
-                    <div className="overflow-hidden bg-ivory-deep" style={{ aspectRatio: '4 / 3' }}>
+                  <figure className="m-0">
+                    <button
+                      type="button"
+                      onClick={() => setLightbox({ images: galleryImages, index: gi })}
+                      aria-label={`View image full screen: ${g.caption}`}
+                      className="group relative block w-full cursor-zoom-in overflow-hidden bg-ivory-deep outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+                      style={{ aspectRatio: '4 / 3' }}
+                    >
                       <img
                         src={g.src}
                         alt={g.caption}
@@ -285,7 +314,15 @@ export default function ProductDetail() {
                         decoding="async"
                         className="h-full w-full object-cover transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.03]"
                       />
-                    </div>
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute bottom-2.5 right-2.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink/70 text-ivory opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100"
+                      >
+                        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5" />
+                        </svg>
+                      </span>
+                    </button>
                     <figcaption className="mt-3 text-[0.82rem] leading-relaxed text-ink/55">
                       {g.caption}
                     </figcaption>
@@ -333,6 +370,14 @@ export default function ProductDetail() {
       </nav>
 
       <CtaBand />
+
+      {lightbox && (
+        <Lightbox
+          images={lightbox.images}
+          startIndex={lightbox.index}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </>
   )
 }
