@@ -476,6 +476,36 @@ export const products = [
   },
 ]
 
+/**
+ * Representative packaging photographs per category. Shown on the product
+ * detail page as examples only — not customer references, and no claim
+ * that Ventura manufactured or supplied the items shown. Third-party
+ * branding visible in some frames belongs to the respective brand owners.
+ */
+export const productGalleries = {
+  'fibc-jumbo-bags': [
+    { src: '/images/ventura_fibc_types.jpg', caption: 'FIBC construction reference — standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative', wide: true },
+  ],
+  'pp-hdpe-woven-bags': [
+    { src: '/images/ventura_pp_plain_bag_blue.jpg', caption: 'Plain woven polypropylene sack' },
+    { src: '/images/ventura_pp_bag_green_front.jpg', caption: 'Printed woven sack' },
+    { src: '/images/ventura_pp_bag_inner_liner.jpg', caption: 'Liner detail' },
+  ],
+  'bopp-laminated-bags': [
+    { src: '/images/ventura_bopp_waller_bags.jpg', caption: 'BOPP-laminated printed woven sacks' },
+    { src: '/images/ventura_ultragreen_front_back.jpg', caption: 'Printed BOPP sack — front and back' },
+    { src: '/images/ventura_wallstar_tile_adhesive.jpg', caption: 'Printed BOPP sack' },
+    { src: '/images/ventura_pp_bag_rice_front.jpg', caption: 'Printed retail sack — front' },
+    { src: '/images/ventura_pp_bag_rice_back.jpg', caption: 'Printed retail sack — reverse' },
+  ],
+  'customized-woven-packaging': [
+    { src: '/images/ventura_pp_bag_rice_front.jpg', caption: 'Custom print — front' },
+    { src: '/images/ventura_pp_bag_rice_back.jpg', caption: 'Custom print — reverse' },
+    { src: '/images/ventura_pp_bag_green_front.jpg', caption: 'Custom print' },
+    { src: '/images/ventura_bopp_waller_bags.jpg', caption: 'BOPP-laminated finish example' },
+  ],
+}
+
 export function getProduct(slug) {
   return products.find((p) => p.slug === slug)
 }

@@ -8,7 +8,8 @@ import { SpecTable } from '../components/products/SpecTable'
 import { OptionGroups } from '../components/products/OptionGroup'
 import { FibcTypeGrid } from '../components/products/FibcTypeCard'
 import { CtaBand } from '../components/ui/CtaBand'
-import { products, getProduct, fibcTypes, fibcOptions, catalogueYear } from '../data/products'
+import { products, getProduct, fibcTypes, fibcOptions, catalogueYear, productGalleries } from '../data/products'
+import { RevealGroup } from '../components/ui/Reveal'
 
 const QUOTE_PRODUCT = {
   'fibc-jumbo-bags': 'FIBC / Jumbo Bags',
@@ -253,6 +254,55 @@ export default function ProductDetail() {
           </div>
         </Container>
       </section>
+
+      {/* Representative packaging photography */}
+      {productGalleries[slug]?.length > 0 && (
+        <section className="border-t border-line bg-ivory-deep/40 py-16 lg:py-24">
+          <Container>
+            <div className="max-w-2xl">
+              <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
+                Representative packaging
+              </h2>
+              <p className="mt-4 text-[0.98rem] leading-relaxed text-ink/60">
+                Examples of packaging formats, constructions and finishes that can be coordinated
+                according to product requirements.
+              </p>
+            </div>
+            <RevealGroup className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+              {productGalleries[slug].map((g) => (
+                <RevealGroup.Item
+                  key={g.src}
+                  className={g.wide ? 'sm:col-span-2 lg:col-span-3' : ''}
+                >
+                  <figure className="group m-0">
+                    <div
+                      className="overflow-hidden bg-ivory-deep"
+                      style={{ aspectRatio: g.wide ? '16 / 7' : '4 / 3' }}
+                    >
+                      <img
+                        src={g.src}
+                        alt={g.caption}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    <figcaption className="mt-3 text-[0.82rem] leading-relaxed text-ink/55">
+                      {g.caption}
+                    </figcaption>
+                  </figure>
+                </RevealGroup.Item>
+              ))}
+            </RevealGroup>
+            <p className="mt-8 max-w-prose text-[0.8rem] leading-relaxed text-ink/45">
+              Photographs are representative packaging examples only. Any third-party branding shown
+              belongs to the respective brand owners; it does not indicate that those companies are
+              Ventura customers or partners, or that Ventura manufactured or supplied the items
+              pictured.
+            </p>
+          </Container>
+        </section>
+      )}
 
       {/* Quote CTA specific to product */}
       <section className="border-t border-line py-16 lg:py-20">

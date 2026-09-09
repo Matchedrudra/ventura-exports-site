@@ -65,19 +65,15 @@ export function GlobalReach() {
                 Connecting international buyers with capable Indian manufacturing partners.
               </p>
             </Reveal>
-            <ul className="mt-7 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.9rem]">
+            <ul className="mt-7 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.9rem] text-ivory/80">
               {NODES.map((r, i) => {
                 const on = reduced || progress > 0.14 + i * 0.11
                 return (
-                  <li
-                    key={r.name}
-                    className="flex items-center gap-2.5 transition-colors duration-500"
-                    style={{ color: on ? 'rgba(245,242,234,0.8)' : 'rgba(245,242,234,0.32)' }}
-                  >
+                  <li key={r.name} className="flex items-center gap-2.5">
                     <span
                       aria-hidden="true"
                       className="h-px w-3.5 transition-colors duration-500"
-                      style={{ background: on ? '#a8814a' : 'rgba(255,255,255,0.2)' }}
+                      style={{ background: on ? '#a8814a' : 'rgba(255,255,255,0.28)' }}
                     />
                     {r.name}
                   </li>
@@ -117,24 +113,29 @@ export function GlobalReach() {
                     })}
                   </g>
 
-                  {/* destination markers — activate after their route lands */}
+                  {/* destination markers — dot activates after its route lands; label stays readable */}
                   {NODES.map((n, i) => {
                     const x = px(n.lon)
                     const y = py(n.lat)
-                    const on = reduced ? 1 : slice(progress, 0.28 + i * 0.1, 0.36 + i * 0.1)
-                    const dx = n.place === 'end' ? -6 : n.place === 'start' ? 6 : 0
+                    const dotOn = reduced ? 1 : slice(progress, 0.28 + i * 0.1, 0.36 + i * 0.1)
                     const anchor = n.place === 'end' ? 'end' : n.place === 'start' ? 'start' : 'middle'
+                    const dx = n.place === 'end' ? -7 : n.place === 'start' ? 7 : 0
+                    const ly = y - 9
+                    const w = n.name.length * 6.2 + 8
+                    const lx = x + dx - (anchor === 'end' ? w - 4 : anchor === 'start' ? 4 : w / 2)
                     return (
-                      <g key={`m-${n.name}`} opacity={on}>
-                        <circle cx={x} cy={y} r={2.4} fill="none" stroke="#d8c6a0" strokeWidth="0.9" />
-                        <circle cx={x} cy={y} r="0.9" fill="#e9dcc0" />
+                      <g key={`m-${n.name}`}>
+                        <circle cx={x} cy={y} r={2.6} fill="none" stroke="#d8c6a0" strokeWidth="1" opacity={dotOn} />
+                        <circle cx={x} cy={y} r="1.1" fill="#e9dcc0" opacity={dotOn} />
+                        <rect x={lx} y={ly - 8} width={w} height={11} rx="1.5" fill="#0f1826" fillOpacity="0.82" />
                         <text
                           x={x + dx}
-                          y={y - 6}
+                          y={ly}
                           textAnchor={anchor}
-                          fill="#cdd3e2"
-                          fontSize="8.5"
-                          letterSpacing="0.12em"
+                          fill="#e7ebf3"
+                          fontSize="9.5"
+                          fontWeight="500"
+                          letterSpacing="0.1em"
                           style={{ textTransform: 'uppercase' }}
                         >
                           {n.name}

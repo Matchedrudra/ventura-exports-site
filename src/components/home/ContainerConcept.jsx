@@ -1,313 +1,210 @@
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Container } from '../ui/Container'
-import { Button } from '../ui/Button'
-import { useScrollProgress, easeInOut, slice } from '../../hooks/useScrollProgress'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
+import { cn } from '../../lib/cn'
 
 /*
- * Signature scroll story. A shipping container is pinned; as the visitor
- * scrolls it runs through five phases —
- *   requirement → coordination → loading → organised load → one source.
- * Plain SVG + transform/opacity, scroll-linked, reduced-motion safe.
+ * "Ventura Packaging Load Plan" — an empty container that loads itself
+ * once, in one staggered sequence, when the section enters view. The six
+ * packaging modules settle into an organised load and stay clickable,
+ * each linking to its product page. Transform/opacity only; the loaded
+ * state is the resting state, so reduced-motion simply shows it filled.
  */
 
-const VB_W = 660
-const VB_H = 430
-
-// container interior grid
-const BOX = { x: 168, y: 118, w: 360, h: 224 }
-const DOOR = 30
-const COLS = [
-  BOX.x + DOOR + 66,
-  BOX.x + DOOR + 66 + 100,
-  BOX.x + DOOR + 66 + 200,
+const MODULES = [
+  { key: 'fibc', l1: 'FIBC /', l2: 'Jumbo Bags', to: '/products/fibc-jumbo-bags', size: 'lg' },
+  { key: 'woven', l1: 'PP & HDPE', l2: 'Woven', to: '/products/pp-hdpe-woven-bags', size: 'md' },
+  { key: 'corrugated', l1: 'Corrugated', l2: 'Boxes', to: '/products/corrugated-boxes-cartons', size: 'md' },
+  { key: 'bopp', l1: 'BOPP', l2: 'Bags', to: '/products/bopp-laminated-bags', size: 'md' },
+  { key: 'filter', l1: 'Filter', l2: 'Bags', to: '/products/industrial-filter-bags', size: 'md' },
+  { key: 'custom', l1: 'Custom', l2: 'Packaging', to: '/products/customized-woven-packaging', size: 'sm' },
 ]
-const ROWS = [BOX.y + 66, BOX.y + 160]
-const CENTER = { x: BOX.x + BOX.w / 2, y: BOX.y + BOX.h / 2 }
 
-const ITEMS = [
-  { key: 'fibc', label: 'FIBC' },
-  { key: 'woven', label: 'Woven Bags' },
-  { key: 'bopp', label: 'BOPP' },
-  { key: 'corrugated', label: 'Corrugated' },
-  { key: 'filter', label: 'Filter Bags' },
-  { key: 'custom', label: 'Custom' },
-].map((it, i) => ({
-  ...it,
-  // resting position inside the container
-  tx: COLS[i % 3],
-  ty: ROWS[Math.floor(i / 3)],
-  // requirement marker start position (ring around the centre)
-  mx: CENTER.x + Math.cos((i / 6) * Math.PI * 2 - Math.PI / 2) * 250,
-  my: CENTER.y + Math.sin((i / 6) * Math.PI * 2 - Math.PI / 2) * 150,
-  // coordination gather point (tight ring)
-  gx: CENTER.x + Math.cos((i / 6) * Math.PI * 2 - Math.PI / 2) * 60,
-  gy: CENTER.y + Math.sin((i / 6) * Math.PI * 2 - Math.PI / 2) * 40,
-}))
-
-const PHASES = ['Requirement', 'Coordination', 'Loading', 'Organised load', 'One source']
-
-/* clean product silhouettes, ~62 x 74, drawn around (0,0) top-left */
-function Silhouette({ kind }) {
-  const s = { fill: '#c2a06a', fillOpacity: 0.12, stroke: '#c2a06a', strokeOpacity: 0.55, strokeWidth: 1.3, strokeLinejoin: 'round' }
-  switch (kind) {
-    case 'fibc':
-      return (
-        <g {...s}>
-          <path d="M8 16 h46 v54 q0 4 -4 4 h-38 q-4 0 -4 -4 z" />
-          <path d="M26 16 v-9 q0 -3 3 -3 M36 16 v-9 q0 -3 3 -3" fill="none" />
-          <rect x="26" y="6" width="10" height="8" />
-        </g>
-      )
-    case 'woven':
-      return (
-        <g {...s}>
-          <path d="M20 12 q-4 4 -6 14 l-4 40 q-1 6 5 6 h32 q6 0 5 -6 l-4 -40 q-2 -10 -6 -14 z" />
-          <path d="M20 12 q10 -5 22 0" fill="none" />
-        </g>
-      )
-    case 'bopp':
-      return (
-        <g {...s}>
-          <path d="M20 12 q-4 4 -6 14 l-4 40 q-1 6 5 6 h32 q6 0 5 -6 l-4 -40 q-2 -10 -6 -14 z" />
-          <rect x="17" y="26" width="28" height="30" fillOpacity="0.22" />
-        </g>
-      )
-    case 'corrugated':
-      return (
-        <g {...s}>
-          <path d="M8 24 h46 v46 h-46 z" />
-          <path d="M8 24 l23 -12 l23 12 M31 12 v58 M8 24 l0 -0" fill="none" />
-        </g>
-      )
-    case 'filter':
-      return (
-        <g {...s}>
-          <rect x="22" y="12" width="18" height="6" />
-          <path d="M20 18 h22 v52 q0 4 -4 4 h-14 q-4 0 -4 -4 z" />
-          <path d="M20 30 h22 M20 44 h22" fill="none" strokeOpacity="0.3" />
-        </g>
-      )
-    default:
-      return (
-        <g {...s}>
-          <path d="M18 14 q-3 3 -5 12 l-4 42 q-1 6 5 6 h32 q6 0 5 -6 l-4 -42 q-2 -9 -5 -12 z" strokeDasharray="3 3" />
-        </g>
-      )
+function Silhouette({ kind, className }) {
+  const s = {
+    fill: 'currentColor',
+    fillOpacity: 0.14,
+    stroke: 'currentColor',
+    strokeOpacity: 0.55,
+    strokeWidth: 1.4,
+    strokeLinejoin: 'round',
   }
+  const paths = {
+    fibc: (
+      <g {...s}>
+        <path d="M10 18 h44 v50 q0 4 -4 4 h-36 q-4 0 -4 -4 z" />
+        <path d="M26 18 v-9 q0 -3 3 -3 M38 18 v-9 q0 -3 3 -3" fill="none" />
+        <rect x="27" y="6" width="10" height="9" />
+      </g>
+    ),
+    woven: (
+      <g {...s}>
+        <path d="M20 12 q-4 4 -6 13 l-4 38 q-1 6 5 6 h30 q6 0 5 -6 l-4 -38 q-2 -9 -6 -13 z" />
+        <path d="M20 12 q9 -5 20 0" fill="none" />
+      </g>
+    ),
+    bopp: (
+      <g {...s}>
+        <path d="M20 12 q-4 4 -6 13 l-4 38 q-1 6 5 6 h30 q6 0 5 -6 l-4 -38 q-2 -9 -6 -13 z" />
+        <rect x="17" y="24" width="26" height="27" fillOpacity="0.24" />
+      </g>
+    ),
+    corrugated: (
+      <g {...s}>
+        <path d="M8 24 h44 v44 h-44 z" />
+        <path d="M8 24 l22 -11 l22 11 M30 13 v55" fill="none" />
+      </g>
+    ),
+    filter: (
+      <g {...s}>
+        <rect x="21" y="10" width="18" height="6" />
+        <path d="M19 16 h22 v54 q0 4 -4 4 h-14 q-4 0 -4 -4 z" />
+        <path d="M19 28 h22 M19 42 h22 M19 56 h22" fill="none" strokeOpacity="0.3" />
+      </g>
+    ),
+    custom: (
+      <g {...s}>
+        <path d="M18 13 q-3 3 -5 11 l-4 40 q-1 6 5 6 h30 q6 0 5 -6 l-4 -40 q-2 -8 -5 -11 z" strokeDasharray="3 3" />
+      </g>
+    ),
+  }
+  return (
+    <svg viewBox="0 0 60 76" className={className} aria-hidden="true">
+      {paths[kind]}
+    </svg>
+  )
 }
 
 export function ContainerConcept() {
-  const { ref, progress, reduced } = useScrollProgress({ start: 0.92, end: 0.06 })
-  const P = reduced ? 1 : progress
+  const reduced = usePrefersReducedMotion()
+  const ref = useRef(null)
+  const [loaded, setLoaded] = useState(reduced)
 
-  // phase timings
-  const marker = (i) => (reduced ? 0 : slice(P, 0.04 + i * 0.02, 0.16 + i * 0.02)) // 0→1 appear
-  const gather = easeInOut(slice(P, 0.2, 0.42))
-  const markerFade = 1 - slice(P, 0.4, 0.5)
-  const ventura = slice(P, 0.22, 0.3) * (1 - slice(P, 0.44, 0.52))
-  const load = (i) => easeInOut(slice(P, 0.46 + i * 0.045, 0.58 + i * 0.045))
-  const tags = slice(P, 0.76, 0.84) * (1 - slice(P, 0.9, 0.96))
-  const doors = easeInOut(slice(P, 0.88, 0.955))
-  const endMsg = slice(P, 0.93, 1)
-  const focus = slice(P, 0.44, 0.5) - slice(P, 0.86, 0.94) // container emphasis 0..1..0
-
-  const phaseIdx = reduced
-    ? 4
-    : P < 0.2 ? 0 : P < 0.44 ? 1 : P < 0.76 ? 2 : P < 0.9 ? 3 : 4
+  useEffect(() => {
+    if (reduced || typeof IntersectionObserver === 'undefined') {
+      setLoaded(true)
+      return
+    }
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setLoaded(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -22% 0px', threshold: 0.15 },
+    )
+    io.observe(el)
+    const t = setTimeout(() => setLoaded(true), 2200)
+    return () => {
+      io.disconnect()
+      clearTimeout(t)
+    }
+  }, [reduced])
 
   return (
-    <section ref={ref} className="relative bg-ink text-ivory h-[240vh] lg:h-[340vh]">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <Container className="w-full">
-          <div className="grid items-center gap-x-16 gap-y-8 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <div className="flex items-center gap-3">
-                <p className="text-label font-semibold uppercase tracking-label text-gold-soft">
-                  Specification-driven supply
-                </p>
-                <span className="text-[0.66rem] uppercase tracking-widelabel text-ivory/35">
-                  {PHASES[phaseIdx]}
-                </span>
-              </div>
-              <h2 className="mt-4 text-[1.55rem] leading-[1.12] text-ivory sm:mt-5 sm:text-[2.35rem]">
-                One container.
-                <br />
-                Built around your requirements.
-              </h2>
-              <p className="mt-4 hidden max-w-md text-[1rem] leading-[1.7] text-ivory/60 sm:mt-5 sm:block">
-                Multiple packaging requirements can be coordinated into a consolidated supply plan,
-                subject to product compatibility, quantities and logistics.
-              </p>
-              <div className="mt-6 hidden sm:mt-9 sm:block">
-                <Button to="/request-a-quote" variant="outlineLight">
-                  Request a Quote
-                </Button>
-              </div>
+    <section className="bg-ink text-ivory">
+      <Container className="py-20 lg:py-28">
+        <div className="grid gap-x-16 gap-y-12 lg:grid-cols-12 lg:items-center">
+          {/* copy */}
+          <div className="lg:col-span-4">
+            <p className="text-label font-semibold uppercase tracking-label text-gold-soft">
+              Ventura packaging load plan
+            </p>
+            <h2 className="mt-5 text-[1.9rem] leading-[1.12] text-ivory sm:text-[2.35rem]">
+              One container.
+              <br />
+              Built around your requirements.
+            </h2>
+            <p className="mt-5 max-w-md text-[1rem] leading-[1.7] text-ivory/60">
+              Multiple packaging requirements can be coordinated into a consolidated supply plan,
+              subject to product compatibility, quantities and logistics.
+            </p>
+
+            <div
+              className="mt-8 space-y-1.5 text-[0.72rem] font-semibold uppercase tracking-widelabel text-ivory/45 transition-opacity duration-700"
+              style={{ opacity: loaded ? 1 : 0 }}
+              aria-hidden="true"
+            >
+              <p>One container</p>
+              <p>Multiple requirements</p>
+              <p className="text-gold-soft">Ventura</p>
             </div>
-
-            <div className="lg:col-span-8">
-              <div className="relative border border-white/10 bg-[#141f33] p-3 sm:p-5">
-                <svg
-                  viewBox={`0 0 ${VB_W} ${VB_H}`}
-                  className="block w-full"
-                  role="img"
-                  aria-label="A shipping container being loaded with FIBC, woven, BOPP, corrugated, filter and customized packaging, coordinated through Ventura"
-                >
-                  <defs>
-                    <clipPath id="cc-interior">
-                      <rect x={BOX.x + DOOR} y={BOX.y + 4} width={BOX.w - DOOR - 6} height={BOX.h - 8} />
-                    </clipPath>
-                  </defs>
-
-                  {/* coordination lines: requirement marker -> centre */}
-                  <g stroke="#c2a06a" strokeOpacity="0.28" strokeWidth="1" fill="none">
-                    {ITEMS.map((it, i) => {
-                      const a = marker(i) * markerFade
-                      if (a <= 0.01 || gather <= 0.01) return null
-                      const x = it.mx + (it.gx - it.mx) * gather
-                      const y = it.my + (it.gy - it.my) * gather
-                      return <line key={it.key} x1={x} y1={y} x2={CENTER.x} y2={CENTER.y} opacity={a * gather} />
-                    })}
-                  </g>
-
-                  {/* centre coordination node */}
-                  <g opacity={reduced ? 0 : ventura} textAnchor="middle">
-                    <circle cx={CENTER.x} cy={CENTER.y} r="20" fill="#c2a06a" fillOpacity="0.08" stroke="#c2a06a" strokeOpacity="0.4" />
-                    <text x={CENTER.x} y={CENTER.y + 3} fill="#e9dcc0" fontSize="10" letterSpacing="2">VENTURA</text>
-                  </g>
-
-                  {/* container shell */}
-                  <g
-                    style={{
-                      transform: reduced ? 'none' : `scale(${1 + focus * 0.02})`,
-                      transformOrigin: `${CENTER.x}px ${CENTER.y}px`,
-                      transition: 'transform 200ms linear',
-                    }}
-                  >
-                    <rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} fill="#101a2e" stroke="#3a4a68" strokeWidth="2" />
-                    {/* corrugation */}
-                    <g stroke="#26364f" strokeWidth="5">
-                      <line x1={BOX.x + DOOR + 4} y1={BOX.y + 6} x2={BOX.x + BOX.w - 6} y2={BOX.y + 6} />
-                      <line x1={BOX.x + DOOR + 4} y1={BOX.y + BOX.h - 6} x2={BOX.x + BOX.w - 6} y2={BOX.y + BOX.h - 6} />
-                    </g>
-                    {/* left door */}
-                    <rect x={BOX.x} y={BOX.y} width={DOOR} height={BOX.h} fill="#1b2740" stroke="#3a4a68" strokeWidth="2" />
-                    {[8, 15, 22].map((d) => (
-                      <line key={d} x1={BOX.x + d} y1={BOX.y + 8} x2={BOX.x + d} y2={BOX.y + BOX.h - 8} stroke="#2c3c5a" strokeWidth="1.6" />
-                    ))}
-                    <circle cx={BOX.x + 15} cy={CENTER.y} r="3.5" fill="#c2a06a" />
-
-                    {/* products loading in */}
-                    <g clipPath="url(#cc-interior)">
-                      {ITEMS.map((it, i) => {
-                        const l = load(i)
-                        const fromX = VB_W + 30 + i * 14
-                        const x = reduced ? it.tx : fromX + (it.tx - fromX) * l
-                        const op = reduced ? 1 : slice(P, 0.46 + i * 0.045, 0.52 + i * 0.045)
-                        return (
-                          <g key={it.key} transform={`translate(${x - 31} ${it.ty - 37})`} opacity={op}>
-                            <Silhouette kind={it.key} />
-                          </g>
-                        )
-                      })}
-                    </g>
-
-                    {/* closing doors */}
-                    <g opacity={reduced ? 0 : doors > 0.01 ? 1 : 0}>
-                      <rect
-                        x={BOX.x + DOOR}
-                        y={BOX.y}
-                        width={(BOX.w - DOOR) / 2}
-                        height={BOX.h}
-                        fill="#16223a"
-                        stroke="#3a4a68"
-                        strokeWidth="1.4"
-                        transform={`translate(${doors * ((BOX.w - DOOR) / 2)} 0)`}
-                      />
-                      <rect
-                        x={BOX.x + BOX.w - (BOX.w - DOOR) / 2}
-                        y={BOX.y}
-                        width={(BOX.w - DOOR) / 2}
-                        height={BOX.h}
-                        fill="#16223a"
-                        stroke="#3a4a68"
-                        strokeWidth="1.4"
-                        transform={`translate(${-doors * ((BOX.w - DOOR) / 2)} 0)`}
-                      />
-                    </g>
-                  </g>
-
-                  {/* requirement markers (labels orbiting the container) */}
-                  <g>
-                    {ITEMS.map((it, i) => {
-                      const a = marker(i) * markerFade
-                      if (a <= 0.01) return null
-                      const x = it.mx + (it.gx - it.mx) * gather
-                      const y = it.my + (it.gy - it.my) * gather
-                      const wpx = it.label.length * 5.6 + 16
-                      return (
-                        <g key={it.key} transform={`translate(${x} ${y})`} opacity={a}>
-                          <rect x={-wpx / 2} y={-9} width={wpx} height={18} rx="1" fill="#14213a" stroke="#3a4a68" strokeWidth="1" />
-                          <text x="0" y="3.5" textAnchor="middle" fill="#cdd3e2" fontSize="8.5" letterSpacing="0.08em" style={{ textTransform: 'uppercase' }}>
-                            {it.label}
-                          </text>
-                        </g>
-                      )
-                    })}
-                    {/* "YOUR REQUIREMENTS" */}
-                    <text
-                      x={CENTER.x}
-                      y={BOX.y - 24}
-                      textAnchor="middle"
-                      fill="#e6dcc6"
-                      fontSize="9"
-                      letterSpacing="0.2em"
-                      opacity={reduced ? 0 : slice(P, 0.02, 0.1) * (1 - slice(P, 0.16, 0.24))}
-                      style={{ textTransform: 'uppercase' }}
-                    >
-                      Your requirements
-                    </text>
-                  </g>
-
-                  {/* organised-load tags */}
-                  <g opacity={reduced ? 0 : tags} textAnchor="middle" fill="#9aa4bd" fontSize="7.5" letterSpacing="0.12em" style={{ textTransform: 'uppercase' }}>
-                    {['Specification', 'Quantity', 'Compatibility', 'Logistics'].map((t, i) => (
-                      <text key={t} x={BOX.x + 40 + i * ((BOX.w - 80) / 3)} y={BOX.y + BOX.h + 22}>
-                        {t}
-                      </text>
-                    ))}
-                  </g>
-
-                  {/* final message */}
-                  <g
-                    opacity={reduced ? 0 : endMsg}
-                    textAnchor="middle"
-                    style={{ transform: reduced ? 'none' : `scale(${0.96 + endMsg * 0.04})`, transformOrigin: `${CENTER.x}px ${CENTER.y}px` }}
-                  >
-                    <rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} fill="#101a2e" opacity={endMsg * 0.9} />
-                    <text x={CENTER.x} y={CENTER.y - 16} fill="#e9dcc0" fontSize="16" fontWeight="600" letterSpacing="3">
-                      ONE SOURCE
-                    </text>
-                    <text x={CENTER.x} y={CENTER.y + 8} fill="#c9cede" fontSize="11" letterSpacing="2">
-                      MULTIPLE PACKAGING SOLUTIONS
-                    </text>
-                    <text x={CENTER.x} y={CENTER.y + 34} fill="#c2a06a" fontSize="10" letterSpacing="4">
-                      VENTURA
-                    </text>
-                  </g>
-                </svg>
-
-                <p
-                  className="mt-4 text-[0.78rem] leading-relaxed text-ivory/40"
-                  style={{ opacity: reduced ? 1 : 0.4 + slice(P, 0.9, 1) * 0.6 }}
-                >
-                  Conceptual. Consolidated loading depends on product compatibility, quantities,
-                  loading constraints and supplier capability, and is confirmed per shipment.
-                </p>
-              </div>
-            </div>
+            <p
+              className="mt-4 font-serif text-[1.15rem] leading-snug text-ivory transition-all duration-700 sm:text-[1.3rem]"
+              style={{ opacity: loaded ? 1 : 0, transform: loaded ? 'none' : 'translateY(8px)' }}
+            >
+              One source. Multiple packaging solutions.
+            </p>
           </div>
-        </Container>
-      </div>
+
+          {/* container */}
+          <div className="lg:col-span-8">
+            <div
+              ref={ref}
+              className="relative flex overflow-hidden border border-white/12 bg-[#141f33] p-3 sm:p-4"
+            >
+              {/* left door */}
+              <div className="relative mr-3 w-8 shrink-0 border-r border-white/10 bg-[#1b2740] sm:mr-4 sm:w-10">
+                <div
+                  className="absolute inset-y-3 left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-gold/70"
+                  style={{ top: '50%', height: '10px', transform: 'translate(-50%,-50%)' }}
+                />
+                <div className="absolute inset-y-2 left-2 w-px bg-white/10" />
+                <div className="absolute inset-y-2 right-2 w-px bg-white/10" />
+              </div>
+
+              {/* load grid */}
+              <div className="grid flex-1 grid-cols-2 gap-2.5 sm:grid-cols-3 sm:grid-rows-2 sm:gap-3">
+                {MODULES.map((m, i) => {
+                  const delay = loaded && !reduced ? `${120 + i * 130}ms` : '0ms'
+                  return (
+                    <Link
+                      key={m.key}
+                      to={m.to}
+                      aria-label={`${m.l1} ${m.l2} — view product`}
+                      className="group relative flex flex-col items-center justify-center gap-2 rounded-[2px] border border-white/10 bg-white/[0.03] px-2 py-4 text-center outline-none transition-[transform,background-color,border-color,box-shadow] duration-300 ease-editorial hover:border-gold/45 hover:bg-white/[0.06] focus-visible:border-gold/60 focus-visible:ring-1 focus-visible:ring-gold/40 sm:py-5"
+                      style={{
+                        opacity: loaded ? 1 : 0,
+                        transform: loaded ? 'translateX(0) scale(1)' : 'translateX(46px) scale(0.96)',
+                        transitionProperty: 'transform, background-color, border-color, box-shadow, opacity',
+                        transitionDuration: reduced ? '0ms' : '700ms',
+                        transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                        transitionDelay: delay,
+                      }}
+                    >
+                      <Silhouette
+                        kind={m.key}
+                        className={cn(
+                          'w-auto text-gold-soft transition-transform duration-300 ease-editorial group-hover:scale-[1.06]',
+                          m.size === 'lg' ? 'h-16 sm:h-24' : m.size === 'sm' ? 'h-10 sm:h-12' : 'h-12 sm:h-16',
+                        )}
+                      />
+                      <span className="text-[0.74rem] font-medium leading-tight tracking-[-0.01em] text-ivory/85">
+                        {m.l1}
+                        <br />
+                        {m.l2}
+                      </span>
+                      <span className="pointer-events-none mt-0.5 flex items-center gap-1 text-[0.62rem] font-semibold uppercase tracking-widelabel text-gold-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                        Explore
+                        <span aria-hidden="true">→</span>
+                      </span>
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+
+            <p className="mt-4 text-[0.78rem] leading-relaxed text-ivory/40">
+              Conceptual. Consolidated loading depends on product compatibility, quantities, loading
+              constraints and supplier capability, and is confirmed per shipment.
+            </p>
+          </div>
+        </div>
+      </Container>
     </section>
   )
 }
