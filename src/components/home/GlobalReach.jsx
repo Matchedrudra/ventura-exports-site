@@ -26,7 +26,8 @@ const NODES = [
   { name: 'Europe', lon: 10, lat: 50, place: 'mid' },
   { name: 'Middle East', lon: 46, lat: 26, place: 'end' },
   { name: 'Africa', lon: 20, lat: 2, place: 'end' },
-  { name: 'Asia Pacific', lon: 120, lat: 14, place: 'start' },
+  { name: 'Asia Pacific', lon: 118, lat: 14, place: 'start' },
+  { name: 'Australia', lon: 134, lat: -25, place: 'start' },
 ]
 
 function routeD(to) {
@@ -176,7 +177,7 @@ export function GlobalReach() {
                   viewBox={WORLD_VIEWBOX}
                   className="block w-full"
                   role="img"
-                  aria-label="World map with supply routes from India to North America, Latin America, Europe, the Middle East, Africa and Asia Pacific"
+                  aria-label="World map with supply routes from India to North America, Latin America, Europe, the Middle East, Africa, Asia Pacific and Australia"
                 >
                   <path d={WORLD_LAND_D} fill="#26344d" stroke="#3a4a68" strokeWidth="0.5" strokeLinejoin="round" />
 
