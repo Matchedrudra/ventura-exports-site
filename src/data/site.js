@@ -1,15 +1,16 @@
-// Central site configuration — verified Ventura Exports information only.
+// Central site configuration.
+// Visible brand: VENTURA. Legal name: Ventura Exports (footer / legal / contact).
 
 export const site = {
-  name: 'Ventura Exports',
+  name: 'Ventura',
   legalName: 'Ventura Exports',
-  domain: 'www.venturaexports.in',
-  url: 'https://www.venturaexports.in',
-  tagline: 'Industrial packaging, sourced from India.',
-  label: 'Indian sourcing · Global supply',
+  domain: 'venturaexport.com',
+  url: 'https://www.venturaexport.com',
+  tagline: 'Industrial packaging & filtration, sourced from India.',
+  label: 'Indian manufacturing · International supply',
   descriptionShort:
-    'Ventura Exports connects international B2B buyers with selected Indian manufacturing partners for FIBC, PP woven bags and industrial packaging solutions.',
-  positioning: 'Industrial packaging sourced from India.',
+    'Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across FIBC, woven and BOPP packaging, corrugated cartons and industrial filter bags.',
+  positioning: 'Industrial packaging & filtration supply from India.',
 }
 
 export const contact = {
@@ -19,16 +20,16 @@ export const contact = {
   phoneHref: 'tel:+918160959023',
   whatsappHref: 'https://wa.me/918160959023',
   location: 'Ahmedabad, Gujarat, India',
-  website: 'www.venturaexports.in',
+  website: 'www.venturaexport.com',
   hours: 'Monday–Saturday, 10:00–19:00 IST',
 }
 
 export const nav = [
-  { label: 'About', to: '/about' },
   { label: 'Products', to: '/products' },
-  { label: 'Sourcing', to: '/sourcing' },
-  { label: 'Markets', to: '/markets' },
+  { label: 'How We Work', to: '/sourcing' },
   { label: 'Quality', to: '/quality' },
+  { label: 'Markets', to: '/markets' },
+  { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
 ]
 
@@ -37,7 +38,7 @@ export const footerNav = [
     heading: 'Company',
     links: [
       { label: 'About', to: '/about' },
-      { label: 'Sourcing', to: '/sourcing' },
+      { label: 'How We Work', to: '/sourcing' },
       { label: 'Quality', to: '/quality' },
       { label: 'Markets', to: '/markets' },
     ],
@@ -46,9 +47,11 @@ export const footerNav = [
     heading: 'Products',
     links: [
       { label: 'FIBC / Jumbo Bags', to: '/products/fibc-jumbo-bags' },
-      { label: 'PP Woven Bags', to: '/products/pp-woven-bags' },
-      { label: 'HDPE Woven Bags', to: '/products/hdpe-woven-bags' },
+      { label: 'PP & HDPE Woven Bags', to: '/products/pp-hdpe-woven-bags' },
+      { label: 'BOPP Laminated Bags', to: '/products/bopp-laminated-bags' },
       { label: 'Customized Woven Packaging', to: '/products/customized-woven-packaging' },
+      { label: 'Corrugated Boxes & Cartons', to: '/products/corrugated-boxes-cartons' },
+      { label: 'Industrial Filter Bags', to: '/products/industrial-filter-bags' },
     ],
   },
   {

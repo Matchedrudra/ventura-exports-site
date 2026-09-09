@@ -59,7 +59,7 @@ export function Header() {
       )}
     >
       <Container className="flex h-[84px] items-center justify-between gap-4 sm:h-[100px] lg:gap-6 xl:h-[116px]">
-        <Link to="/" aria-label="Ventura Exports — home" className="shrink-0">
+        <Link to="/" aria-label="Ventura — home" className="shrink-0">
           <Logo variant="row" />
         </Link>
 

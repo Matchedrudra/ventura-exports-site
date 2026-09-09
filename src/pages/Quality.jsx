@@ -3,6 +3,7 @@ import { PageHeader } from '../components/ui/PageHeader'
 import { Container } from '../components/ui/Container'
 import { Reveal } from '../components/ui/Reveal'
 import { CtaBand } from '../components/ui/CtaBand'
+import { CertificationsCompliance } from '../components/ui/CertificationsCompliance'
 import { qualityPillars, qualityIntro, qualityNotes } from '../data/quality'
 
 export default function Quality() {
@@ -11,7 +12,7 @@ export default function Quality() {
       <Seo
         path="/quality"
         title="Quality"
-        description="Every Ventura Exports order is built around an agreed specification — from the buyer’s requirements and manufacturing through to the batch documentation that accompanies each shipment."
+        description="Every Ventura order is built around an agreed specification — from the buyer’s requirements and manufacturing through to the batch documentation that accompanies each shipment."
       />
       <PageHeader
         label="Quality"
@@ -51,6 +52,8 @@ export default function Quality() {
           </div>
         </Container>
       </section>
+
+      <CertificationsCompliance tone="light" />
 
       <CtaBand
         title="Inspection and documentation, coordinated."

@@ -3,10 +3,12 @@
 
 export const PRODUCT_OPTIONS = [
   'FIBC / Jumbo Bags',
-  'PP Woven Bags',
-  'HDPE Woven Bags',
+  'PP & HDPE Woven Bags',
+  'BOPP Laminated Bags',
   'Customized Woven Packaging',
-  'Other',
+  'Corrugated Boxes & Cartons',
+  'Industrial Filter Bags',
+  'Other Industrial Packaging',
 ]
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/

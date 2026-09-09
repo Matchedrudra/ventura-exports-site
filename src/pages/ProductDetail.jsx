@@ -12,21 +12,34 @@ import { products, getProduct, fibcTypes, fibcOptions, catalogueYear } from '../
 
 const QUOTE_PRODUCT = {
   'fibc-jumbo-bags': 'FIBC / Jumbo Bags',
-  'pp-woven-bags': 'PP Woven Bags',
-  'hdpe-woven-bags': 'HDPE Woven Bags',
+  'pp-hdpe-woven-bags': 'PP & HDPE Woven Bags',
+  'bopp-laminated-bags': 'BOPP Laminated Bags',
   'customized-woven-packaging': 'Customized Woven Packaging',
+  'corrugated-boxes-cartons': 'Corrugated Boxes & Cartons',
+  'industrial-filter-bags': 'Industrial Filter Bags',
+  'industrial-commercial-packaging': 'Other Industrial Packaging',
+}
+
+// Retired slugs from the previous site structure.
+const SLUG_ALIASES = {
+  'pp-woven-bags': 'pp-hdpe-woven-bags',
+  'hdpe-woven-bags': 'pp-hdpe-woven-bags',
 }
 
 export default function ProductDetail() {
   const { slug } = useParams()
-  const product = getProduct(slug)
+  if (SLUG_ALIASES[slug]) return <Navigate to={`/products/${SLUG_ALIASES[slug]}`} replace />
 
+  const product = getProduct(slug)
   if (!product) return <Navigate to="/products" replace />
 
   const idx = products.findIndex((p) => p.slug === slug)
   const prev = products[(idx - 1 + products.length) % products.length]
   const next = products[(idx + 1) % products.length]
-  const quoteHref = `/request-a-quote?product=${encodeURIComponent(QUOTE_PRODUCT[slug] || 'Other')}`
+  const quoteHref = `/request-a-quote?product=${encodeURIComponent(
+    QUOTE_PRODUCT[slug] || 'Other Industrial Packaging',
+  )}`
+  const quoteLabel = product.quoteCta || 'Request specification & quote'
 
   return (
     <>
@@ -129,9 +142,9 @@ export default function ProductDetail() {
                 Construction types
               </h2>
               <p className="mt-4 text-[0.98rem] leading-relaxed text-ink/60">
-                Six FIBC constructions from the reference catalogue. All are rated 500–2000 kg SWL at
-                a 5:1 or 6:1 safety factor; the construction is chosen for the product and the
-                handling method.
+                Eight FIBC constructions. All are rated 500–2000 kg SWL at a 5:1 or 6:1 safety
+                factor; the construction is chosen for the product and the handling method, and the
+                final specification is configured to your requirement.
               </p>
             </div>
             <div className="mt-12">
@@ -156,6 +169,35 @@ export default function ProductDetail() {
             </div>
             <div className="mt-10">
               <OptionGroups groups={fibcOptions} />
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* Filter bag operating requirements */}
+      {product.filterOperating && (
+        <section className="border-t border-line bg-ivory-deep/40 py-16 lg:py-24">
+          <Container>
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-4">
+                <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
+                  Operating requirements
+                </h2>
+                <p className="mt-4 text-[0.92rem] leading-relaxed text-ink/55">
+                  Filter bag specifications are developed around the operating conditions and
+                  filtration requirements of the application.
+                </p>
+              </div>
+              <div className="lg:col-span-8">
+                <ul className="grid gap-x-8 gap-y-3 border-t border-line pt-6 sm:grid-cols-2">
+                  {product.filterOperating.map((item) => (
+                    <li key={item} className="flex gap-3 text-[0.95rem] text-ink/75">
+                      <span aria-hidden="true" className="mt-2.5 h-px w-3 shrink-0 bg-gold" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </Container>
         </section>
@@ -217,10 +259,10 @@ export default function ProductDetail() {
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-md font-serif text-[1.4rem] leading-snug text-ink">
-              Request a specification &amp; quote for {product.shortName.toLowerCase()}.
+              Tell us about your {product.shortName.toLowerCase()} requirement.
             </p>
             <Button to={quoteHref} variant="solid">
-              Request specification &amp; quote
+              {quoteLabel}
             </Button>
           </div>
         </Container>

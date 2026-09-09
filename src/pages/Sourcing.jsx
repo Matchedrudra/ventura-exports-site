@@ -11,13 +11,13 @@ export default function Sourcing() {
     <>
       <Seo
         path="/sourcing"
-        title="Sourcing"
-        description="How Ventura Exports works: source, specify, quality, pack, ship — the coordination process between international buyers and Indian manufacturing partners."
+        title="How We Work"
+        description="How Ventura works: understand, source, validate, supply — the coordination process between international buyers and capable Indian manufacturing partners."
       />
       <PageHeader
         label="How we work"
-        title="Source. Specify. Quality. Pack. Ship."
-        lead="Five stages that carry an order from the buyer’s requirement through to dispatch."
+        title="Understand. Source. Validate. Supply."
+        lead="Four stages that carry an order from the buyer’s requirement through to repeat supply."
       />
 
       <section className="py-16 lg:py-24">

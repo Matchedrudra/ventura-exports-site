@@ -1,5 +1,5 @@
 export const marketsIntro =
-  'Ventura Exports supports international B2B buyers sourcing industrial packaging from India. Enquiries are handled the same way in every region — a written specification, a coordinated partner, and export details managed through dispatch.'
+  'Ventura supports international buyers sourcing industrial packaging and filtration from India. Enquiries are handled the same way in every region — a written specification, a coordinated partner, and export details managed through dispatch.'
 
 export const regions = [
   {

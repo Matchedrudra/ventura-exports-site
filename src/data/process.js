@@ -1,40 +1,32 @@
 export const processSteps = [
   {
     index: '01',
-    title: 'Source',
+    title: 'Understand',
     summary:
-      'Identify suitable Indian manufacturing partners for the buyer’s product and commercial requirements.',
+      'Understand the buyer’s product, specification, application and commercial requirement.',
     detail:
-      'Ventura matches the enquiry to the partner whose construction capability, capacity and commercial terms fit the order.',
+      'The requirement is written down — product, construction, capacity, print, packing, destination and the conditions the packaging has to hold up to.',
   },
   {
     index: '02',
-    title: 'Specify',
-    summary:
-      'Align dimensions, construction, capacity, printing and other requirements before production.',
+    title: 'Source',
+    summary: 'Identify suitable Indian manufacturing partners and supply options.',
     detail:
-      'The specification is written down and confirmed with the partner: body construction, safe working load, loop, filling and discharge, liner, fabric, print and packing.',
+      'The enquiry is matched to partners whose capability, capacity and commercial terms fit the order — across FIBC, woven, BOPP, corrugated and filtration.',
   },
   {
     index: '03',
-    title: 'Quality',
+    title: 'Validate',
     summary:
-      'Coordinate the relevant product specifications and quality requirements with the selected supplier.',
+      'Coordinate specifications, samples, testing and quality requirements before the order is confirmed.',
     detail:
-      'Agreed checkpoints are documented against the specification. Where a project calls for third-party inspection, that is arranged with the buyer.',
+      'The specification is confirmed with the partner. Samples, test data and documentation are coordinated where the order calls for them.',
   },
   {
     index: '04',
-    title: 'Pack',
-    summary: 'Coordinate packing and loading requirements according to the shipment.',
+    title: 'Supply',
+    summary: 'Coordinate commercial execution, documentation, shipment and repeat supply.',
     detail:
-      'Bale or pallet configuration, bag count per unit, marking and container plan are set so the load arrives in usable condition.',
-  },
-  {
-    index: '05',
-    title: 'Ship',
-    summary: 'Coordinate practical export and shipment details through to dispatch.',
-    detail:
-      'Documentation, incoterms and dispatch schedule are coordinated with the partner and the buyer’s forwarder through loading.',
+      'Production, packing, export documentation and dispatch are coordinated toward the agreed requirement — and held consistent for repeat orders.',
   },
 ]

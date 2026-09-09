@@ -15,12 +15,12 @@ export default function Products() {
       <Seo
         path="/products"
         title="Products"
-        description="FIBC / jumbo bags, PP woven bags, HDPE woven bags and customized woven packaging — sourced from India and specified to the application."
+        description="Ventura's packaging portfolio: FIBC and jumbo bags, PP & HDPE woven bags, BOPP laminated bags, customized woven packaging, corrugated boxes and cartons, and industrial filter bags — sourced from Indian manufacturing partners to specification."
       />
       <PageHeader
-        label="Products"
-        title="Woven industrial packaging, sourced to specification."
-        lead="Four sourcing categories. FIBC construction and technical options follow the manufacturing partner’s reference catalogue; woven-sack specifications are agreed per enquiry."
+        label="Packaging portfolio"
+        title="One portfolio, specified to the application."
+        lead="Seven categories across bulk, woven, laminated, corrugated and filtration formats. Specifications are configured to the buyer's requirement and coordinated with the manufacturing partner before production."
       />
 
       <section className="py-16 lg:py-24">
@@ -41,9 +41,12 @@ export default function Products() {
                   </div>
                   <div className="lg:col-span-6">
                     <Reveal>
-                      <div className="flex items-baseline gap-4">
+                      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                         <span className="font-serif text-sm text-gold">{p.index}</span>
                         <span className="text-label font-semibold uppercase tracking-label text-ink/45">
+                          {p.group}
+                        </span>
+                        <span className="text-[0.7rem] uppercase tracking-widelabel text-ink/35">
                           {p.kicker}
                         </span>
                       </div>

@@ -16,10 +16,12 @@ import { Resend } from 'resend'
 // src/lib/validation.js — keep the two in sync.
 const PRODUCT_OPTIONS = [
   'FIBC / Jumbo Bags',
-  'PP Woven Bags',
-  'HDPE Woven Bags',
+  'PP & HDPE Woven Bags',
+  'BOPP Laminated Bags',
   'Customized Woven Packaging',
-  'Other',
+  'Corrugated Boxes & Cartons',
+  'Industrial Filter Bags',
+  'Other Industrial Packaging',
 ]
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const blank = (v) => String(v || '').trim().length === 0
@@ -57,6 +59,9 @@ const FIELD_LABELS = {
   gsm: 'Fabric weight (GSM)',
   lamination: 'Lamination',
   printing: 'Printing',
+  application: 'Application',
+  operatingTemp: 'Operating temperature',
+  specification: 'Specification / requirement',
   destinationCountry: 'Destination country',
   destinationPort: 'Destination port / city',
 }
@@ -87,7 +92,7 @@ function buildHtml(d, meta) {
   return `<!doctype html><html><body style="margin:0;background:#f5f2ea;padding:24px">
   <div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #e4ddca">
     <div style="background:#17233a;padding:20px 24px">
-      <div style="font:600 14px/1.4 -apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f5f2ea">New Ventura Exports B2B Enquiry</div>
+      <div style="font:600 14px/1.4 -apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f5f2ea">New Ventura B2B Enquiry</div>
     </div>
     <div style="padding:8px 24px 28px">
       ${section('Buyer details', [
@@ -109,6 +114,9 @@ function buildHtml(d, meta) {
         [FIELD_LABELS.gsm, d.gsm],
         [FIELD_LABELS.lamination, d.lamination],
         [FIELD_LABELS.printing, d.printing],
+        [FIELD_LABELS.application, d.application],
+        [FIELD_LABELS.operatingTemp, d.operatingTemp],
+        [FIELD_LABELS.specification, d.specification],
       ])}
       ${section('Destination', [
         [FIELD_LABELS.destinationCountry, d.destinationCountry],
@@ -136,7 +144,7 @@ function buildHtml(d, meta) {
 function buildText(d, meta) {
   const line = (l, v) => (clean(v) ? `${l}: ${clean(v)}\n` : '')
   return (
-    `NEW VENTURA EXPORTS B2B ENQUIRY\n\n` +
+    `NEW VENTURA B2B ENQUIRY\n\n` +
     `BUYER DETAILS\n` +
     line('Name', d.fullName) +
     line('Company', d.company) +
@@ -155,6 +163,9 @@ function buildText(d, meta) {
     line('Fabric weight (GSM)', d.gsm) +
     line('Lamination', d.lamination) +
     line('Printing', d.printing) +
+    line('Application', d.application) +
+    line('Operating temperature', d.operatingTemp) +
+    line('Specification / requirement', d.specification) +
     `\nDESTINATION\n` +
     line('Country', d.destinationCountry) +
     line('Port / City', d.destinationPort) +
@@ -195,9 +206,11 @@ export default async function handler(req, res) {
   for (const key of [
     'fullName', 'company', 'email', 'country', 'phone', 'product', 'quantity',
     'dimensions', 'swl', 'construction', 'filling', 'discharge', 'liner', 'gsm',
-    'lamination', 'printing', 'destinationCountry', 'destinationPort', 'message',
+    'lamination', 'printing', 'application', 'operatingTemp', 'specification',
+    'destinationCountry', 'destinationPort', 'message',
   ]) {
-    data[key] = clean(body[key]).slice(0, key === 'message' ? 4000 : 300)
+    const long = key === 'message' || key === 'specification'
+    data[key] = clean(body[key]).slice(0, long ? 4000 : 300)
   }
 
   const errors = validateEnquiry(data)

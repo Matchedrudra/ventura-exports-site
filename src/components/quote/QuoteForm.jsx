@@ -22,6 +22,9 @@ const EMPTY = {
   gsm: '',
   lamination: '',
   printing: '',
+  application: '',
+  operatingTemp: '',
+  specification: '',
   destinationCountry: '',
   destinationPort: '',
   message: '',
@@ -46,9 +49,10 @@ export function QuoteForm() {
 
   const isFibc = values.product === 'FIBC / Jumbo Bags'
   const isWoven =
-    values.product === 'PP Woven Bags' ||
-    values.product === 'HDPE Woven Bags' ||
+    values.product === 'PP & HDPE Woven Bags' ||
+    values.product === 'BOPP Laminated Bags' ||
     values.product === 'Customized Woven Packaging'
+  const isFilter = values.product === 'Industrial Filter Bags'
 
   const set = (name) => (e) => {
     const value = e.target.value
@@ -343,16 +347,42 @@ export function QuoteForm() {
           </>
         )}
 
-        {values.product === 'Other' && (
-          <TextField
-            name="dimensions"
-            label="Key dimensions / spec"
-            placeholder="Describe the item"
-            value={values.dimensions}
-            onChange={set('dimensions')}
-            className="sm:col-span-2"
-          />
+        {isFilter && (
+          <>
+            <TextField
+              name="application"
+              label="Filtration application"
+              placeholder="e.g. cement kiln baghouse / pulse-jet"
+              value={values.application}
+              onChange={set('application')}
+            />
+            <TextField
+              name="operatingTemp"
+              label="Operating temperature"
+              placeholder="Continuous / peak (°C)"
+              value={values.operatingTemp}
+              onChange={set('operatingTemp')}
+            />
+            <TextField
+              name="dimensions"
+              label="Bag dimensions & fitting"
+              placeholder="Dia x length, snap-band / cuff"
+              value={values.dimensions}
+              onChange={set('dimensions')}
+              className="sm:col-span-2"
+            />
+          </>
         )}
+
+        <TextArea
+          name="specification"
+          label="Specification / requirement"
+          rows={4}
+          placeholder="Construction, material, print, capacity, standards — as much as you have."
+          value={values.specification}
+          onChange={set('specification')}
+          className="sm:col-span-2"
+        />
       </FieldSet>
 
       <FieldSet legend="Destination">

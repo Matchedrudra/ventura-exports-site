@@ -20,11 +20,11 @@ export default function Contact() {
       <Seo
         path="/contact"
         title="Contact"
-        description="Contact Ventura Exports — Ahmedabad, Gujarat, India. Email rudra@venturaexports.in or send an enquiry through the quote form."
+        description="Contact Ventura — Ahmedabad, Gujarat, India. Send a packaging or filtration enquiry through the quote form, or reach us by email, phone or WhatsApp."
       />
       <PageHeader
         label="Contact"
-        title="Talk to Ventura Exports."
+        title="Talk to Ventura."
         lead="For product enquiries, use the quote form — it reaches us with the specification already structured. For anything else, the details below."
       />
 
@@ -62,7 +62,7 @@ export default function Contact() {
 
               <Reveal>
                 <p className="mt-8 max-w-prose text-[0.88rem] leading-relaxed text-ink/50">
-                  Ventura Exports operates as a sourcing and export coordination business.
+                  Ventura is an India-based packaging and industrial supply company (legal name Ventura Exports).
                   Correspondence is by email, phone or WhatsApp.
                 </p>
               </Reveal>

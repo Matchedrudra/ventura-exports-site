@@ -18,3 +18,6 @@ attribution required. Credits are listed here as good practice.
 
 To swap any image, drop a replacement JPEG in this folder using the same
 filename. Recommended: long edge ≤ 1800px, JPEG quality ~70, < 350 KB.
+
+| product-corrugated.jpg | Pexels | https://www.pexels.com/photo/5025503/ — plain brown corrugated shipping cartons |
+| product-filter-bags.jpg | Pexels | https://www.pexels.com/photo/18468425/ — industrial process plant with dust-collection ductwork |

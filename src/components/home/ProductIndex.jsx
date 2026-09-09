@@ -1,52 +1,52 @@
 import { Link } from 'react-router-dom'
 import { Container } from '../ui/Container'
 import { SectionHeading } from '../ui/SectionHeading'
-import { Reveal } from '../ui/Reveal'
+import { Button } from '../ui/Button'
+import { RevealGroup } from '../ui/Reveal'
+import { Figure } from '../ui/Figure'
 import { products } from '../../data/products'
+
+// Six primary portfolio categories on the homepage.
+const featured = products.filter((p) => p.slug !== 'industrial-commercial-packaging')
 
 export function ProductIndex() {
   return (
     <section className="border-b border-line py-20 lg:py-28">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeading
-              label="Products"
-              title="Four categories, specified to the load."
-              lead="Ventura works across woven industrial packaging — from two-tonne bulk bags to retail-size woven sacks — and coordinates the specification with the manufacturing partner before production."
-            />
-          </div>
-          <div className="lg:col-span-7 lg:pt-2">
-            <ul className="border-t border-line">
-              {products.map((p) => (
-                <li key={p.slug}>
-                  <Reveal>
-                    <Link
-                      to={`/products/${p.slug}`}
-                      className="group grid grid-cols-[auto_1fr_auto] items-baseline gap-x-5 border-b border-line py-6 transition-colors duration-300 hover:bg-ivory-deep/50 sm:gap-x-8"
-                    >
-                      <span className="font-serif text-sm text-gold">{p.index}</span>
-                      <span className="min-w-0">
-                        <span className="block text-[1.15rem] font-medium tracking-[-0.01em] text-ink sm:text-[1.3rem]">
-                          {p.name}
-                        </span>
-                        <span className="mt-1 block text-[0.92rem] leading-relaxed text-ink/55">
-                          {p.tagline}
-                        </span>
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="translate-x-0 text-ink/30 transition-transform duration-300 ease-editorial group-hover:translate-x-1 group-hover:text-gold"
-                      >
-                        →
-                      </span>
-                    </Link>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeading
+            label="Packaging portfolio"
+            title="A growing packaging & filtration portfolio."
+            lead="Ventura sources across bulk, woven, laminated, corrugated and filtration formats — coordinating the specification with the manufacturing partner before production."
+          />
+          <Button to="/products" variant="link" className="shrink-0">
+            All products
+          </Button>
         </div>
+
+        <RevealGroup className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((p) => (
+            <RevealGroup.Item key={p.slug}>
+              <Link to={`/products/${p.slug}`} className="group block">
+                <div className="overflow-hidden bg-ivory-deep">
+                  <Figure
+                    src={p.image}
+                    alt={p.imageAlt}
+                    ratio="4 / 3"
+                    imgClassName="transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.04]"
+                  />
+                </div>
+                <div className="mt-4 flex items-baseline gap-3">
+                  <span className="font-serif text-[0.8rem] text-gold">{p.index}</span>
+                  <h3 className="text-[1.08rem] font-medium tracking-[-0.01em] text-ink transition-colors group-hover:text-gold-deep">
+                    {p.name}
+                  </h3>
+                </div>
+                <p className="mt-2 text-[0.9rem] leading-relaxed text-ink/55">{p.tagline}</p>
+              </Link>
+            </RevealGroup.Item>
+          ))}
+        </RevealGroup>
       </Container>
     </section>
   )

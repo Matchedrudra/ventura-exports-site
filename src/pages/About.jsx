@@ -29,12 +29,12 @@ export default function About() {
       <Seo
         path="/about"
         title="About"
-        description="Ventura Exports is a sourcing partner between Indian supply and international demand for industrial packaging and woven products."
+        description="Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across industrial packaging and filtration."
       />
       <PageHeader
         label="About"
-        title="A sourcing partner between Indian supply and international demand."
-        lead="Ventura Exports connects international B2B buyers with selected Indian manufacturing partners for industrial packaging and woven products."
+        title="India-based packaging & industrial supply."
+        lead="Ventura is an India-based packaging and industrial supply company focused on connecting international buyers with capable Indian manufacturing partners."
       />
 
       <section className="py-16 lg:py-24">
@@ -44,26 +44,24 @@ export default function About() {
               <div className="max-w-prose space-y-6 text-[1.05rem] leading-[1.8] text-ink/75">
                 <Reveal>
                   <p>
-                    Ventura Exports is a B2B sourcing and export coordination business based in
-                    Ahmedabad, Gujarat. We work with international buyers who want to source
-                    industrial packaging from India and would rather run that process through one
-                    point of contact.
+                    Ventura is an India-based packaging and industrial supply company, based in
+                    Ahmedabad, Gujarat. We connect international buyers with capable Indian
+                    manufacturing partners and run the requirement through one point of contact.
                   </p>
                 </Reveal>
                 <Reveal delay={0.05}>
                   <p>
-                    We coordinate product requirements, supplier communication, documentation and
-                    export details to help buyers source from India with greater clarity. That means
-                    translating a requirement into a build specification, identifying a suitable
-                    manufacturing partner, and staying with the order through production, packing and
-                    dispatch.
+                    We work around buyer specifications, product requirements and destination-market
+                    needs to identify suitable supply from India — across industrial packaging, bulk
+                    packaging, woven packaging, corrugated packaging and industrial filtration.
                   </p>
                 </Reveal>
                 <Reveal delay={0.1}>
                   <p>
-                    Ventura’s work is the coordination layer: aligning the specification, the
-                    manufacturing partner and the export documentation so a cross-border packaging
-                    order runs through one point of contact rather than several.
+                    The focus is on understanding the requirement, identifying a suitable
+                    manufacturing partner, aligning the specification, coordinating quality and
+                    documentation, and supplying export-ready product — held consistent for repeat
+                    orders.
                   </p>
                 </Reveal>
               </div>

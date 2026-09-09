@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.venturaexports.in/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.venturaexports.in/about</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.venturaexports.in/products</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.venturaexports.in/products/fibc-jumbo-bags</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.venturaexports.in/products/pp-woven-bags</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.venturaexports.in/products/hdpe-woven-bags</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.venturaexports.in/products/customized-woven-packaging</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.venturaexports.in/sourcing</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.venturaexports.in/markets</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.venturaexports.in/quality</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.venturaexports.in/request-a-quote</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.venturaexports.in/contact</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.venturaexport.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.venturaexport.com/products</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.venturaexport.com/products/fibc-jumbo-bags</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.venturaexport.com/products/pp-hdpe-woven-bags</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.venturaexport.com/products/bopp-laminated-bags</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.venturaexport.com/products/customized-woven-packaging</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.venturaexport.com/products/corrugated-boxes-cartons</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.venturaexport.com/products/industrial-filter-bags</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.venturaexport.com/products/industrial-commercial-packaging</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.venturaexport.com/sourcing</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.venturaexport.com/markets</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.venturaexport.com/quality</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.venturaexport.com/request-a-quote</loc><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.venturaexport.com/about</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.venturaexport.com/contact</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
 </urlset>

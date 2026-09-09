@@ -12,7 +12,7 @@ export function ProcessStrip() {
           <SectionHeading
             tone="light"
             label="How we work"
-            title="A sourcing process, kept deliberately plain."
+            title="Understand. Source. Validate. Supply."
           />
           <Link
             to="/sourcing"

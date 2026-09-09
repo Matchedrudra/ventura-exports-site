@@ -1,7 +1,7 @@
 {
-  "name": "Ventura Exports",
-  "short_name": "Ventura Exports",
-  "description": "Industrial packaging sourced from India.",
+  "name": "Ventura",
+  "short_name": "Ventura",
+  "description": "Industrial packaging & filtration, sourced from India.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f5f2ea",

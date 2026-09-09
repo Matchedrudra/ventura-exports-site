@@ -27,7 +27,7 @@ export function Hero() {
             )}
             style={delay(1)}
           >
-            Industrial packaging,
+            Industrial packaging &amp; filtration,
             <br className="hidden sm:inline" />
             <span className="sm:hidden"> </span>
             sourced from <span className="italic text-gold-deep">India</span>.
@@ -37,19 +37,20 @@ export function Hero() {
             className={cn('mt-7 max-w-md text-[1.05rem] leading-[1.75] text-ink/70', rise(2))}
             style={delay(2)}
           >
-            Ventura Exports connects international B2B buyers with selected Indian manufacturing
-            partners for FIBC, PP woven bags and industrial packaging solutions.
+            Ventura connects international buyers with capable Indian manufacturing partners across
+            industrial packaging and filtration — from FIBC and woven bags to corrugated cartons and
+            industrial filter bags.
           </p>
 
           <div
             className={cn('mt-9 flex flex-wrap items-center gap-x-3 gap-y-4', rise(3))}
             style={delay(3)}
           >
-            <Button to="/request-a-quote" variant="solid">
-              Request a Quote
-            </Button>
-            <Button to="/products" variant="link">
+            <Button to="/products" variant="solid">
               Explore products
+            </Button>
+            <Button to="/request-a-quote" variant="link">
+              Request a quote
             </Button>
           </div>
         </div>

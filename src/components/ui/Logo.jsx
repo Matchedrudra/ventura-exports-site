@@ -21,7 +21,7 @@ export function Logo({ variant = 'row', tone = 'ink', className }) {
   const img = (
     <img
       src="/brand/ventura-logo.png"
-      alt="Ventura Exports"
+      alt="Ventura"
       width="785"
       height="655"
       className={cn(SIZES[variant] || SIZES.row, className)}

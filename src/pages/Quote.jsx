@@ -18,7 +18,7 @@ export default function Quote() {
       <Seo
         path="/request-a-quote"
         title="Request a Quote"
-        description="Send Ventura Exports a B2B enquiry for FIBC, PP woven, HDPE woven or customized woven packaging. The form reaches us with the specification structured."
+        description="Send Ventura a B2B enquiry for FIBC, PP & HDPE woven, BOPP laminated, corrugated or industrial filter bags. The form reaches us with the specification structured."
       />
 
       <header className="bg-ink text-ivory pt-16 pb-14 sm:pt-24 sm:pb-16">

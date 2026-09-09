@@ -1,12 +1,12 @@
 export const qualityIntro =
-  'Every order is built around an agreed specification — from the buyer’s requirements and manufacturing through to the documentation accompanying each shipment.'
+  'Quality starts with the specification. Product requirements are clarified before sourcing and production, and — where required — samples, specifications and quality documentation are coordinated with the supplying manufacturer.'
 
 export const qualityPillars = [
   {
     index: '01',
     title: 'Specification matching',
     body:
-      'Every requirement is written into a single specification sheet — construction, safe working load, safety factor, loop, filling, discharge, liner, fabric, print and packing. That sheet is what the partner quotes and produces against.',
+      'Every requirement is written into a single specification — construction, material, capacity, print, packing and the conditions the packaging has to hold up to. That sheet is what the partner quotes and produces against.',
   },
   {
     index: '02',
@@ -16,9 +16,9 @@ export const qualityPillars = [
   },
   {
     index: '03',
-    title: 'Documentation',
+    title: 'Testing & documentation',
     body:
-      'Each batch is accompanied by a batch-specific laboratory test report confirming compliance with the agreed product specifications. Commercial and export documentation is prepared for the destination market and the agreed incoterms, so the paperwork matches the goods.',
+      'Where the order calls for it, product testing and a batch-specific laboratory test report against the agreed product specifications are coordinated with the manufacturing partner, alongside commercial and export documentation for the destination market.',
   },
   {
     index: '04',
@@ -30,6 +30,6 @@ export const qualityPillars = [
 
 export const qualityNotes = [
   'The specification is confirmed with the manufacturing partner before production begins.',
-  'Each batch is accompanied by a batch-specific laboratory test report against the agreed product specifications.',
+  'Product testing and documentation are coordinated according to the agreed specifications.',
   'Certificates, test reports and inspection are provided or coordinated with the manufacturing partner as the order requires.',
 ]
