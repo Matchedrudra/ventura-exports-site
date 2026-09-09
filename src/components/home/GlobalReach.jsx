@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { Container } from '../ui/Container'
 import { Reveal } from '../ui/Reveal'
-import { useScrollProgress, slice, easeInOut } from '../../hooks/useScrollProgress'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { WORLD_VIEWBOX, WORLD_LAND_D } from './worldLand'
 
 /*
- * "From India to global markets." An accurate equirectangular world map
- * (Natural Earth 110m land, public domain) in deep navy. As the section
- * scrolls, supply routes draw outward from India and market regions
- * activate in turn. Once a route is revealed it stays drawn, and a small
- * gold dot then travels its path continuously — India → destination, on a
- * loop, lightly staggered — independent of further scrolling. Reduced
- * motion keeps the routes and points but drops the travelling dots.
+ * "From India to global markets." A recognizable equirectangular world map
+ * (Natural Earth 50m land, public domain) in deep navy.
+ *
+ * When the section enters view, seven supply routes draw outward from a
+ * single India origin — one to each market region — lightly staggered.
+ * Each route then keeps a small muted-gold dot travelling its real SVG
+ * path, India → destination, on a loop. Everything after the reveal runs
+ * on its own; scrolling is not required. Reduced motion shows the routes
+ * and points as a clean static state with no travelling dots.
+ *
  * Regions shown are market groupings, not claims of active supply.
  */
 
@@ -19,63 +22,83 @@ const px = (lon) => ((lon + 180) / 360) * 1000
 const py = (lat) => ((90 - lat) / 180) * 500
 
 const ORIGIN = { lon: 79, lat: 22 }
+const OX = px(ORIGIN.lon)
+const OY = py(ORIGIN.lat)
 
+// bow = how far the arc bows toward the top of the map, as a fraction of the
+// straight-line distance (capped). Tuned so all seven routes read separately.
 const NODES = [
-  { name: 'North America', lon: -96, lat: 40, place: 'end' },
-  { name: 'Latin America', lon: -61, lat: -12, place: 'end' },
-  { name: 'Europe', lon: 10, lat: 50, place: 'mid' },
-  { name: 'Middle East', lon: 46, lat: 26, place: 'end' },
-  { name: 'Africa', lon: 20, lat: 2, place: 'end' },
-  { name: 'Asia Pacific', lon: 118, lat: 14, place: 'start' },
-  { name: 'Australia', lon: 134, lat: -25, place: 'start' },
+  { name: 'North America', lon: -96, lat: 40, place: 'end', bow: 0.16 },
+  { name: 'Latin America', lon: -61, lat: -12, place: 'end', bow: 0.18 },
+  { name: 'Europe', lon: 10, lat: 50, place: 'mid', bow: 0.24 },
+  { name: 'Middle East', lon: 47, lat: 27, place: 'end', bow: 0.6 },
+  { name: 'Africa', lon: 22, lat: 3, place: 'end', bow: 0.32 },
+  { name: 'Asia Pacific', lon: 119, lat: 12, place: 'start', bow: 0.34 },
+  { name: 'Australia', lon: 135, lat: -25, place: 'start', bow: 0.24 },
 ]
 
 function routeD(to) {
-  const x1 = px(ORIGIN.lon)
-  const y1 = py(ORIGIN.lat)
   const x2 = px(to.lon)
   const y2 = py(to.lat)
-  const mx = (x1 + x2) / 2
-  const my = (y1 + y2) / 2
-  const dist = Math.hypot(x2 - x1, y2 - y1)
-  const cy = my - Math.min(dist * 0.32, 120) - 6
-  return `M${x1} ${y1} Q${mx} ${cy} ${x2} ${y2}`
+  const mx = (OX + x2) / 2
+  const my = (OY + y2) / 2
+  const dx = x2 - OX
+  const dy = y2 - OY
+  const dist = Math.hypot(dx, dy) || 1
+  // unit normal to the chord, forced to point toward the top of the map
+  let nx = -dy / dist
+  let ny = dx / dist
+  if (ny > 0) {
+    nx = -nx
+    ny = -ny
+  }
+  const off = Math.min(dist * to.bow, 118)
+  return `M${OX} ${OY} Q${mx + nx * off} ${my + ny * off} ${x2} ${y2}`
 }
 
-const ROUTE_LEN = 640
+const DRAW_MS = 900
+const STEP = 140 // stagger between route reveals
+const LEAD = 220 // delay before the first route starts
+const DOTS_LEAD = LEAD + (7 - 1) * STEP + 500 // dots begin as the last route lands
 const TRAVEL = 4600 // ms for one India → destination pass
-const STAGGER = 620 // ms offset between routes
-const PULSE = 700 // ms destination pulse
+const LAUNCH_STEP = 320 // ms between each dot setting off
+const PULSE = 700
+
+const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
 
 export function GlobalReach() {
-  const { ref, progress, reduced } = useScrollProgress({ start: 0.82, end: 0.28 })
-  const ox = px(ORIGIN.lon)
-  const oy = py(ORIGIN.lat)
-  const originOn = reduced ? 1 : slice(progress, 0.02, 0.12)
+  const reduced = usePrefersReducedMotion()
+  const sectionRef = useRef(null)
+  const [active, setActive] = useState(reduced)
+  const activeRef = useRef(active)
+  activeRef.current = active
 
-  // Latch each route on once it has finished drawing — it then stays visible
-  // and its dot keeps travelling regardless of later scrolling.
-  const [revealed, setRevealed] = useState(() => NODES.map(() => reduced))
-  const revealedRef = useRef(revealed)
-  revealedRef.current = revealed
-
+  // one-shot reveal when the section scrolls into view
   useEffect(() => {
-    if (reduced) return
-    setRevealed((prev) => {
-      let changed = false
-      const next = prev.map((was, i) => {
-        if (was) return true
-        if (slice(progress, 0.12 + i * 0.1, 0.32 + i * 0.1) >= 0.98) {
-          changed = true
-          return true
+    if (reduced || typeof IntersectionObserver === 'undefined') {
+      setActive(true)
+      return
+    }
+    const el = sectionRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setActive(true)
+          io.disconnect()
         }
-        return false
-      })
-      return changed ? next : prev
-    })
-  }, [progress, reduced])
+      },
+      { rootMargin: '0px 0px -15% 0px', threshold: 0.2 },
+    )
+    io.observe(el)
+    const t = setTimeout(() => setActive(true), 2600)
+    return () => {
+      io.disconnect()
+      clearTimeout(t)
+    }
+  }, [reduced])
 
-  // Continuous dot travel along the real SVG paths.
+  // continuous dot travel along the real SVG paths
   const pathRefs = useRef([])
   const dotRefs = useRef([])
   const pulseRefs = useRef([])
@@ -83,44 +106,43 @@ export function GlobalReach() {
   useEffect(() => {
     if (reduced) return
     let raf = 0
-    const t0 = performance.now()
+    let startedAt = 0
     const lastU = NODES.map(() => 0)
     const pulseAt = NODES.map(() => -1)
 
     const tick = (now) => {
-      for (let i = 0; i < NODES.length; i += 1) {
-        const dot = dotRefs.current[i]
-        const path = pathRefs.current[i]
-        if (!dot || !path) continue
+      if (activeRef.current) {
+        if (!startedAt) startedAt = now
+        for (let i = 0; i < NODES.length; i += 1) {
+          const dot = dotRefs.current[i]
+          const path = pathRefs.current[i]
+          if (!dot || !path) continue
 
-        if (!revealedRef.current[i]) {
-          dot.style.opacity = '0'
-          continue
-        }
-        const local = now - t0 - i * STAGGER
-        if (local < 0) {
-          dot.style.opacity = '0'
-          continue
-        }
-        const u = (local % TRAVEL) / TRAVEL
-        if (u < lastU[i]) pulseAt[i] = now // wrapped → arrived
-        lastU[i] = u
+          // dots set off one after another, then loop independently
+          const local = now - startedAt - DOTS_LEAD - i * LAUNCH_STEP
+          if (local < 0) {
+            dot.style.opacity = '0'
+            continue
+          }
+          const u = (local % TRAVEL) / TRAVEL
+          if (u < lastU[i]) pulseAt[i] = now
+          lastU[i] = u
 
-        const len = path.getTotalLength()
-        const pt = path.getPointAtLength(easeInOut(u) * len)
-        dot.setAttribute('transform', `translate(${pt.x} ${pt.y})`)
-        // appear near India, dissolve at the destination, seamless restart
-        dot.style.opacity = String(0.9 * Math.sin(Math.PI * u))
+          const len = path.getTotalLength()
+          const pt = path.getPointAtLength(easeInOut(u) * len)
+          dot.setAttribute('transform', `translate(${pt.x} ${pt.y})`)
+          dot.style.opacity = String(0.9 * Math.sin(Math.PI * u))
 
-        const pulse = pulseRefs.current[i]
-        if (pulse) {
-          const age = now - pulseAt[i]
-          if (pulseAt[i] >= 0 && age < PULSE) {
-            const k = age / PULSE
-            pulse.setAttribute('r', String(2.4 + 9 * k))
-            pulse.style.opacity = String(0.4 * (1 - k))
-          } else {
-            pulse.style.opacity = '0'
+          const pulse = pulseRefs.current[i]
+          if (pulse) {
+            const age = now - pulseAt[i]
+            if (pulseAt[i] >= 0 && age < PULSE) {
+              const k = age / PULSE
+              pulse.setAttribute('r', String(2.4 + 9 * k))
+              pulse.style.opacity = String(0.4 * (1 - k))
+            } else {
+              pulse.style.opacity = '0'
+            }
           }
         }
       }
@@ -130,8 +152,11 @@ export function GlobalReach() {
     return () => cancelAnimationFrame(raf)
   }, [reduced])
 
+  const drawTransition = (i, prop) =>
+    reduced ? 'none' : `${prop} ${DRAW_MS}ms cubic-bezier(0.4, 0, 0.2, 1) ${LEAD + i * STEP}ms`
+
   return (
-    <section ref={ref} className="bg-ink text-ivory">
+    <section ref={sectionRef} className="bg-ink text-ivory">
       <Container className="py-16 lg:py-24">
         <div className="grid items-center gap-x-12 gap-y-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -151,19 +176,19 @@ export function GlobalReach() {
               </p>
             </Reveal>
             <ul className="mt-7 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.9rem] text-ivory/80">
-              {NODES.map((r, i) => {
-                const on = reduced || revealed[i] || progress > 0.14 + i * 0.11
-                return (
-                  <li key={r.name} className="flex items-center gap-2.5">
-                    <span
-                      aria-hidden="true"
-                      className="h-px w-3.5 transition-colors duration-500"
-                      style={{ background: on ? '#a8814a' : 'rgba(255,255,255,0.28)' }}
-                    />
-                    {r.name}
-                  </li>
-                )
-              })}
+              {NODES.map((r, i) => (
+                <li key={r.name} className="flex items-center gap-2.5">
+                  <span
+                    aria-hidden="true"
+                    className="h-px w-3.5 transition-colors duration-500"
+                    style={{
+                      background: active ? '#a8814a' : 'rgba(255,255,255,0.28)',
+                      transitionDelay: reduced ? '0ms' : `${LEAD + i * STEP}ms`,
+                    }}
+                  />
+                  {r.name}
+                </li>
+              ))}
             </ul>
             <p className="mt-6 text-[0.78rem] leading-relaxed text-ivory/40">
               Market regions, not a claim of active supply in every territory.
@@ -179,33 +204,37 @@ export function GlobalReach() {
                   role="img"
                   aria-label="World map with supply routes from India to North America, Latin America, Europe, the Middle East, Africa, Asia Pacific and Australia"
                 >
-                  <path d={WORLD_LAND_D} fill="#26344d" stroke="#3a4a68" strokeWidth="0.5" strokeLinejoin="round" />
+                  <path
+                    d={WORLD_LAND_D}
+                    fill="#26344d"
+                    stroke="#3a4a68"
+                    strokeWidth="0.5"
+                    strokeLinejoin="round"
+                  />
 
-                  {/* routes — draw on scroll, then stay */}
+                  {/* seven supply routes — draw once, then stay */}
                   <g fill="none" stroke="#c2a06a" strokeLinecap="round">
-                    {NODES.map((n, i) => {
-                      const seg = revealed[i]
-                        ? 1
-                        : easeInOut(slice(progress, 0.12 + i * 0.1, 0.32 + i * 0.1))
-                      return (
-                        <path
-                          key={n.name}
-                          ref={(el) => { pathRefs.current[i] = el }}
-                          d={routeD(n)}
-                          strokeWidth="1.1"
-                          opacity="0.8"
-                          strokeDasharray={ROUTE_LEN}
-                          strokeDashoffset={reduced ? 0 : ROUTE_LEN * (1 - seg)}
-                        />
-                      )
-                    })}
+                    {NODES.map((n, i) => (
+                      <path
+                        key={n.name}
+                        ref={(el) => {
+                          pathRefs.current[i] = el
+                        }}
+                        d={routeD(n)}
+                        strokeWidth="1.1"
+                        opacity="0.82"
+                        pathLength="1"
+                        strokeDasharray="1"
+                        strokeDashoffset={reduced || active ? 0 : 1}
+                        style={{ transition: drawTransition(i, 'stroke-dashoffset') }}
+                      />
+                    ))}
                   </g>
 
-                  {/* destination markers — dot activates after its route lands; label stays readable */}
+                  {/* destination markers */}
                   {NODES.map((n, i) => {
                     const x = px(n.lon)
                     const y = py(n.lat)
-                    const dotOn = reduced || revealed[i] ? 1 : slice(progress, 0.28 + i * 0.1, 0.36 + i * 0.1)
                     const anchor = n.place === 'end' ? 'end' : n.place === 'start' ? 'start' : 'middle'
                     const dx = n.place === 'end' ? -7 : n.place === 'start' ? 7 : 0
                     const ly = y - 9
@@ -213,9 +242,10 @@ export function GlobalReach() {
                     const lx = x + dx - (anchor === 'end' ? w - 4 : anchor === 'start' ? 4 : w / 2)
                     return (
                       <g key={`m-${n.name}`}>
-                        {/* subtle arrival pulse */}
                         <circle
-                          ref={(el) => { pulseRefs.current[i] = el }}
+                          ref={(el) => {
+                            pulseRefs.current[i] = el
+                          }}
                           cx={x}
                           cy={y}
                           r="2.6"
@@ -224,32 +254,43 @@ export function GlobalReach() {
                           strokeWidth="0.9"
                           style={{ opacity: 0 }}
                         />
-                        <circle cx={x} cy={y} r={2.6} fill="none" stroke="#d8c6a0" strokeWidth="1" opacity={dotOn} />
-                        <circle cx={x} cy={y} r="1.1" fill="#e9dcc0" opacity={dotOn} />
-                        <rect x={lx} y={ly - 8} width={w} height={11} rx="1.5" fill="#0f1826" fillOpacity="0.82" />
-                        <text
-                          x={x + dx}
-                          y={ly}
-                          textAnchor={anchor}
-                          fill="#e7ebf3"
-                          fontSize="9.5"
-                          fontWeight="500"
-                          letterSpacing="0.1em"
-                          style={{ textTransform: 'uppercase' }}
+                        <g
+                          style={{
+                            opacity: reduced || active ? 1 : 0,
+                            transition: reduced
+                              ? 'none'
+                              : `opacity 500ms ease ${LEAD + i * STEP + DRAW_MS * 0.5}ms`,
+                          }}
                         >
-                          {n.name}
-                        </text>
+                          <circle cx={x} cy={y} r={2.6} fill="none" stroke="#d8c6a0" strokeWidth="1" />
+                          <circle cx={x} cy={y} r="1.1" fill="#e9dcc0" />
+                          <rect x={lx} y={ly - 8} width={w} height={11} rx="1.5" fill="#0f1826" fillOpacity="0.82" />
+                          <text
+                            x={x + dx}
+                            y={ly}
+                            textAnchor={anchor}
+                            fill="#e7ebf3"
+                            fontSize="9.5"
+                            fontWeight="500"
+                            letterSpacing="0.1em"
+                            style={{ textTransform: 'uppercase' }}
+                          >
+                            {n.name}
+                          </text>
+                        </g>
                       </g>
                     )
                   })}
 
-                  {/* travelling dots — one per route, positioned each frame along the real path */}
+                  {/* travelling dots — positioned each frame along the real path */}
                   {!reduced && (
                     <g aria-hidden="true">
                       {NODES.map((n, i) => (
                         <g
                           key={`d-${n.name}`}
-                          ref={(el) => { dotRefs.current[i] = el }}
+                          ref={(el) => {
+                            dotRefs.current[i] = el
+                          }}
                           style={{ opacity: 0 }}
                         >
                           <circle r="3.4" fill="#c2a06a" opacity="0.16" />
@@ -259,11 +300,25 @@ export function GlobalReach() {
                     </g>
                   )}
 
-                  {/* origin: India */}
-                  <g opacity={originOn}>
-                    <circle cx={ox} cy={oy} r="3.4" fill="none" stroke="#c2a06a" strokeWidth="1" />
-                    <circle cx={ox} cy={oy} r="1.7" fill="#a8814a" />
-                    <text x={ox + 7} y={oy + 3} fill="#e9dcc0" fontSize="9" letterSpacing="0.14em" style={{ textTransform: 'uppercase' }}>
+                  {/* origin: India — brighter than the destinations, the source of every route */}
+                  <g
+                    style={{
+                      opacity: reduced || active ? 1 : 0,
+                      transition: reduced ? 'none' : 'opacity 500ms ease 60ms',
+                    }}
+                  >
+                    <circle cx={OX} cy={OY} r="6" fill="#c2a06a" opacity="0.12" />
+                    <circle cx={OX} cy={OY} r="3.6" fill="none" stroke="#d8c6a0" strokeWidth="1.1" />
+                    <circle cx={OX} cy={OY} r="2.1" fill="#e7d6ac" />
+                    <text
+                      x={OX + 8}
+                      y={OY + 3}
+                      fill="#f2e9d6"
+                      fontSize="9.5"
+                      fontWeight="600"
+                      letterSpacing="0.14em"
+                      style={{ textTransform: 'uppercase' }}
+                    >
                       India
                     </text>
                   </g>
