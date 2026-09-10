@@ -1,9 +1,13 @@
 import { Outlet } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { WhatsAppButton } from '../ui/WhatsAppButton'
 import { useScrollTop } from '../../hooks/useScrollTop'
+import { useSmoothScroll } from '../../hooks/useSmoothScroll'
 
 export function Layout() {
+  useSmoothScroll()
   useScrollTop()
   return (
     <div className="flex min-h-screen flex-col">
@@ -18,6 +22,8 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <WhatsAppButton />
+      <Analytics />
     </div>
   )
 }

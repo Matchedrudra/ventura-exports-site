@@ -26,7 +26,7 @@ export const contact = {
 
 export const nav = [
   { label: 'Products', to: '/products' },
-  { label: 'How We Work', to: '/sourcing' },
+  { label: 'How We Work', to: '/how-we-work' },
   { label: 'Quality', to: '/quality' },
   { label: 'Markets', to: '/markets' },
   { label: 'About', to: '/about' },
@@ -38,7 +38,7 @@ export const footerNav = [
     heading: 'Company',
     links: [
       { label: 'About', to: '/about' },
-      { label: 'How We Work', to: '/sourcing' },
+      { label: 'How We Work', to: '/how-we-work' },
       { label: 'Quality', to: '/quality' },
       { label: 'Markets', to: '/markets' },
     ],

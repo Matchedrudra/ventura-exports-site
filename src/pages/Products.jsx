@@ -53,7 +53,7 @@ export default function Products() {
                         <span className="text-label font-semibold uppercase tracking-label text-ink/45">
                           {p.group}
                         </span>
-                        <span className="text-[0.7rem] uppercase tracking-widelabel text-ink/35">
+                        <span className="text-[0.7rem] uppercase tracking-widelabel text-ink/55">
                           {p.kicker}
                         </span>
                       </div>

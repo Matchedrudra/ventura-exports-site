@@ -20,7 +20,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
             {footerNav.map((group) => (
               <nav key={group.heading} aria-label={group.heading}>
-                <p className="text-label font-semibold uppercase tracking-label text-ivory/40">
+                <p className="text-label font-semibold uppercase tracking-label text-ivory/60">
                   {group.heading}
                 </p>
                 <ul className="mt-4 space-y-2.5">
@@ -40,7 +40,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <p className="text-label font-semibold uppercase tracking-label text-ivory/40">Contact</p>
+            <p className="text-label font-semibold uppercase tracking-label text-ivory/60">Contact</p>
             <ul className="mt-4 space-y-2.5 text-[0.9rem] text-ivory/75">
               <li>
                 <a href={`mailto:${contact.email}`} className="transition-colors hover:text-gold-soft">
@@ -57,7 +57,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-[0.8rem] text-ivory/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-[0.8rem] text-ivory/60 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {site.legalName}. All rights reserved.
           </p>

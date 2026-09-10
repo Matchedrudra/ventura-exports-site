@@ -11,6 +11,9 @@ import { OptionGroups } from '../components/products/OptionGroup'
 import { FibcTypeGrid } from '../components/products/FibcTypeCard'
 import { CtaBand } from '../components/ui/CtaBand'
 import { products, getProduct, fibcTypes, fibcOptions, catalogueYear, productGalleries } from '../data/products'
+import { site } from '../data/site'
+
+const siteUrl = site.url
 import { RevealGroup } from '../components/ui/Reveal'
 
 const QUOTE_PRODUCT = {
@@ -49,6 +52,29 @@ export default function ProductDetail() {
   )}`
   const quoteLabel = product.quoteCta || 'Request specification & quote'
 
+  const canonical = `${siteUrl}/products/${slug}`
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      description: product.summary,
+      category: product.group,
+      ...(product.image ? { image: `${siteUrl}${product.image}` } : {}),
+      brand: { '@type': 'Brand', name: 'Ventura' },
+      url: canonical,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+        { '@type': 'ListItem', position: 2, name: 'Products', item: `${siteUrl}/products` },
+        { '@type': 'ListItem', position: 3, name: product.name, item: canonical },
+      ],
+    },
+  ]
+
   return (
     <>
       <Seo
@@ -56,12 +82,13 @@ export default function ProductDetail() {
         title={product.name}
         description={product.summary}
         image={product.image || undefined}
+        jsonLd={jsonLd}
       />
 
       {/* Header */}
       <header className="bg-ink text-ivory pt-12 pb-14 sm:pt-16 sm:pb-16">
         <Container>
-          <nav className="text-[0.78rem] uppercase tracking-widelabel text-ivory/45" aria-label="Breadcrumb">
+          <nav className="text-[0.78rem] uppercase tracking-widelabel text-ivory/65" aria-label="Breadcrumb">
             <Link to="/products" className="transition-colors hover:text-ivory">
               Products
             </Link>
@@ -73,7 +100,7 @@ export default function ProductDetail() {
             <div className="lg:col-span-7">
               <div className="flex items-baseline gap-4">
                 <span className="font-serif text-sm text-gold-soft">{product.index}</span>
-                <span className="text-label font-semibold uppercase tracking-label text-ivory/45">
+                <span className="text-label font-semibold uppercase tracking-label text-ivory/65">
                   {product.kicker}
                 </span>
               </div>
@@ -146,7 +173,7 @@ export default function ProductDetail() {
                     className="flex items-center justify-center overflow-hidden bg-gradient-to-br from-ivory-deep to-line/60"
                     style={{ aspectRatio: product.heroRatio || '4 / 3' }}
                   >
-                    <span className="px-8 text-center font-serif text-[1.5rem] leading-snug text-ink/35">
+                    <span className="px-8 text-center font-serif text-[1.5rem] leading-snug text-ink/55">
                       {product.name}
                     </span>
                   </div>
@@ -363,7 +390,7 @@ export default function ProductDetail() {
       <nav className="border-t border-line" aria-label="More products">
         <Container className="grid divide-y divide-line sm:grid-cols-2 sm:divide-x sm:divide-y-0">
           <Link to={`/products/${prev.slug}`} className="group flex flex-col gap-1 py-8 pr-4">
-            <span className="text-[0.72rem] uppercase tracking-widelabel text-ink/40">Previous</span>
+            <span className="text-[0.72rem] uppercase tracking-widelabel text-ink/55">Previous</span>
             <span className="text-[1.05rem] text-ink transition-colors group-hover:text-gold">
               ← {prev.name}
             </span>
@@ -372,7 +399,7 @@ export default function ProductDetail() {
             to={`/products/${next.slug}`}
             className="group flex flex-col gap-1 py-8 sm:items-end sm:pl-4"
           >
-            <span className="text-[0.72rem] uppercase tracking-widelabel text-ink/40">Next</span>
+            <span className="text-[0.72rem] uppercase tracking-widelabel text-ink/55">Next</span>
             <span className="text-[1.05rem] text-ink transition-colors group-hover:text-gold">
               {next.name} →
             </span>

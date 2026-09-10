@@ -35,7 +35,7 @@ export function FibcTypeGrid({ types = [] }) {
           </ul>
 
           <p className="mt-5 text-[0.8rem] leading-relaxed text-ink/50">
-            <span className="uppercase tracking-label text-ink/40">Typical use — </span>
+            <span className="uppercase tracking-label text-ink/55">Typical use — </span>
             {t.applications.join(', ')}.
           </p>
         </RevealGroup.Item>

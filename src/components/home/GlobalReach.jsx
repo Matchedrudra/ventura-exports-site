@@ -72,6 +72,9 @@ export function GlobalReach() {
   const [active, setActive] = useState(reduced)
   const activeRef = useRef(active)
   activeRef.current = active
+  // whether the section is on screen — the rAF loop skips its (layout-forcing)
+  // per-frame work when the map is scrolled out of view
+  const visibleRef = useRef(true)
 
   // one-shot reveal when the section scrolls into view
   useEffect(() => {
@@ -98,6 +101,21 @@ export function GlobalReach() {
     }
   }, [reduced])
 
+  // pause the travelling-dot work when the map is off screen
+  useEffect(() => {
+    if (reduced || typeof IntersectionObserver === 'undefined') return
+    const el = sectionRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        visibleRef.current = entries.some((e) => e.isIntersecting)
+      },
+      { rootMargin: '200px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [reduced])
+
   // continuous dot travel along the real SVG paths
   const pathRefs = useRef([])
   const dotRefs = useRef([])
@@ -111,7 +129,7 @@ export function GlobalReach() {
     const pulseAt = NODES.map(() => -1)
 
     const tick = (now) => {
-      if (activeRef.current) {
+      if (activeRef.current && visibleRef.current) {
         if (!startedAt) startedAt = now
         for (let i = 0; i < NODES.length; i += 1) {
           const dot = dotRefs.current[i]
@@ -190,7 +208,7 @@ export function GlobalReach() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-[0.78rem] leading-relaxed text-ivory/40">
+            <p className="mt-6 text-[0.78rem] leading-relaxed text-ivory/60">
               Market regions, not a claim of active supply in every territory.
             </p>
           </div>

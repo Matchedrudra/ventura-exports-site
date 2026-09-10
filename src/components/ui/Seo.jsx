@@ -3,8 +3,9 @@ import { site } from '../../data/site'
 
 /**
  * Lightweight document head manager for this SPA — sets the title and the
- * meta/link tags that matter for sharing and indexing. No dependency; the
- * crawlable baseline lives in index.html and this keeps it in sync per route.
+ * meta/link tags that matter for sharing and indexing, plus optional
+ * per-route JSON-LD. No dependency; the crawlable baseline lives in
+ * index.html and this keeps it in sync per route.
  */
 
 function setMeta(selector, attr, key, value) {
@@ -27,7 +28,7 @@ function setLink(rel, href) {
   el.setAttribute('href', href)
 }
 
-export function Seo({ title, description, path = '/', image = '/og-image.jpg', type = 'website' }) {
+export function Seo({ title, description, path = '/', image = '/og-image.jpg', type = 'website', jsonLd }) {
   const fullTitle = title
     ? `${title} — ${site.name}`
     : `${site.name} | Industrial Packaging & Filtration Supplier — India`
@@ -51,6 +52,20 @@ export function Seo({ title, description, path = '/', image = '/og-image.jpg', t
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', desc)
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', img)
   }, [fullTitle, desc, url, img, type])
+
+  useEffect(() => {
+    if (!jsonLd) return
+    const blocks = Array.isArray(jsonLd) ? jsonLd : [jsonLd]
+    const nodes = blocks.map((block) => {
+      const el = document.createElement('script')
+      el.type = 'application/ld+json'
+      el.dataset.seoRoute = 'true'
+      el.textContent = JSON.stringify(block)
+      document.head.appendChild(el)
+      return el
+    })
+    return () => nodes.forEach((el) => el.remove())
+  }, [jsonLd])
 
   return null
 }

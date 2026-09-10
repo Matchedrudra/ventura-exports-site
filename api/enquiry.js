@@ -7,9 +7,64 @@
 //   ENQUIRY_TO       — destination, e.g. rudra@venturaexports.in
 // Optional:
 //   ENQUIRY_CC       — comma-separated extra recipients
-//   ENQUIRY_TOKEN    — shared secret; if set, request must send header x-ventura-token
+//   ENQUIRY_TOKEN    — shared secret for server-to-server callers; if set, a
+//                      request must send header x-ventura-token. LEAVE UNSET for
+//                      the public website form (a browser can't hold a secret).
+//   TURNSTILE_SECRET — Cloudflare Turnstile secret; if set, the request must
+//                      carry a valid `turnstileToken` (pair with the client's
+//                      VITE_TURNSTILE_SITE_KEY). Dormant when unset.
 
 import { Resend } from 'resend'
+
+// --- lightweight abuse controls -------------------------------------------
+// Best-effort per-IP throttle. Serverless instances are ephemeral and not
+// shared, so this only blunts bursts that hit the same warm instance — good
+// enough alongside the honeypot + timing check. For hard guarantees put a
+// Vercel KV / Upstash counter here instead.
+const RATE = { WINDOW_MS: 60_000, MAX: 5 }
+const hits = new Map() // ip -> number[] (timestamps)
+
+function rateLimited(ip) {
+  if (!ip) return false
+  const now = Date.now()
+  const arr = (hits.get(ip) || []).filter((t) => now - t < RATE.WINDOW_MS)
+  arr.push(now)
+  hits.set(ip, arr)
+  if (hits.size > 5000) hits.clear() // crude memory cap
+  return arr.length > RATE.MAX
+}
+
+async function turnstileOk(token, ip) {
+  const secret = process.env.TURNSTILE_SECRET
+  if (!secret) return true // feature dormant
+  if (!token) return false
+  try {
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token, ...(ip ? { remoteip: ip } : {}) }),
+    })
+    const j = await r.json()
+    return j.success === true
+  } catch {
+    return false
+  }
+}
+
+const ATTACH_MAX = 3 * 1024 * 1024
+const ATTACH_EXT = /\.(pdf|jpe?g|png|docx?|xlsx?|zip)$/i
+
+function normalizeAttachment(a) {
+  if (!a || typeof a !== 'object') return { ok: true, value: undefined }
+  const filename = String(a.filename || '').trim().slice(0, 180)
+  const data = String(a.data || '')
+  if (!filename || !data) return { ok: true, value: undefined }
+  if (!ATTACH_EXT.test(filename)) return { ok: false, error: 'Unsupported attachment type.' }
+  if (!/^[A-Za-z0-9+/]+=*$/.test(data)) return { ok: false, error: 'Attachment could not be read.' }
+  const bytes = Math.floor((data.length * 3) / 4)
+  if (bytes > ATTACH_MAX) return { ok: false, error: 'Attachment is larger than 3 MB.' }
+  return { ok: true, value: { filename, content: data } }
+}
 
 // Validation is intentionally inlined (not imported from src/) so this
 // function is fully self-contained for the Vercel Node runtime. It mirrors
@@ -185,6 +240,15 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
+  const ip =
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    req.socket?.remoteAddress ||
+    ''
+
+  if (rateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many enquiries in a short time. Please try again shortly.' })
+  }
+
   let body = req.body
   if (typeof body === 'string') {
     try {
@@ -200,6 +264,22 @@ export default async function handler(req, res) {
   // Honeypot — accept silently, send nothing.
   if (clean(body.botField) || clean(body.company_website)) {
     return res.status(200).json({ ok: true })
+  }
+
+  // Timing check — a real person takes more than a couple of seconds to fill
+  // this in. `elapsedMs` is measured on the client, so it's clock-skew safe.
+  const elapsed = Number(body.elapsedMs)
+  if (Number.isFinite(elapsed) && elapsed >= 0 && elapsed < 2500) {
+    return res.status(200).json({ ok: true })
+  }
+
+  if (!(await turnstileOk(body.turnstileToken, ip))) {
+    return res.status(403).json({ error: 'Verification failed. Please reload the page and try again.' })
+  }
+
+  const attach = normalizeAttachment(body.attachment)
+  if (!attach.ok) {
+    return res.status(422).json({ error: attach.error })
   }
 
   const data = {}
@@ -240,17 +320,20 @@ export default async function handler(req, res) {
       timeStyle: 'short',
     }) + ' IST',
     source: clean(body.submittedFrom) || 'website',
-    ip:
-      (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
-      req.socket?.remoteAddress ||
-      '',
+    ip,
   }
 
   const subject = `Enquiry — ${data.product}${data.company ? ` — ${data.company}` : ''}`
 
   // Staging / QA escape hatch: render the email but do not send it.
   if (apiKey === 'TEST_MODE') {
-    console.log('[enquiry:TEST_MODE]', subject, '\n', buildText(data, meta))
+    console.log(
+      '[enquiry:TEST_MODE]',
+      subject,
+      attach.value ? `\n[attachment: ${attach.value.filename}]` : '',
+      '\n',
+      buildText(data, meta),
+    )
     return res.status(200).json({ ok: true, testMode: true })
   }
 
@@ -265,6 +348,7 @@ export default async function handler(req, res) {
       subject,
       html: buildHtml(data, meta),
       text: buildText(data, meta),
+      attachments: attach.value ? [attach.value] : undefined,
     })
 
     if (error) {

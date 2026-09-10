@@ -62,7 +62,7 @@ export function OneStop() {
                           }
                         />
                       ) : (
-                        <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ivory-deep to-line/60 px-4 text-center font-serif text-[0.92rem] leading-snug text-ink/40">
+                        <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ivory-deep to-line/60 px-4 text-center font-serif text-[0.92rem] leading-snug text-ink/55">
                           {t.name}
                         </span>
                       )}

@@ -56,7 +56,7 @@ export function CertificationsCompliance({ tone = 'ink' }) {
             <Reveal>
               <p
                 className={`mt-6 text-[0.82rem] leading-relaxed ${
-                  light ? 'text-ivory/45' : 'text-ink/50'
+                  light ? 'text-ivory/60' : 'text-ink/50'
                 }`}
               >
                 Certification and compliance documentation is coordinated according to product,

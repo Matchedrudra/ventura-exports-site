@@ -10,7 +10,7 @@ export default function Sourcing() {
   return (
     <>
       <Seo
-        path="/sourcing"
+        path="/how-we-work"
         title="How We Work"
         description="How Ventura works: understand, source, validate, supply — the coordination process between international buyers and capable Indian manufacturing partners."
       />

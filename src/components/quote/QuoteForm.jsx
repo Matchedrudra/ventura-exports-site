@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { TextField, SelectField, TextArea, FieldSet } from './Field'
+import { Turnstile, turnstileEnabled } from './Turnstile'
 import { Button } from '../ui/Button'
 import { validateEnquiry, PRODUCT_OPTIONS } from '../../lib/validation'
 import { fibcTypes, fibcOptions } from '../../data/products'
@@ -34,6 +35,19 @@ const EMPTY = {
 const fillingItems = fibcOptions.find((g) => g.key === 'filling')?.items ?? []
 const dischargeItems = fibcOptions.find((g) => g.key === 'discharge')?.items ?? []
 
+// Kept under Vercel's ~4.5 MB serverless request-body limit once base64-encoded.
+const ATTACH_MAX = 3 * 1024 * 1024
+const ATTACH_EXT = /\.(pdf|jpe?g|png|docx?|xlsx?|zip)$/i
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader()
+    r.onload = () => resolve(String(r.result).split(',')[1] || '')
+    r.onerror = () => reject(new Error('Could not read the file.'))
+    r.readAsDataURL(file)
+  })
+}
+
 export function QuoteForm() {
   const [params] = useSearchParams()
   const initialProduct = PRODUCT_OPTIONS.includes(params.get('product') || '')
@@ -44,8 +58,42 @@ export function QuoteForm() {
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | submitting | success | error
   const [serverMessage, setServerMessage] = useState('')
+  const [file, setFile] = useState(null)
+  const [fileError, setFileError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('')
   const busyRef = useRef(false)
   const formRef = useRef(null)
+  const fileInputRef = useRef(null)
+  const mountedAt = useRef(Date.now())
+  const onTurnstile = useCallback((t) => setTurnstileToken(t), [])
+
+  const onFile = (e) => {
+    const f = e.target.files?.[0]
+    setFileError('')
+    if (!f) {
+      setFile(null)
+      return
+    }
+    if (!ATTACH_EXT.test(f.name)) {
+      setFile(null)
+      setFileError('Use a PDF, image, Word, Excel or ZIP file.')
+      e.target.value = ''
+      return
+    }
+    if (f.size > ATTACH_MAX) {
+      setFile(null)
+      setFileError('That file is over 3 MB — please compress it or send it by email.')
+      e.target.value = ''
+      return
+    }
+    setFile(f)
+  }
+
+  const clearFile = () => {
+    setFile(null)
+    setFileError('')
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
 
   const isFibc = values.product === 'FIBC / Jumbo Bags'
   const isWoven =
@@ -80,15 +128,36 @@ export function QuoteForm() {
       return
     }
 
+    if (turnstileEnabled && !turnstileToken) {
+      setStatus('error')
+      setServerMessage('Please complete the verification challenge.')
+      return
+    }
+
     busyRef.current = true
     setStatus('submitting')
     setServerMessage('')
 
     try {
+      let attachment
+      if (file) {
+        attachment = {
+          filename: file.name,
+          contentType: file.type || 'application/octet-stream',
+          data: await readFileAsBase64(file),
+        }
+      }
+
       const res = await fetch('/api/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, submittedFrom: 'website-quote-form' }),
+        body: JSON.stringify({
+          ...values,
+          attachment,
+          turnstileToken: turnstileToken || undefined,
+          elapsedMs: Date.now() - mountedAt.current,
+          submittedFrom: 'website-quote-form',
+        }),
       })
 
       if (!res.ok) {
@@ -99,6 +168,7 @@ export function QuoteForm() {
       setStatus('success')
       setValues({ ...EMPTY })
       setErrors({})
+      clearFile()
     } catch (err) {
       setStatus('error')
       setServerMessage(
@@ -411,6 +481,48 @@ export function QuoteForm() {
           error={errors.message}
           className="sm:col-span-2"
         />
+
+        <div className="sm:col-span-2">
+          <label
+            htmlFor="attachment"
+            className="block text-[0.82rem] font-medium uppercase tracking-widelabel text-ink/70"
+          >
+            Attachment <span className="normal-case tracking-normal text-ink/50">(optional)</span>
+          </label>
+          <p className="mt-1 text-[0.82rem] leading-relaxed text-ink/50">
+            Spec sheet, drawing or artwork — PDF, image, Word, Excel or ZIP, up to 3 MB.
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <input
+              ref={fileInputRef}
+              id="attachment"
+              name="attachment"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx,.zip,application/pdf,image/*"
+              onChange={onFile}
+              className="block max-w-full text-[0.85rem] text-ink/70 file:mr-3 file:cursor-pointer file:border file:border-ink/20 file:bg-ivory-deep file:px-4 file:py-2 file:text-[0.78rem] file:font-medium file:uppercase file:tracking-widelabel file:text-ink hover:file:bg-line/50"
+            />
+            {file && (
+              <button
+                type="button"
+                onClick={clearFile}
+                className="text-[0.8rem] uppercase tracking-widelabel text-ink/50 underline underline-offset-4 hover:text-ink"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+          {file && (
+            <p className="mt-2 text-[0.82rem] text-ink/60">
+              Attached: {file.name} ({(file.size / 1024 / 1024).toFixed(1)} MB)
+            </p>
+          )}
+          {fileError && (
+            <p role="alert" className="mt-2 text-[0.82rem] text-[#8f3123]">
+              {fileError}
+            </p>
+          )}
+        </div>
       </FieldSet>
 
       <div className="border-t border-line pt-8">
@@ -425,7 +537,9 @@ export function QuoteForm() {
           </p>
         )}
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        {turnstileEnabled && <Turnstile onToken={onTurnstile} />}
+
+        <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-sm text-[0.82rem] leading-relaxed text-ink/50">
             Fields marked <span className="text-gold">*</span> are required. Your details are used
             only to respond to this enquiry.

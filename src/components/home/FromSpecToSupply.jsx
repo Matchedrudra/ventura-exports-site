@@ -29,7 +29,7 @@ export function FromSpecToSupply() {
             </h2>
           </div>
           <Link
-            to="/sourcing"
+            to="/how-we-work"
             className="group inline-flex items-center gap-2 text-[0.82rem] font-medium uppercase tracking-widelabel text-ivory/55 transition-colors hover:text-ivory"
           >
             Full process

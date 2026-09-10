@@ -1,7 +1,7 @@
 import { cn } from '../../lib/cn'
 
 const controlBase =
-  'mt-2 w-full border border-line bg-paper px-3.5 py-3 text-[0.95rem] text-ink placeholder:text-ink/35 transition-colors duration-200 focus:border-ink focus:outline-none focus:ring-0'
+  'mt-2 w-full border border-line bg-paper px-3.5 py-3 text-[0.95rem] text-ink placeholder:text-ink/45 transition-colors duration-200 focus:border-ink focus:outline-none focus:ring-0'
 
 function Label({ htmlFor, children, required }) {
   return (

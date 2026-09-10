@@ -84,9 +84,11 @@ export function Lightbox({ images, startIndex = 0, onClose }) {
   useLayoutEffect(() => {
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    window.__lenis?.stop()
     closeBtn.current?.focus()
     return () => {
       document.body.style.overflow = prev
+      window.__lenis?.start()
     }
   }, [])
 

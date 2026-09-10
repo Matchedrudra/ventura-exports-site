@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 
 const Home = lazy(() => import('./pages/Home'))
@@ -26,7 +26,8 @@ export default function App() {
           <Route path="about" element={<About />} />
           <Route path="products" element={<Products />} />
           <Route path="products/:slug" element={<ProductDetail />} />
-          <Route path="sourcing" element={<Sourcing />} />
+          <Route path="how-we-work" element={<Sourcing />} />
+          <Route path="sourcing" element={<Navigate to="/how-we-work" replace />} />
           <Route path="markets" element={<Markets />} />
           <Route path="quality" element={<Quality />} />
           <Route path="request-a-quote" element={<Quote />} />

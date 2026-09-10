@@ -159,7 +159,7 @@ export function ContainerConcept() {
             {/* narrative ladder — revealed as the load settles */}
             <div className="mt-9 space-y-2" aria-hidden="true">
               <p
-                className="text-[0.72rem] font-semibold uppercase tracking-widelabel text-ivory/45"
+                className="text-[0.72rem] font-semibold uppercase tracking-widelabel text-ivory/60"
                 style={settle(880)}
               >
                 Multiple requirements
@@ -168,7 +168,7 @@ export function ContainerConcept() {
                 ↓
               </p>
               <p
-                className="text-[0.72rem] font-semibold uppercase tracking-widelabel text-ivory/45"
+                className="text-[0.72rem] font-semibold uppercase tracking-widelabel text-ivory/60"
                 style={settle(1040)}
               >
                 One consolidated load
@@ -234,7 +234,7 @@ export function ContainerConcept() {
 
               {/* top rail */}
               <div className="flex items-center gap-3 border-b border-white/10 px-4 py-2.5 sm:px-6">
-                <span className="text-[0.62rem] font-semibold uppercase tracking-widelabel text-ivory/45">
+                <span className="text-[0.62rem] font-semibold uppercase tracking-widelabel text-ivory/60">
                   Consolidated load plan
                 </span>
                 <span aria-hidden="true" className="flex flex-1 items-center gap-1.5">
@@ -310,7 +310,7 @@ export function ContainerConcept() {
                   }}
                 />
                 <p
-                  className="mt-2 text-center text-[0.62rem] font-semibold uppercase tracking-widelabel text-ivory/40"
+                  className="mt-2 text-center text-[0.62rem] font-semibold uppercase tracking-widelabel text-ivory/60"
                   style={settle(1000)}
                 >
                   One consolidated load
@@ -318,7 +318,7 @@ export function ContainerConcept() {
               </div>
             </div>
 
-            <p className="mt-4 text-[0.78rem] leading-relaxed text-ivory/40">
+            <p className="mt-4 text-[0.78rem] leading-relaxed text-ivory/60">
               Conceptual. Consolidated loading depends on product compatibility, quantities, loading
               constraints and supplier capability, and is confirmed per shipment.
             </p>
