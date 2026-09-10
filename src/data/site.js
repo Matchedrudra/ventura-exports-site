@@ -5,7 +5,7 @@ export const site = {
   name: 'Ventura',
   legalName: 'Ventura Exports',
   domain: 'venturaexports.in',
-  url: 'https://venturaexports.in',
+  url: 'https://www.venturaexports.in',
   tagline: 'Industrial packaging & filtration, sourced from India.',
   label: 'Indian manufacturing · International supply',
   descriptionShort:

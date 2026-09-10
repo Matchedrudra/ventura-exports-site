@@ -17,16 +17,24 @@ export function useSmoothScroll() {
 
   useEffect(() => {
     if (reduced) return
-    // Coarse pointers (touch) already have good native momentum; Lenis on
-    // touch can fight the mobile URL bar, so keep it wheel-only.
-    const lenis = new Lenis({
-      duration: 1.05,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      syncTouch: false,
-      touchMultiplier: 1.6,
-      anchors: { offset: -80 },
-    })
+
+    let lenis
+    try {
+      // Coarse pointers (touch) already have good native momentum; Lenis on
+      // touch can fight the mobile URL bar, so keep it wheel-only. `lerp` mode
+      // (frame-rate independent) gives the continuous, weighted glide of a
+      // considered marketing site rather than discrete wheel steps.
+      lenis = new Lenis({
+        lerp: 0.08,
+        wheelMultiplier: 0.95,
+        smoothWheel: true,
+        syncTouch: false,
+        touchMultiplier: 1.6,
+        anchors: { offset: -80 },
+      })
+    } catch {
+      return // fall back to native scrolling
+    }
 
     window.__lenis = lenis
     let raf = 0

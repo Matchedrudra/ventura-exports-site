@@ -16,7 +16,7 @@ import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const SITE = 'https://venturaexports.in'
+const SITE = 'https://www.venturaexports.in'
 const DIST = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist')
 
 const PRODUCTS = [
