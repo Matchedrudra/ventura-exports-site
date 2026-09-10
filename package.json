@@ -6,7 +6,7 @@
   "description": "Ventura Exports — industrial packaging sourced from India.",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/seo-snapshot.mjs",
     "preview": "vite preview",
     "lint": "eslint ."
   },
