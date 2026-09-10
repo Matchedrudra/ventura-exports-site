@@ -25,8 +25,8 @@ export function useSmoothScroll() {
       // (frame-rate independent) gives the continuous, weighted glide of a
       // considered marketing site rather than discrete wheel steps.
       lenis = new Lenis({
-        lerp: 0.08,
-        wheelMultiplier: 0.95,
+        lerp: 0.065,
+        wheelMultiplier: 1,
         smoothWheel: true,
         syncTouch: false,
         touchMultiplier: 1.6,
