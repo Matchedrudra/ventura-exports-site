@@ -49,17 +49,23 @@ export function OneStop() {
                 <RevealGroup.Item key={t.slug} className="bg-ivory">
                   <Link to={`/products/${t.slug}`} className="group block">
                     <div className="relative aspect-[5/4] overflow-hidden bg-ivory-deep">
-                      <img
-                        src={t.image}
-                        alt={t.alt}
-                        loading="lazy"
-                        decoding="async"
-                        className={
-                          t.fit === 'contain'
-                            ? 'absolute inset-0 h-full w-full object-contain p-3 opacity-95 transition duration-500 ease-editorial group-hover:scale-[1.03] group-hover:opacity-100'
-                            : 'absolute inset-0 h-full w-full object-cover opacity-90 transition duration-500 ease-editorial group-hover:scale-[1.04] group-hover:opacity-100'
-                        }
-                      />
+                      {t.image ? (
+                        <img
+                          src={t.image}
+                          alt={t.alt}
+                          loading="lazy"
+                          decoding="async"
+                          className={
+                            t.fit === 'contain'
+                              ? 'absolute inset-0 h-full w-full object-contain p-3 opacity-95 transition duration-500 ease-editorial group-hover:scale-[1.03] group-hover:opacity-100'
+                              : 'absolute inset-0 h-full w-full object-cover opacity-90 transition duration-500 ease-editorial group-hover:scale-[1.04] group-hover:opacity-100'
+                          }
+                        />
+                      ) : (
+                        <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ivory-deep to-line/60 px-4 text-center font-serif text-[0.92rem] leading-snug text-ink/40">
+                          {t.name}
+                        </span>
+                      )}
                     </div>
                     <p className="px-3 py-3 text-[0.8rem] font-medium tracking-[-0.01em] text-ink">
                       {t.name}

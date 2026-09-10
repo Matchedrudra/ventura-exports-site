@@ -252,8 +252,8 @@ export const products = [
     tagline: 'Durable woven packaging for agricultural, industrial and commercial applications.',
     summary:
       'Woven PP and HDPE sacks for granular and powdered products in retail and industrial pack sizes, configured with fabric weight, lamination, liner, print and closure to suit the packing line and the destination.',
-    image: '/images/ventura_pp_plain_bag_blue.jpg',
-    imageAlt: 'A plain woven polypropylene sack',
+    image: null,
+    imageAlt: 'PP & HDPE woven bags',
     catalogueBacked: false,
     intro: [
       'PP and HDPE woven sacks carry granular and powdered products in retail and industrial pack sizes. PP gives a strong, economical sack; HDPE tape yarn gives a stiffer, tighter weave for sharp or dense products and high stacking. Both hold print well and can be laminated or lined where the product needs a closer barrier.',
@@ -290,8 +290,8 @@ export const products = [
     tagline: 'High-quality printed woven packaging combining durability with strong product presentation.',
     summary:
       'Woven PP sacks with a BOPP film laminate carrying high-resolution print — for products where shelf presentation, branding and surface protection matter alongside strength.',
-    image: '/images/ventura_bopp_waller_bags.jpg',
-    imageAlt: 'Printed BOPP-laminated woven sacks — a laminated woven packaging example',
+    image: null,
+    imageAlt: 'BOPP laminated bags',
     catalogueBacked: false,
     intro: [
       'A BOPP laminate bonds a printed biaxially-oriented polypropylene film to a woven PP sack. The result carries near-photographic print, resists scuffing and moisture on the surface, and keeps the load strength of a woven bag.',
@@ -328,8 +328,8 @@ export const products = [
     tagline: 'Packaging configured around dimensions, material, printing, construction and application requirements.',
     summary:
       'Where a standard bag does not fit, Ventura works from a written brief — dimensions, material, construction, print, lamination, liner, filling and discharge, packing and destination requirements — coordinated as a single specification.',
-    image: '/images/ventura_pp_bag_green_front.jpg',
-    imageAlt: 'A printed woven sack — a customized woven packaging example',
+    image: null,
+    imageAlt: 'Customized woven packaging',
     catalogueBacked: false,
     intro: [
       'Not every requirement matches a catalogue item. Customized woven packaging starts from a written brief and is coordinated with the manufacturing partner as a single specification.',
@@ -409,8 +409,8 @@ export const products = [
     tagline: 'Filtration engineered around the application.',
     summary:
       'Filter bags for dust collectors and baghouses — pulse-jet, reverse-air and shaker systems — configured by filtration media, operating temperature, chemical environment, dust characteristics and equipment layout.',
-    image: '/images/product-filter-bags.jpg',
-    imageAlt: 'Industrial process plant with dust-collection ductwork and cyclones',
+    image: null,
+    imageAlt: 'Industrial filter bags',
     catalogueBacked: false,
     intro: [
       'Industrial filter bags are the working media in a dust collector. They separate particulate from an air or gas stream in cement plants, mineral and mining operations, chemical and fertilizer processing, power generation, food processing and general manufacturing.',

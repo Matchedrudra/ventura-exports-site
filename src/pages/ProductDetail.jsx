@@ -39,7 +39,7 @@ export default function ProductDetail() {
 
   const gallery = productGalleries[slug] || []
   const galleryImages = gallery.map((g) => ({ src: g.src, alt: g.caption }))
-  const heroImages = [{ src: product.image, alt: product.imageAlt }]
+  const heroImages = product.image ? [{ src: product.image, alt: product.imageAlt }] : []
 
   const idx = products.findIndex((p) => p.slug === slug)
   const prev = products[(idx - 1 + products.length) % products.length]
@@ -55,7 +55,7 @@ export default function ProductDetail() {
         path={`/products/${slug}`}
         title={product.name}
         description={product.summary}
-        image={product.image}
+        image={product.image || undefined}
       />
 
       {/* Header */}
@@ -117,29 +117,40 @@ export default function ProductDetail() {
             </div>
             <div className="lg:col-span-6">
               <Reveal>
-                <button
-                  type="button"
-                  onClick={() => setLightbox({ images: heroImages, index: 0 })}
-                  aria-label={`View image full screen: ${product.imageAlt}`}
-                  className="group relative block w-full cursor-zoom-in overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
-                >
-                  <Figure
-                    src={product.image}
-                    alt={product.imageAlt}
-                    ratio={product.heroRatio || '4 / 3'}
-                    fit={product.heroFit || 'cover'}
-                    imgClassName="transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.03]"
-                    priority
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute bottom-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-ink/70 text-ivory opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100"
+                {product.image ? (
+                  <button
+                    type="button"
+                    onClick={() => setLightbox({ images: heroImages, index: 0 })}
+                    aria-label={`View image full screen: ${product.imageAlt}`}
+                    className="group relative block w-full cursor-zoom-in overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
                   >
-                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5" />
-                    </svg>
-                  </span>
-                </button>
+                    <Figure
+                      src={product.image}
+                      alt={product.imageAlt}
+                      ratio={product.heroRatio || '4 / 3'}
+                      fit={product.heroFit || 'cover'}
+                      imgClassName="transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.03]"
+                      priority
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute bottom-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-ink/70 text-ivory opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100"
+                    >
+                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5" />
+                      </svg>
+                    </span>
+                  </button>
+                ) : (
+                  <div
+                    className="flex items-center justify-center overflow-hidden bg-gradient-to-br from-ivory-deep to-line/60"
+                    style={{ aspectRatio: product.heroRatio || '4 / 3' }}
+                  >
+                    <span className="px-8 text-center font-serif text-[1.5rem] leading-snug text-ink/35">
+                      {product.name}
+                    </span>
+                  </div>
+                )}
               </Reveal>
             </div>
           </div>

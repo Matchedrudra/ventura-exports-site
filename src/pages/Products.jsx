@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Seo } from '../components/ui/Seo'
 import { PageHeader } from '../components/ui/PageHeader'
 import { Container } from '../components/ui/Container'
-import { Figure } from '../components/ui/Figure'
+import { ProductThumb } from '../components/ui/ProductThumb'
 import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 import { CtaBand } from '../components/ui/CtaBand'
@@ -36,7 +36,14 @@ export default function Products() {
                 >
                   <div className="lg:col-span-6">
                     <Reveal>
-                      <Figure src={p.image} alt={p.imageAlt} ratio="4 / 3" />
+                      <ProductThumb
+                        image={p.image}
+                        alt={p.imageAlt}
+                        label={p.shortName}
+                        ratio="4 / 3"
+                        fit={p.cardFit || 'cover'}
+                        labelClassName="text-[1.35rem]"
+                      />
                     </Reveal>
                   </div>
                   <div className="lg:col-span-6">

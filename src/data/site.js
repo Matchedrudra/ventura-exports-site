@@ -4,8 +4,8 @@
 export const site = {
   name: 'Ventura',
   legalName: 'Ventura Exports',
-  domain: 'venturaexport.com',
-  url: 'https://www.venturaexport.com',
+  domain: 'venturaexports.in',
+  url: 'https://venturaexports.in',
   tagline: 'Industrial packaging & filtration, sourced from India.',
   label: 'Indian manufacturing · International supply',
   descriptionShort:
@@ -20,7 +20,7 @@ export const contact = {
   phoneHref: 'tel:+918160959023',
   whatsappHref: 'https://wa.me/918160959023',
   location: 'Ahmedabad, Gujarat, India',
-  website: 'www.venturaexport.com',
+  website: 'venturaexports.in',
   hours: 'Monday–Saturday, 10:00–19:00 IST',
 }
 

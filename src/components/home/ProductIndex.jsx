@@ -3,7 +3,7 @@ import { Container } from '../ui/Container'
 import { SectionHeading } from '../ui/SectionHeading'
 import { Button } from '../ui/Button'
 import { RevealGroup } from '../ui/Reveal'
-import { Figure } from '../ui/Figure'
+import { ProductThumb } from '../ui/ProductThumb'
 import { products } from '../../data/products'
 
 // Six primary portfolio categories on the homepage.
@@ -29,9 +29,10 @@ export function ProductIndex() {
             <RevealGroup.Item key={p.slug}>
               <Link to={`/products/${p.slug}`} className="group block">
                 <div className="overflow-hidden bg-ivory-deep">
-                  <Figure
-                    src={p.image}
+                  <ProductThumb
+                    image={p.image}
                     alt={p.imageAlt}
+                    label={p.shortName}
                     ratio="4 / 3"
                     fit={p.cardFit || 'cover'}
                     imgClassName="transition-transform duration-[900ms] ease-editorial group-hover:scale-[1.04]"
