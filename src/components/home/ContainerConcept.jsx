@@ -19,9 +19,9 @@ const MODULES = [
   { key: 'fibc', l1: 'FIBC /', l2: 'Jumbo Bags', to: '/products/fibc-jumbo-bags' },
   { key: 'woven', l1: 'PP & HDPE', l2: 'Woven Bags', to: '/products/pp-hdpe-woven-bags' },
   { key: 'bopp', l1: 'BOPP', l2: 'Bags', to: '/products/bopp-laminated-bags' },
+  { key: 'jute', l1: 'Jute', l2: 'Bags', to: '/products/jute-bags' },
   { key: 'corrugated', l1: 'Corrugated', l2: 'Boxes', to: '/products/corrugated-boxes-cartons' },
-  { key: 'filter', l1: 'Filter', l2: 'Bags', to: '/products/industrial-filter-bags' },
-  { key: 'custom', l1: 'Custom', l2: 'Packaging', to: '/products/customized-woven-packaging' },
+  { key: 'tape', l1: 'Packaging', l2: 'Tapes', to: '/products/packaging-tapes' },
 ]
 
 // Entry order: outer modules converge first, the two centre modules fill last.
@@ -72,16 +72,17 @@ function Silhouette({ kind, className }) {
         <path d="M8 24 l22 -11 l22 11 M30 13 v55" fill="none" />
       </g>
     ),
-    filter: (
+    jute: (
       <g {...s}>
-        <rect x="21" y="10" width="18" height="6" />
-        <path d="M19 16 h22 v54 q0 4 -4 4 h-14 q-4 0 -4 -4 z" />
-        <path d="M19 28 h22 M19 42 h22 M19 56 h22" fill="none" strokeOpacity="0.3" />
+        <path d="M18 18 h24 v42 q0 6 -6 6 h-12 q-6 0 -6 -6 z" />
+        <path d="M24 18 q0 -9 6 -9 q6 0 6 9" fill="none" />
+        <path d="M18 32 h24 M18 44 h24" fill="none" strokeOpacity="0.3" />
       </g>
     ),
-    custom: (
+    tape: (
       <g {...s}>
-        <path d="M18 13 q-3 3 -5 11 l-4 40 q-1 6 5 6 h30 q6 0 5 -6 l-4 -40 q-2 -8 -5 -11 z" strokeDasharray="3 3" />
+        <circle cx="30" cy="36" r="21" />
+        <circle cx="30" cy="36" r="8" fill="none" />
       </g>
     ),
   }

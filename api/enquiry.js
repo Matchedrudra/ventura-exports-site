@@ -73,10 +73,13 @@ const PRODUCT_OPTIONS = [
   'FIBC / Jumbo Bags',
   'PP & HDPE Woven Bags',
   'BOPP Laminated Bags',
-  'Customized Woven Packaging',
+  'Jute Bags',
+  'Packaging Tapes',
   'Corrugated Boxes & Cartons',
+  'Customized Woven Packaging',
   'Industrial Filter Bags',
-  'Other Industrial Packaging',
+  'Industrial & Commercial Packaging',
+  'Other Packaging Requirement',
 ]
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const blank = (v) => String(v || '').trim().length === 0

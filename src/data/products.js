@@ -5,9 +5,12 @@
 // technical option lists follow the reference product catalogue held by
 // Ventura's manufacturing partner. Where a value depends on the buyer's
 // requirement it is written as "configured to requirement" rather than an
-// invented figure. Woven-sack, BOPP, corrugated and filter-bag
+// invented figure. Woven-sack, BOPP, jute, tape, corrugated and filter-bag
 // specifications are developed per enquiry and are intentionally not
 // fixed here.
+//
+// `homeGroup` places each product into one of three homepage groupings —
+// 'core' | 'additional' | 'custom' — used by ProductIndex.
 // ─────────────────────────────────────────────────────────────
 
 export const catalogueYear = '2025–2026'
@@ -204,6 +207,7 @@ export const products = [
     name: 'FIBC / Jumbo Bags',
     shortName: 'FIBC / Jumbo Bags',
     group: 'Bulk packaging',
+    homeGroup: 'core',
     kicker: 'Flexible intermediate bulk containers',
     tagline: 'Flexible bulk packaging built around application, load and handling requirements.',
     summary:
@@ -248,6 +252,7 @@ export const products = [
     name: 'PP & HDPE Woven Bags',
     shortName: 'PP & HDPE Woven Bags',
     group: 'Woven packaging',
+    homeGroup: 'core',
     kicker: 'Polypropylene & high-density polyethylene sacks',
     tagline: 'Durable woven packaging for agricultural, industrial and commercial applications.',
     summary:
@@ -286,6 +291,7 @@ export const products = [
     name: 'BOPP Laminated Bags',
     shortName: 'BOPP Laminated Bags',
     group: 'Woven packaging',
+    homeGroup: 'core',
     kicker: 'Printed BOPP-laminated woven sacks',
     tagline: 'High-quality printed woven packaging combining durability with strong product presentation.',
     summary:
@@ -303,7 +309,7 @@ export const products = [
       { label: 'Finish', value: 'Gloss or matte laminate' },
       { label: 'Fabric weight (GSM)', value: 'To buyer specification' },
       { label: 'Dimensions & pack size', value: 'To buyer specification' },
-      { label: 'Bag style', value: 'Open-mouth, box-bottom or as specified' },
+      { label: 'Bag style', value: 'Open-mouth, box-bottom or as specified — including block-bottom / valve formats where the construction supports it' },
       { label: 'Liner', value: 'Inner liner where a closer barrier is required' },
       { label: 'Closure', value: 'Stitched, heat-sealed or as specified' },
     ],
@@ -320,10 +326,119 @@ export const products = [
   },
   {
     index: '04',
+    slug: 'jute-bags',
+    name: 'Jute Bags',
+    shortName: 'Jute Bags',
+    group: 'Natural-fibre packaging',
+    homeGroup: 'additional',
+    kicker: 'Natural-fibre bags & sacks',
+    tagline: 'Natural-fibre packaging developed in the construction, size and finish the application calls for.',
+    summary:
+      'Jute shopping, promotional, grocery and industrial sacks — plain, laminated or printed — developed in the construction, size, handle and finish the application requires.',
+    image: null,
+    imageAlt: 'Jute bags',
+    catalogueBacked: false,
+    intro: [
+      'Jute is a natural, plant-based fibre long used for sacks, retail bags and agricultural packaging. Woven jute fabric can be left plain, laminated for a cleaner finish and closer moisture resistance, or printed for retail and promotional use.',
+      'Jute packaging can be developed in different constructions, sizes, handles, finishes and printing formats according to the intended application. Ventura coordinates the specification with a manufacturing partner suited to the format and volume required.',
+      'Where sustainability or biodegradability matters to your application, the applicable claim is confirmed against the specific construction, lamination and material used — Ventura does not apply a blanket "100% eco-friendly" claim across every format.',
+    ],
+    specs: [
+      { label: 'Formats', value: 'Shopping bags, promotional bags, grocery bags, sacks, agricultural/industrial packaging' },
+      { label: 'Construction', value: 'Plain woven, laminated or printed jute fabric' },
+      { label: 'Handles', value: 'Rope, fabric, cane or stitched handles — per format' },
+      { label: 'Lamination', value: 'Laminated or unlaminated, per application' },
+      { label: 'Printing', value: 'Plain or printed — colours and artwork to specification' },
+      { label: 'Dimensions', value: 'Configured to requirement' },
+    ],
+    applications: [
+      'Retail & grocery bags',
+      'Promotional & corporate gifting bags',
+      'Agricultural produce packaging',
+      'Food products where the construction and finish support it',
+      'Sustainable-packaging applications',
+    ],
+    hasTypes: false,
+    hasOptions: false,
+    quoteCta: 'Discuss your jute packaging requirement',
+  },
+  {
+    index: '05',
+    slug: 'packaging-tapes',
+    name: 'Packaging Tapes',
+    shortName: 'Packaging Tapes',
+    group: 'Sealing & finishing',
+    homeGroup: 'additional',
+    kicker: 'Carton sealing & industrial tapes',
+    tagline: 'Sealing and finishing tape formats coordinated to the pack line and shipping requirement.',
+    summary:
+      'BOPP, carton-sealing and printed packaging tapes for e-commerce, warehouse and industrial use — width, length and printing coordinated to the application.',
+    image: null,
+    imageAlt: 'Packaging tapes',
+    catalogueBacked: false,
+    intro: [
+      'Packaging tape is the finishing step that closes and secures a shipment — cartons, pallets and export packs all depend on a tape suited to the surface, the load and the transit route.',
+      'Available constructions and specifications can be coordinated according to application and packing requirements — plain or printed BOPP tape, carton-sealing tape, and custom-branded tape for retail and e-commerce use. Ventura coordinates width, length, colour and print with a suitable manufacturing partner.',
+    ],
+    specs: [
+      { label: 'Formats', value: 'BOPP tape, carton-sealing tape, transparent tape, brown/tan tape, printed/branded tape' },
+      { label: 'Printing', value: 'Plain or custom-printed — artwork and colours to specification' },
+      { label: 'Width & length', value: 'Configured to requirement' },
+      { label: 'Use', value: 'Carton sealing, palletising, warehouse & distribution packaging' },
+    ],
+    applications: [
+      'Carton sealing',
+      'E-commerce & retail shipping',
+      'Warehouse & distribution packaging',
+      'Export & industrial packaging',
+    ],
+    hasTypes: false,
+    hasOptions: false,
+    quoteCta: 'Discuss your tape requirement',
+  },
+  {
+    index: '06',
+    slug: 'corrugated-boxes-cartons',
+    name: 'Corrugated Boxes & Cartons',
+    shortName: 'Corrugated Boxes & Cartons',
+    group: 'Industrial packaging',
+    homeGroup: 'additional',
+    kicker: 'Corrugated fibreboard packaging',
+    tagline: 'Corrugated packaging for industrial, commercial and export applications.',
+    summary:
+      'Regular slotted cartons, die-cut boxes, heavy-duty and multi-wall corrugated, and custom-size cases — configured by board grade, flute, dimensions, print and closure to the product and the transit route.',
+    image: '/images/product-corrugated.jpg',
+    imageAlt: 'Plain brown corrugated shipping cartons stacked in warm light',
+    catalogueBacked: false,
+    intro: [
+      'Corrugated boxes are secondary and transit packaging — they protect the product from the packing line to the shelf or the receiving dock. Performance comes from board grade, flute profile, box style and how the box is closed and palletised.',
+      'Ventura coordinates corrugated packaging as part of a broader supply — often alongside the primary bag or pack — so the outer case, the print and the pallet plan are specified together.',
+    ],
+    specs: [
+      { label: 'Box styles', value: 'RSC, die-cut, telescopic, tray, heavy-duty & custom' },
+      { label: 'Board', value: 'Single, double or triple wall — grade to load & stacking, confirmed per order' },
+      { label: 'Flute', value: 'B, C, E, BC and other profiles per application' },
+      { label: 'Dimensions', value: 'To buyer specification' },
+      { label: 'Print', value: 'Flexo or litho-laminate — plain to multi-colour' },
+      { label: 'Finishing', value: 'Stitched, glued or taped; handholds & inserts as required' },
+    ],
+    applications: [
+      'Export and transit outer cases',
+      'Industrial component & spares packaging',
+      'Commercial & retail secondary packaging',
+      'Heavy-duty cases for dense products',
+      'Custom-size cartons for non-standard products',
+    ],
+    hasTypes: false,
+    hasOptions: false,
+  },
+  {
+    index: '07',
     slug: 'customized-woven-packaging',
     name: 'Customized Woven Packaging',
     shortName: 'Customized Woven Packaging',
     group: 'Woven packaging',
+    homeGroup: 'custom',
     kicker: 'Configured around your specification',
     tagline: 'Packaging configured around dimensions, material, printing, construction and application requirements.',
     summary:
@@ -332,7 +447,7 @@ export const products = [
     imageAlt: 'A custom-printed woven sack',
     catalogueBacked: false,
     intro: [
-      'Not every requirement matches a catalogue item. Customized woven packaging starts from a written brief and is coordinated with the manufacturing partner as a single specification.',
+      'Not every requirement matches a catalogue item. Customized woven packaging starts from a written brief and is coordinated with the manufacturing partner as a single specification, developed around the buyer’s dimensions, materials, printing, construction and application.',
       'The more precise the brief, the tighter the quotation and the production sample. Ventura helps structure that brief and holds it consistent from enquiry through dispatch.',
     ],
     specBrief: [
@@ -365,46 +480,12 @@ export const products = [
     hasOptions: false,
   },
   {
-    index: '05',
-    slug: 'corrugated-boxes-cartons',
-    name: 'Corrugated Boxes & Cartons',
-    shortName: 'Corrugated Boxes & Cartons',
-    group: 'Industrial packaging',
-    kicker: 'Corrugated fibreboard packaging',
-    tagline: 'Corrugated packaging for industrial, commercial and export applications.',
-    summary:
-      'Regular slotted cartons, die-cut boxes, heavy-duty and multi-wall corrugated, and custom-size cases — configured by board grade, flute, dimensions, print and closure to the product and the transit route.',
-    image: '/images/product-corrugated.jpg',
-    imageAlt: 'Plain brown corrugated shipping cartons stacked in warm light',
-    catalogueBacked: false,
-    intro: [
-      'Corrugated boxes are secondary and transit packaging — they protect the product from the packing line to the shelf or the receiving dock. Performance comes from board grade, flute profile, box style and how the box is closed and palletised.',
-      'Ventura coordinates corrugated packaging as part of a broader supply — often alongside the primary bag or pack — so the outer case, the print and the pallet plan are specified together.',
-    ],
-    specs: [
-      { label: 'Box styles', value: 'RSC, die-cut, telescopic, tray, heavy-duty & custom' },
-      { label: 'Board', value: 'Single, double or triple wall — grade to load & stacking' },
-      { label: 'Flute', value: 'B, C, E, BC and other profiles per application' },
-      { label: 'Dimensions', value: 'To buyer specification' },
-      { label: 'Print', value: 'Flexo or litho-laminate — plain to multi-colour' },
-      { label: 'Finishing', value: 'Stitched, glued or taped; handholds & inserts as required' },
-    ],
-    applications: [
-      'Export and transit outer cases',
-      'Industrial component & spares packaging',
-      'Commercial & retail secondary packaging',
-      'Heavy-duty cases for dense products',
-      'Custom-size cartons for non-standard products',
-    ],
-    hasTypes: false,
-    hasOptions: false,
-  },
-  {
-    index: '06',
+    index: '08',
     slug: 'industrial-filter-bags',
     name: 'Industrial Filter Bags',
     shortName: 'Industrial Filter Bags',
     group: 'Filtration',
+    homeGroup: 'custom',
     kicker: 'Dust collection & process filtration media',
     tagline: 'Filtration engineered around the application.',
     summary:
@@ -446,20 +527,21 @@ export const products = [
     quoteCta: 'Discuss your filtration requirement',
   },
   {
-    index: '07',
+    index: '09',
     slug: 'industrial-commercial-packaging',
     name: 'Industrial & Commercial Packaging',
     shortName: 'Industrial & Commercial Packaging',
     group: 'Industrial packaging',
+    homeGroup: 'custom',
     kicker: 'Additional packaging formats',
     tagline: 'Additional packaging formats sourced around specific product, handling and application requirements.',
     summary:
-      'Where a requirement sits outside the core categories, Ventura evaluates supply from its Indian manufacturing network — from protective and transit packaging to product-specific formats.',
+      'Where a requirement sits outside the core categories, Ventura evaluates supply from its Indian manufacturing network — protective packaging, liners, packaging accessories and other product-specific formats.',
     image: '/images/woven-fabric-loom.jpg',
     imageAlt: 'Industrial weaving machinery running synthetic tape yarn',
     catalogueBacked: false,
     intro: [
-      'The categories above cover most bulk, woven, laminated, corrugated and filtration requirements. Where a product needs a different format, Ventura evaluates whether a suitable Indian manufacturing partner can supply it to the specification.',
+      'The categories above cover most bulk, woven, laminated, natural-fibre, tape, corrugated and filtration requirements. Where a product needs a different format — protective packaging, liners or packaging accessories among them — Ventura evaluates whether a suitable Indian manufacturing partner can supply it to the specification.',
       'This is a scoped process, not an open promise: the requirement is written down, a partner is identified, and commercial and quality details are validated before an order is confirmed.',
     ],
     specs: [
@@ -470,6 +552,7 @@ export const products = [
     ],
     applications: [
       'Protective & transit packaging',
+      'Liners & packaging accessories',
       'Product-specific packaging formats',
       'Combined packaging supply across multiple formats',
       'Requirements adjacent to the core categories',

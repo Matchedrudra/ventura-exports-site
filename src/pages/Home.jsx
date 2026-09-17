@@ -14,7 +14,7 @@ export default function Home() {
       <Seo
         path="/"
         title={null}
-        description="Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across FIBC, woven and BOPP packaging, corrugated cartons and industrial filter bags."
+        description="Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners — FIBC and jumbo bags, PP & HDPE woven bags, BOPP laminated bags, jute bags, packaging tapes, corrugated cartons and industrial filter bags."
       />
       <Hero />
       <ProductIndex />

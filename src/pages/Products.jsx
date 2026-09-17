@@ -15,12 +15,12 @@ export default function Products() {
       <Seo
         path="/products"
         title="Products"
-        description="Ventura's packaging portfolio: FIBC and jumbo bags, PP & HDPE woven bags, BOPP laminated bags, customized woven packaging, corrugated boxes and cartons, and industrial filter bags — sourced from Indian manufacturing partners to specification."
+        description="Ventura's packaging portfolio: FIBC and jumbo bags, PP & HDPE woven bags, BOPP laminated bags, jute bags, packaging tapes, corrugated boxes and cartons, customized woven packaging and industrial filter bags — sourced from Indian manufacturing partners to specification."
       />
       <PageHeader
         label="Packaging portfolio"
         title="One portfolio, specified to the application."
-        lead="Seven categories across bulk, woven, laminated, corrugated and filtration formats. Specifications are configured to the buyer's requirement and coordinated with the manufacturing partner before production."
+        lead="Nine categories across bulk, woven, laminated, natural-fibre, tape, corrugated and filtration formats. Specifications are configured to the buyer's requirement and coordinated with the manufacturing partner before production."
       />
 
       <section className="py-16 lg:py-24">

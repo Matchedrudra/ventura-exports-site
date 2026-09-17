@@ -52,8 +52,9 @@ export default function About() {
                 <Reveal delay={0.05}>
                   <p>
                     We work around buyer specifications, product requirements and destination-market
-                    needs to identify suitable supply from India — across industrial packaging, bulk
-                    packaging, woven packaging, corrugated packaging and industrial filtration.
+                    needs to identify suitable supply from India — across bulk packaging, woven
+                    packaging, natural-fibre packaging, packaging tapes, corrugated packaging and
+                    industrial filtration.
                   </p>
                 </Reveal>
                 <Reveal delay={0.1}>

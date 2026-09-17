@@ -42,6 +42,18 @@ const PRODUCTS = [
     image: '/images/ventura_bopp_bluefert.jpg',
   },
   {
+    slug: 'jute-bags',
+    name: 'Jute Bags',
+    summary:
+      'Jute shopping, promotional, grocery and industrial sacks — plain, laminated or printed — developed in the construction, size, handle and finish the application requires.',
+  },
+  {
+    slug: 'packaging-tapes',
+    name: 'Packaging Tapes',
+    summary:
+      'BOPP, carton-sealing and printed packaging tapes for e-commerce, warehouse and industrial use — width, length and printing coordinated to the application.',
+  },
+  {
     slug: 'customized-woven-packaging',
     name: 'Customized Woven Packaging',
     summary:
@@ -82,7 +94,7 @@ const PAGES = [
     path: '/products',
     title: 'Products',
     description:
-      "Ventura's packaging portfolio: FIBC and jumbo bags, PP & HDPE woven bags, BOPP laminated bags, customized woven packaging, corrugated boxes and cartons, and industrial filter bags — sourced from Indian manufacturing partners to specification.",
+      "Ventura's packaging portfolio: FIBC and jumbo bags, PP & HDPE woven bags, BOPP laminated bags, jute bags, packaging tapes, corrugated boxes and cartons, customized woven packaging and industrial filter bags — sourced from Indian manufacturing partners to specification.",
   },
   {
     path: '/how-we-work',
@@ -112,7 +124,7 @@ const PAGES = [
     path: '/request-a-quote',
     title: 'Request a Quote',
     description:
-      'Send Ventura a B2B enquiry for FIBC, PP & HDPE woven, BOPP laminated, corrugated or industrial filter bags. The form reaches us with the specification structured.',
+      'Send Ventura a B2B enquiry for FIBC, PP & HDPE woven, BOPP laminated, jute bags, packaging tapes, corrugated or industrial filter bags. The form reaches us with the specification structured.',
   },
   ...PRODUCTS.map((p) => ({
     path: `/products/${p.slug}`,

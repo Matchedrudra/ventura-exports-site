@@ -20,10 +20,12 @@ const QUOTE_PRODUCT = {
   'fibc-jumbo-bags': 'FIBC / Jumbo Bags',
   'pp-hdpe-woven-bags': 'PP & HDPE Woven Bags',
   'bopp-laminated-bags': 'BOPP Laminated Bags',
+  'jute-bags': 'Jute Bags',
+  'packaging-tapes': 'Packaging Tapes',
   'customized-woven-packaging': 'Customized Woven Packaging',
   'corrugated-boxes-cartons': 'Corrugated Boxes & Cartons',
   'industrial-filter-bags': 'Industrial Filter Bags',
-  'industrial-commercial-packaging': 'Other Industrial Packaging',
+  'industrial-commercial-packaging': 'Industrial & Commercial Packaging',
 }
 
 // Retired slugs from the previous site structure.
@@ -48,7 +50,7 @@ export default function ProductDetail() {
   const prev = products[(idx - 1 + products.length) % products.length]
   const next = products[(idx + 1) % products.length]
   const quoteHref = `/request-a-quote?product=${encodeURIComponent(
-    QUOTE_PRODUCT[slug] || 'Other Industrial Packaging',
+    QUOTE_PRODUCT[slug] || 'Other Packaging Requirement',
   )}`
   const quoteLabel = product.quoteCta || 'Request specification & quote'
 

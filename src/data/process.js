@@ -12,7 +12,7 @@ export const processSteps = [
     title: 'Source',
     summary: 'Identify suitable Indian manufacturing partners and supply options.',
     detail:
-      'The enquiry is matched to partners whose capability, capacity and commercial terms fit the order — across FIBC, woven, BOPP, corrugated and filtration.',
+      'The enquiry is matched to partners whose capability, capacity and commercial terms fit the order — across FIBC, woven, BOPP, jute, tape, corrugated and filtration.',
   },
   {
     index: '03',

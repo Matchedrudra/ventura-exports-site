@@ -9,7 +9,7 @@ export const site = {
   tagline: 'Industrial packaging & filtration, sourced from India.',
   label: 'Indian manufacturing · International supply',
   descriptionShort:
-    'Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across FIBC, woven and BOPP packaging, corrugated cartons and industrial filter bags.',
+    'Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across FIBC, woven and BOPP packaging, jute bags, packaging tapes, corrugated cartons and industrial filter bags.',
   positioning: 'Industrial packaging & filtration supply from India.',
 }
 
@@ -49,8 +49,10 @@ export const footerNav = [
       { label: 'FIBC / Jumbo Bags', to: '/products/fibc-jumbo-bags' },
       { label: 'PP & HDPE Woven Bags', to: '/products/pp-hdpe-woven-bags' },
       { label: 'BOPP Laminated Bags', to: '/products/bopp-laminated-bags' },
-      { label: 'Customized Woven Packaging', to: '/products/customized-woven-packaging' },
+      { label: 'Jute Bags', to: '/products/jute-bags' },
+      { label: 'Packaging Tapes', to: '/products/packaging-tapes' },
       { label: 'Corrugated Boxes & Cartons', to: '/products/corrugated-boxes-cartons' },
+      { label: 'Customized Woven Packaging', to: '/products/customized-woven-packaging' },
       { label: 'Industrial Filter Bags', to: '/products/industrial-filter-bags' },
     ],
   },
