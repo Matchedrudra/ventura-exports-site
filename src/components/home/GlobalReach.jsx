@@ -127,40 +127,66 @@ export function GlobalReach() {
     let startedAt = 0
     const lastU = NODES.map(() => 0)
     const pulseAt = NODES.map(() => -1)
+    // Route geometry never changes after mount. Reading getTotalLength() inside
+    // the per-frame loop — interleaved with the setAttribute writes below —
+    // forces a synchronous layout on every node, every frame (classic layout
+    // thrashing) and was a real source of scroll jank. Read all lengths once,
+    // up front, instead.
+    const lens = pathRefs.current.map((el) => (el ? el.getTotalLength() : 0))
+
+    // read-phase results, applied in a separate write-phase below — keeps
+    // every getPointAtLength() read together, ahead of any DOM writes, so a
+    // style/attribute change on one node can never force a synchronous
+    // layout before the next node's geometry read (read/write thrashing).
+    const plan = NODES.map(() => null)
 
     const tick = (now) => {
       if (activeRef.current && visibleRef.current) {
         if (!startedAt) startedAt = now
-        for (let i = 0; i < NODES.length; i += 1) {
-          const dot = dotRefs.current[i]
-          const path = pathRefs.current[i]
-          if (!dot || !path) continue
 
-          // dots set off one after another, then loop independently
+        // read phase
+        for (let i = 0; i < NODES.length; i += 1) {
+          const path = pathRefs.current[i]
+          if (!path) continue
           const local = now - startedAt - DOTS_LEAD - i * LAUNCH_STEP
           if (local < 0) {
-            dot.style.opacity = '0'
+            plan[i] = { hidden: true }
             continue
           }
           const u = (local % TRAVEL) / TRAVEL
-          if (u < lastU[i]) pulseAt[i] = now
+          const arrived = u < lastU[i]
+          if (arrived) pulseAt[i] = now
           lastU[i] = u
 
-          const len = path.getTotalLength()
-          const pt = path.getPointAtLength(easeInOut(u) * len)
-          dot.setAttribute('transform', `translate(${pt.x} ${pt.y})`)
-          dot.style.opacity = String(0.9 * Math.sin(Math.PI * u))
+          const pt = path.getPointAtLength(easeInOut(u) * lens[i])
+          const age = now - pulseAt[i]
+          const pulsing = pulseAt[i] >= 0 && age < PULSE
+          plan[i] = {
+            hidden: false,
+            x: pt.x,
+            y: pt.y,
+            opacity: 0.9 * Math.sin(Math.PI * u),
+            pulseR: pulsing ? 2.4 + 9 * (age / PULSE) : 0,
+            pulseOpacity: pulsing ? 0.4 * (1 - age / PULSE) : 0,
+          }
+        }
+
+        // write phase
+        for (let i = 0; i < NODES.length; i += 1) {
+          const step = plan[i]
+          const dot = dotRefs.current[i]
+          if (!step || !dot) continue
+          if (step.hidden) {
+            dot.style.opacity = '0'
+            continue
+          }
+          dot.setAttribute('transform', `translate(${step.x} ${step.y})`)
+          dot.style.opacity = String(step.opacity)
 
           const pulse = pulseRefs.current[i]
           if (pulse) {
-            const age = now - pulseAt[i]
-            if (pulseAt[i] >= 0 && age < PULSE) {
-              const k = age / PULSE
-              pulse.setAttribute('r', String(2.4 + 9 * k))
-              pulse.style.opacity = String(0.4 * (1 - k))
-            } else {
-              pulse.style.opacity = '0'
-            }
+            pulse.setAttribute('r', String(step.pulseR || 2.4))
+            pulse.style.opacity = String(step.pulseOpacity)
           }
         }
       }

@@ -46,12 +46,14 @@ const PRODUCTS = [
     name: 'Jute Bags',
     summary:
       'Jute shopping, promotional, grocery and industrial sacks — plain, laminated or printed — developed in the construction, size, handle and finish the application requires.',
+    image: '/images/jute-bags-stacked.jpg',
   },
   {
     slug: 'packaging-tapes',
     name: 'Packaging Tapes',
     summary:
       'BOPP, carton-sealing and printed packaging tapes for e-commerce, warehouse and industrial use — width, length and printing coordinated to the application.',
+    image: '/images/packaging-tape-carton-sealing.jpg',
   },
   {
     slug: 'customized-woven-packaging',

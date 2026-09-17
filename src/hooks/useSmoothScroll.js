@@ -22,10 +22,13 @@ export function useSmoothScroll() {
     try {
       // Coarse pointers (touch) already have good native momentum; Lenis on
       // touch can fight the mobile URL bar, so keep it wheel-only. `lerp` mode
-      // (frame-rate independent) gives the continuous, weighted glide of a
-      // considered marketing site rather than discrete wheel steps.
+      // (frame-rate independent) takes the edge off raw wheel steps without
+      // the page visibly trailing behind the input — a heavier lerp (we
+      // tried 0.065) settles ~700ms after the input stops, which reads as
+      // sluggish/laggy rather than smooth. 0.13 settles in ~350ms: still an
+      // eased glide, not a still-catching-up one.
       lenis = new Lenis({
-        lerp: 0.065,
+        lerp: 0.13,
         wheelMultiplier: 1,
         smoothWheel: true,
         syncTouch: false,

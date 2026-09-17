@@ -335,8 +335,8 @@ export const products = [
     tagline: 'Natural-fibre packaging developed in the construction, size and finish the application calls for.',
     summary:
       'Jute shopping, promotional, grocery and industrial sacks — plain, laminated or printed — developed in the construction, size, handle and finish the application requires.',
-    image: null,
-    imageAlt: 'Jute bags',
+    image: '/images/jute-bags-stacked.jpg',
+    imageAlt: 'Stacked woven jute sacks',
     catalogueBacked: false,
     intro: [
       'Jute is a natural, plant-based fibre long used for sacks, retail bags and agricultural packaging. Woven jute fabric can be left plain, laminated for a cleaner finish and closer moisture resistance, or printed for retail and promotional use.',
@@ -373,8 +373,8 @@ export const products = [
     tagline: 'Sealing and finishing tape formats coordinated to the pack line and shipping requirement.',
     summary:
       'BOPP, carton-sealing and printed packaging tapes for e-commerce, warehouse and industrial use — width, length and printing coordinated to the application.',
-    image: null,
-    imageAlt: 'Packaging tapes',
+    image: '/images/packaging-tape-carton-sealing.jpg',
+    imageAlt: 'A tape gun sealing a cardboard carton with clear packaging tape',
     catalogueBacked: false,
     intro: [
       'Packaging tape is the finishing step that closes and secures a shipment — cartons, pallets and export packs all depend on a tape suited to the surface, the load and the transit route.',
