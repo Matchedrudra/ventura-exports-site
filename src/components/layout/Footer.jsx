@@ -12,9 +12,9 @@ export function Footer() {
           <div className="lg:col-span-4">
             <Logo variant="row" tone="light" />
             <p className="mt-6 max-w-xs text-[0.95rem] leading-relaxed text-ivory/60">
-              India-based packaging and industrial supply — FIBC, woven and BOPP bags, jute bags,
-              packaging tapes, corrugated cartons and industrial filter bags, coordinated from
-              specification to dispatch.
+              India-based packaging sourcing and supply — BOPP laminated and woven bags, FIBC, jute
+              bags, cartons, tapes and customized packaging, coordinated from specification to
+              dispatch.
             </p>
           </div>
 

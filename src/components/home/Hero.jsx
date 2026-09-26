@@ -4,6 +4,35 @@ import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { site } from '../../data/site'
 import { cn } from '../../lib/cn'
 
+// Real product photographs — BOPP, woven, cartons and jute — so the hero reads
+// as broad packaging rather than a single industrial format.
+const HERO_TILES = [
+  {
+    src: '/images/ventura_bopp_bluefert.jpg',
+    alt: 'A BOPP-laminated woven sack with full-colour print',
+    className: 'col-span-2 row-span-2',
+    position: '50% 62%',
+  },
+  {
+    src: '/images/ventura_woven_grass_seed.jpg',
+    alt: 'A custom-printed woven sack',
+    className: 'col-span-2',
+    position: '50% 40%',
+  },
+  {
+    src: '/images/product-corrugated.jpg',
+    alt: 'Corrugated cartons',
+    className: '',
+    position: '50% 55%',
+  },
+  {
+    src: '/images/jute-bags-stacked.jpg',
+    alt: 'Stacked jute sacks',
+    className: '',
+    position: '50% 45%',
+  },
+]
+
 export function Hero() {
   const reduced = usePrefersReducedMotion()
   const rise = () => (reduced ? '' : 'animate-fade-up')
@@ -27,7 +56,7 @@ export function Hero() {
             )}
             style={delay(1)}
           >
-            Industrial packaging &amp; filtration,
+            Packaging solutions,
             <br className="hidden sm:inline" />
             <span className="sm:hidden"> </span>
             sourced from <span className="italic text-gold-deep">India</span>.
@@ -38,8 +67,8 @@ export function Hero() {
             style={delay(2)}
           >
             Ventura connects international buyers with capable Indian manufacturing partners across
-            industrial packaging and filtration — from FIBC and woven bags to corrugated cartons and
-            industrial filter bags.
+            flexible, woven, paper and commercial packaging — from BOPP laminated bags and FIBC to
+            woven bags, cartons and customized packaging solutions.
           </p>
 
           <div
@@ -58,20 +87,23 @@ export function Hero() {
         <div className="relative lg:col-span-5 xl:col-span-6">
           <div
             className={cn(
-              'relative h-full min-h-[320px] overflow-hidden bg-ivory-deep sm:min-h-[420px] lg:min-h-[560px] xl:-mr-14',
+              'relative h-full min-h-[340px] overflow-hidden bg-ivory-deep sm:min-h-[440px] lg:min-h-[560px] xl:-mr-14',
               !reduced && 'animate-fade-up',
             )}
           >
-            <img
-              src="/images/hero-fibc-warehouse.jpg"
-              alt="Dock workers loading woven-packed bales into a shipping container at a port"
-              className="absolute inset-0 h-full w-full object-cover"
-              fetchpriority="high"
-              decoding="async"
-              width="2000"
-              height="1333"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/15 to-transparent" />
+            <div className="absolute inset-0 grid grid-cols-4 grid-rows-2 gap-1.5">
+            {HERO_TILES.map((t, i) => (
+              <img
+                key={t.src}
+                src={t.src}
+                alt={t.alt}
+                className={cn('h-full w-full object-cover', t.className)}
+                style={{ objectPosition: t.position }}
+                {...(i === 0 ? { fetchpriority: 'high' } : {})}
+                decoding="async"
+              />
+            ))}
+            </div>
           </div>
         </div>
       </Container>

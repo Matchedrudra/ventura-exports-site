@@ -29,12 +29,12 @@ export default function About() {
       <Seo
         path="/about"
         title="About"
-        description="Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across industrial packaging and filtration."
+        description="Ventura is an India-based packaging sourcing and supply company connecting international buyers with capable Indian manufacturing partners across flexible, woven, paper and commercial packaging."
       />
       <PageHeader
         label="About"
-        title="India-based packaging & industrial supply."
-        lead="Ventura is an India-based packaging and industrial supply company focused on connecting international buyers with capable Indian manufacturing partners."
+        title="India-based packaging sourcing & supply."
+        lead="Ventura is an India-based packaging sourcing and supply company connecting international buyers with capable Indian manufacturing partners."
       />
 
       <section className="py-16 lg:py-24">
@@ -44,17 +44,16 @@ export default function About() {
               <div className="max-w-prose space-y-6 text-[1.05rem] leading-[1.8] text-ink/75">
                 <Reveal>
                   <p>
-                    Ventura is an India-based packaging and industrial supply company, based in
-                    Ahmedabad, Gujarat. We connect international buyers with capable Indian
-                    manufacturing partners and run the requirement through one point of contact.
+                    Ventura is an India-based packaging sourcing and supply company connecting
+                    international buyers with capable Indian manufacturing partners, based in
+                    Ahmedabad, Gujarat.
                   </p>
                 </Reveal>
                 <Reveal delay={0.05}>
                   <p>
-                    We work around buyer specifications, product requirements and destination-market
-                    needs to identify suitable supply from India — across bulk packaging, woven
-                    packaging, natural-fibre packaging, packaging tapes, corrugated packaging and
-                    industrial filtration.
+                    We work across flexible, woven, paper and commercial packaging, helping buyers
+                    identify suitable Indian supply options around product specifications,
+                    applications, quantities and destination-market requirements.
                   </p>
                 </Reveal>
                 <Reveal delay={0.1}>

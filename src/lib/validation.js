@@ -2,15 +2,15 @@
 // serverless enquiry handler.
 
 export const PRODUCT_OPTIONS = [
-  'FIBC / Jumbo Bags',
-  'PP & HDPE Woven Bags',
   'BOPP Laminated Bags',
-  'Jute Bags',
-  'Packaging Tapes',
-  'Corrugated Boxes & Cartons',
+  'PP & HDPE Woven Bags',
+  'FIBC / Jumbo Bags',
   'Customized Woven Packaging',
+  'Corrugated Boxes & Cartons',
+  'Packaging Tapes',
+  'Jute Bags',
   'Industrial Filter Bags',
-  'Industrial & Commercial Packaging',
+  'Industrial & Specialized Packaging',
   'Other Packaging Requirement',
 ]
 

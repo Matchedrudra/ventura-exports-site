@@ -27,6 +27,10 @@ export function FromSpecToSupply() {
             <h2 className="mt-5 text-[1.9rem] leading-[1.14] text-ivory sm:text-[2.35rem]">
               From specification to supply.
             </h2>
+            <p className="mt-5 max-w-lg text-[1rem] leading-[1.7] text-ivory/60">
+              Whether the requirement is BOPP laminated bags, FIBC, woven packaging, cartons or a
+              customized solution, Ventura works around the buyer’s specification.
+            </p>
           </div>
           <Link
             to="/how-we-work"

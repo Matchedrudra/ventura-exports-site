@@ -6,11 +6,11 @@ export const site = {
   legalName: 'Ventura Exports',
   domain: 'venturaexports.in',
   url: 'https://www.venturaexports.in',
-  tagline: 'Industrial packaging & filtration, sourced from India.',
-  label: 'Indian manufacturing · International supply',
+  tagline: 'Packaging solutions, sourced from India.',
+  label: 'Indian sourcing · Global supply',
   descriptionShort:
-    'Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across FIBC, woven and BOPP packaging, jute bags, packaging tapes, corrugated cartons and industrial filter bags.',
-  positioning: 'Industrial packaging & filtration supply from India.',
+    'Ventura connects international buyers with capable Indian manufacturing partners for BOPP laminated bags, FIBC, woven bags, jute packaging, cartons and customized packaging solutions.',
+  positioning: 'Packaging sourcing & supply from India.',
 }
 
 export const contact = {
@@ -46,13 +46,13 @@ export const footerNav = [
   {
     heading: 'Products',
     links: [
-      { label: 'FIBC / Jumbo Bags', to: '/products/fibc-jumbo-bags' },
-      { label: 'PP & HDPE Woven Bags', to: '/products/pp-hdpe-woven-bags' },
       { label: 'BOPP Laminated Bags', to: '/products/bopp-laminated-bags' },
-      { label: 'Jute Bags', to: '/products/jute-bags' },
-      { label: 'Packaging Tapes', to: '/products/packaging-tapes' },
-      { label: 'Corrugated Boxes & Cartons', to: '/products/corrugated-boxes-cartons' },
+      { label: 'PP & HDPE Woven Bags', to: '/products/pp-hdpe-woven-bags' },
+      { label: 'FIBC / Jumbo Bags', to: '/products/fibc-jumbo-bags' },
       { label: 'Customized Woven Packaging', to: '/products/customized-woven-packaging' },
+      { label: 'Corrugated Boxes & Cartons', to: '/products/corrugated-boxes-cartons' },
+      { label: 'Packaging Tapes', to: '/products/packaging-tapes' },
+      { label: 'Jute Bags', to: '/products/jute-bags' },
       { label: 'Industrial Filter Bags', to: '/products/industrial-filter-bags' },
     ],
   },

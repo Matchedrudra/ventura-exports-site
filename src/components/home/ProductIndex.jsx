@@ -7,12 +7,11 @@ import { ProductThumb } from '../ui/ProductThumb'
 import { products } from '../../data/products'
 
 // The homepage portfolio, grouped into three calm rows rather than one dense
-// grid — core bulk/woven/laminated formats, the additional formats, then the
-// custom and industrial-adjacent work.
+// grid. Packaging is the umbrella; each group is an equal part of it.
 const GROUPS = [
-  { key: 'core', label: 'Core packaging' },
-  { key: 'additional', label: 'Additional packaging' },
-  { key: 'custom', label: 'Custom & industrial' },
+  { key: 'flexible', label: 'Flexible & woven packaging', cols: 'lg:grid-cols-4' },
+  { key: 'paper', label: 'Paper & commercial packaging', cols: 'lg:grid-cols-3' },
+  { key: 'specialized', label: 'Industrial & specialized packaging', cols: 'lg:grid-cols-3' },
 ]
 
 export function ProductIndex() {
@@ -22,8 +21,8 @@ export function ProductIndex() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
             label="Packaging portfolio"
-            title="A growing packaging & filtration portfolio."
-            lead="Ventura sources across bulk, woven, laminated, natural-fibre, tape, corrugated and filtration formats — coordinating the specification with the manufacturing partner before production."
+            title="One packaging portfolio, sourced from India."
+            lead="Ventura sources across flexible, woven, paper and commercial packaging — coordinating the specification with a suitable Indian manufacturing partner before production."
           />
           <Button to="/products" variant="link" className="shrink-0">
             All products
@@ -42,7 +41,7 @@ export function ProductIndex() {
                     {group.label}
                   </p>
                 </Reveal>
-                <RevealGroup className="mt-7 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+                <RevealGroup className={`mt-7 grid gap-x-8 gap-y-12 sm:grid-cols-2 ${group.cols}`}>
                   {items.map((p) => (
                     <RevealGroup.Item key={p.slug}>
                       <Link to={`/products/${p.slug}`} className="group block">

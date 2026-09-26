@@ -17,7 +17,7 @@ export function OneStop() {
             <SectionHeading
               label="One-stop supply"
               title="One source. Multiple packaging solutions."
-              lead="From bulk packaging and woven bags to corrugated packaging and industrial filtration, Ventura coordinates suitable sourcing options around your requirements — so international buyers can work with one relationship rather than a separate supplier for every format."
+              lead="From BOPP laminated bags and woven packaging to FIBC, cartons, jute and specialized formats, Ventura coordinates suitable sourcing options around your requirements — so international buyers can work with one relationship rather than a separate supplier for every format."
             />
             <Reveal delay={0.12}>
               <p className="mt-5 max-w-md text-[0.92rem] leading-relaxed text-ink/55">

@@ -25,7 +25,7 @@ const QUOTE_PRODUCT = {
   'customized-woven-packaging': 'Customized Woven Packaging',
   'corrugated-boxes-cartons': 'Corrugated Boxes & Cartons',
   'industrial-filter-bags': 'Industrial Filter Bags',
-  'industrial-commercial-packaging': 'Industrial & Commercial Packaging',
+  'industrial-commercial-packaging': 'Industrial & Specialized Packaging',
 }
 
 // Retired slugs from the previous site structure.

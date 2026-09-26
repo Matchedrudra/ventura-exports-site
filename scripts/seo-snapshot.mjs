@@ -78,7 +78,7 @@ const PRODUCTS = [
   },
   {
     slug: 'industrial-commercial-packaging',
-    name: 'Industrial & Commercial Packaging',
+    name: 'Industrial & Specialized Packaging',
     summary:
       'Where a requirement sits outside the core categories, Ventura evaluates supply from its Indian manufacturing network — from protective and transit packaging to specialised industrial formats.',
     image: '/images/woven-fabric-loom.jpg',
@@ -90,13 +90,13 @@ const PAGES = [
     path: '/about',
     title: 'About',
     description:
-      'Ventura is an India-based packaging and industrial supply company connecting international buyers with capable Indian manufacturing partners across industrial packaging and filtration.',
+      'Ventura is an India-based packaging sourcing and supply company connecting international buyers with capable Indian manufacturing partners across flexible, woven, paper and commercial packaging.',
   },
   {
     path: '/products',
     title: 'Products',
     description:
-      "Ventura's packaging portfolio: FIBC and jumbo bags, PP & HDPE woven bags, BOPP laminated bags, jute bags, packaging tapes, corrugated boxes and cartons, customized woven packaging and industrial filter bags — sourced from Indian manufacturing partners to specification.",
+      "Ventura's packaging portfolio: BOPP laminated bags, PP & HDPE woven bags, FIBC and jumbo bags, customized woven packaging, corrugated boxes and cartons, packaging tapes, jute bags and specialized packaging — sourced from Indian manufacturing partners to specification.",
   },
   {
     path: '/how-we-work',
@@ -114,13 +114,13 @@ const PAGES = [
     path: '/markets',
     title: 'Markets',
     description:
-      'Ventura supports international buyers sourcing industrial packaging and filtration from India. Europe, the Middle East, North America, Africa and Asia & Oceania are among the key market regions.',
+      'Ventura supports international buyers sourcing packaging from India — BOPP and woven bags, FIBC, cartons and customized solutions. Europe, the Middle East, North America, Africa and Asia & Oceania are among the key market regions.',
   },
   {
     path: '/contact',
     title: 'Contact',
     description:
-      'Contact Ventura — Ahmedabad, Gujarat, India. Send a packaging or filtration enquiry through the quote form, or reach us by email, phone or WhatsApp.',
+      'Contact Ventura — Ahmedabad, Gujarat, India. Send a packaging enquiry through the quote form, or reach us by email, phone or WhatsApp.',
   },
   {
     path: '/request-a-quote',
@@ -142,7 +142,7 @@ const text = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 function rewrite(html, page) {
   const fullTitle = page.title
     ? `${page.title} — Ventura`
-    : 'Ventura | Industrial Packaging & Filtration Supplier — India'
+    : 'Ventura | Packaging Sourcing from India'
   const url = `${SITE}${page.path}`
   const img = page.image ? `${SITE}${page.image}` : `${SITE}/og-image.jpg`
   const desc = page.description

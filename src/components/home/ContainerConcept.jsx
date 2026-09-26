@@ -16,12 +16,12 @@ import { cn } from '../../lib/cn'
  */
 
 const MODULES = [
-  { key: 'fibc', l1: 'FIBC /', l2: 'Jumbo Bags', to: '/products/fibc-jumbo-bags' },
-  { key: 'woven', l1: 'PP & HDPE', l2: 'Woven Bags', to: '/products/pp-hdpe-woven-bags' },
   { key: 'bopp', l1: 'BOPP', l2: 'Bags', to: '/products/bopp-laminated-bags' },
-  { key: 'jute', l1: 'Jute', l2: 'Bags', to: '/products/jute-bags' },
-  { key: 'corrugated', l1: 'Corrugated', l2: 'Boxes', to: '/products/corrugated-boxes-cartons' },
-  { key: 'tape', l1: 'Packaging', l2: 'Tapes', to: '/products/packaging-tapes' },
+  { key: 'fibc', l1: 'FIBC /', l2: 'Jumbo Bags', to: '/products/fibc-jumbo-bags' },
+  { key: 'woven', l1: 'PP / HDPE', l2: 'Woven Bags', to: '/products/pp-hdpe-woven-bags' },
+  { key: 'corrugated', l1: 'Corrugated', l2: 'Cartons', to: '/products/corrugated-boxes-cartons' },
+  { key: 'jute', l1: 'Jute', l2: 'Packaging', to: '/products/jute-bags' },
+  { key: 'custom', l1: 'Customized', l2: 'Packaging', to: '/products/customized-woven-packaging' },
 ]
 
 // Entry order: outer modules converge first, the two centre modules fill last.
@@ -79,10 +79,9 @@ function Silhouette({ kind, className }) {
         <path d="M18 32 h24 M18 44 h24" fill="none" strokeOpacity="0.3" />
       </g>
     ),
-    tape: (
+    custom: (
       <g {...s}>
-        <circle cx="30" cy="36" r="21" />
-        <circle cx="30" cy="36" r="8" fill="none" />
+        <path d="M18 13 q-3 3 -5 11 l-4 40 q-1 6 5 6 h30 q6 0 5 -6 l-4 -40 q-2 -8 -5 -11 z" strokeDasharray="3 3" />
       </g>
     ),
   }

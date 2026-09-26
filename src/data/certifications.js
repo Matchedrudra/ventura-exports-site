@@ -4,7 +4,7 @@
 // manufacturing partner.
 
 export const complianceIntro =
-  'Packaging requirements can involve different standards, certifications and testing depending on the product, application and destination market. Ventura coordinates with appropriate Indian manufacturing partners to source products meeting the applicable requirements.'
+  'Packaging requirements can involve different standards, certifications and testing depending on the product, application and destination market. Ventura coordinates with appropriate Indian manufacturing partners to identify and meet applicable requirements.'
 
 export const complianceLine = 'Compliance is specified around the product — not added as an afterthought.'
 
@@ -15,9 +15,9 @@ export const complianceCards = [
     body: 'Quality management systems maintained by applicable manufacturing partners.',
   },
   {
-    kicker: 'FIBC standards',
-    title: 'ISO 21898:2024',
-    body: 'Applicable FIBC requirements for the transport of non-dangerous solid materials.',
+    kicker: 'Product standards',
+    title: 'Category-specific standards',
+    body: 'Standards differ by packaging category — for example ISO 21898:2024 for FIBC — and apply where the product and market call for them.',
   },
   {
     kicker: 'Dangerous goods',

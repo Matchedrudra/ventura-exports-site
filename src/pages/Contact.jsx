@@ -20,7 +20,7 @@ export default function Contact() {
       <Seo
         path="/contact"
         title="Contact"
-        description="Contact Ventura — Ahmedabad, Gujarat, India. Send a packaging or filtration enquiry through the quote form, or reach us by email, phone or WhatsApp."
+        description="Contact Ventura — Ahmedabad, Gujarat, India. Send a packaging enquiry through the quote form, or reach us by email, phone or WhatsApp."
       />
       <PageHeader
         label="Contact"
