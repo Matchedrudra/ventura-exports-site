@@ -4,7 +4,6 @@ import { Logo } from '../ui/Logo'
 import { site, contact, footerNav } from '../../data/site'
 
 export function Footer() {
-  const year = new Date().getFullYear()
   return (
     <footer className="bg-ink text-ivory">
       <Container className="py-16 lg:py-20">
@@ -60,7 +59,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-[0.8rem] text-ivory/60 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {site.legalName}. All rights reserved.
+            © {site.legalName}. All rights reserved.
           </p>
           <p className="uppercase tracking-widelabel">{site.label}</p>
         </div>
