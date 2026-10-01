@@ -6,10 +6,11 @@ import { Reveal, RevealGroup } from '../ui/Reveal'
 import { ProductThumb } from '../ui/ProductThumb'
 import { products } from '../../data/products'
 
-// The homepage portfolio, grouped into three calm rows rather than one dense
-// grid. Packaging is the umbrella; each group is an equal part of it.
+// Secondary to FIBC on the homepage — the rest of Ventura's packaging
+// portfolio, grouped into calm rows. FIBC itself is excluded here since it
+// already has its own showcase section higher on the page.
 const GROUPS = [
-  { key: 'flexible', label: 'Flexible & woven packaging', cols: 'lg:grid-cols-4' },
+  { key: 'flexible', label: 'Flexible & woven packaging', cols: 'lg:grid-cols-3' },
   { key: 'paper', label: 'Paper & commercial packaging', cols: 'lg:grid-cols-3' },
   { key: 'specialized', label: 'Industrial & specialized packaging', cols: 'lg:grid-cols-3' },
 ]
@@ -20,9 +21,9 @@ export function ProductIndex() {
       <Container>
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            label="Packaging portfolio"
-            title="One packaging portfolio, sourced from India."
-            lead="Ventura sources across flexible, woven, paper and commercial packaging — coordinating the specification with a suitable Indian manufacturing partner before production."
+            label="Additional packaging solutions"
+            title="Beyond FIBC: the rest of Ventura's packaging range."
+            lead="Alongside FIBC and jumbo bags, Ventura sources flexible, woven, paper and commercial packaging — coordinating each specification with a suitable Indian manufacturing partner before production."
           />
           <Button to="/products" variant="link" className="shrink-0">
             All products
@@ -31,7 +32,7 @@ export function ProductIndex() {
 
         <div className="mt-16 space-y-16 lg:mt-20 lg:space-y-20">
           {GROUPS.map((group) => {
-            const items = products.filter((p) => p.homeGroup === group.key)
+            const items = products.filter((p) => p.homeGroup === group.key && p.slug !== 'fibc-jumbo-bags')
             if (items.length === 0) return null
             return (
               <div key={group.key}>

@@ -31,7 +31,7 @@ function setLink(rel, href) {
 export function Seo({ title, description, path = '/', image = '/og-image.jpg', type = 'website', jsonLd }) {
   const fullTitle = title
     ? `${title} — ${site.name}`
-    : `${site.name} | Packaging Sourcing from India`
+    : `${site.legalName} | FIBC & Jumbo Bags from India`
   const desc = description || site.descriptionShort
   const url = `${site.url}${path === '/' ? '/' : path}`
   const img = image.startsWith('http') ? image : `${site.url}${image}`

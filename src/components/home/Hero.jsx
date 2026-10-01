@@ -4,32 +4,35 @@ import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { site } from '../../data/site'
 import { cn } from '../../lib/cn'
 
-// Real product photographs — BOPP, woven, cartons and jute — so the hero reads
-// as broad packaging rather than a single industrial format.
+const FIBC_QUOTE_HREF = `/request-a-quote?product=${encodeURIComponent('FIBC / Jumbo Bags')}`
+
+// FIBC is the primary product, so it carries the hero visual — real FIBC
+// photography plus the construction-types reference fill most of the grid;
+// one tile keeps a supporting packaging category in view.
 const HERO_TILES = [
+  {
+    src: '/images/ventura_fibc_bulk_bags.jpg',
+    alt: 'FIBC / jumbo bags stacked on pallets in a warehouse',
+    className: 'col-span-2 row-span-2',
+    position: '50% 45%',
+  },
+  {
+    src: '/images/product-fibc.jpg',
+    alt: 'An FIBC jumbo bag being loaded and lifted at a packing facility',
+    className: 'col-span-2',
+    position: '70% 45%',
+  },
+  {
+    src: '/images/ventura_fibc_types.jpg',
+    alt: 'FIBC construction types — standard, circular, tunnel-lift, baffle, U-panel, full-loop, conductive and dissipative',
+    className: 'bg-paper',
+    fit: 'contain',
+  },
   {
     src: '/images/ventura_bopp_bluefert.jpg',
     alt: 'A BOPP-laminated woven sack with full-colour print',
-    className: 'col-span-2 row-span-2',
-    position: '50% 62%',
-  },
-  {
-    src: '/images/ventura_woven_grass_seed.jpg',
-    alt: 'A custom-printed woven sack',
-    className: 'col-span-2',
-    position: '50% 40%',
-  },
-  {
-    src: '/images/product-corrugated.jpg',
-    alt: 'Corrugated cartons',
     className: '',
     position: '50% 55%',
-  },
-  {
-    src: '/images/jute-bags-stacked.jpg',
-    alt: 'Stacked jute sacks',
-    className: '',
-    position: '50% 45%',
   },
 ]
 
@@ -56,7 +59,7 @@ export function Hero() {
             )}
             style={delay(1)}
           >
-            Packaging solutions,
+            FIBC &amp; Jumbo Bags,
             <br className="hidden sm:inline" />
             <span className="sm:hidden"> </span>
             sourced from <span className="italic text-gold-deep">India</span>.
@@ -66,20 +69,20 @@ export function Hero() {
             className={cn('mt-7 max-w-md text-[1.05rem] leading-[1.75] text-ink/70', rise(2))}
             style={delay(2)}
           >
-            Ventura connects international buyers with capable Indian manufacturing partners across
-            flexible, woven, paper and commercial packaging — from BOPP laminated bags and FIBC to
-            woven bags, cartons and customized packaging solutions.
+            Ventura connects international buyers with capable Indian manufacturing partners for FIBC
+            and jumbo bags, with woven, laminated, paper and other industrial packaging available as
+            complementary solutions.
           </p>
 
           <div
             className={cn('mt-9 flex flex-wrap items-center gap-x-3 gap-y-4', rise(3))}
             style={delay(3)}
           >
-            <Button to="/products" variant="solid">
-              Explore products
+            <Button to="/products/fibc-jumbo-bags" variant="solid">
+              Explore FIBC &amp; Jumbo Bags
             </Button>
-            <Button to="/request-a-quote" variant="link">
-              Request a quote
+            <Button to={FIBC_QUOTE_HREF} variant="link">
+              Request an FIBC quote
             </Button>
           </div>
         </div>
@@ -97,8 +100,12 @@ export function Hero() {
                 key={t.src}
                 src={t.src}
                 alt={t.alt}
-                className={cn('h-full w-full object-cover', t.className)}
-                style={{ objectPosition: t.position }}
+                className={cn(
+                  'h-full w-full',
+                  t.fit === 'contain' ? 'object-contain p-3' : 'object-cover',
+                  t.className,
+                )}
+                style={t.position ? { objectPosition: t.position } : undefined}
                 {...(i === 0 ? { fetchpriority: 'high' } : {})}
                 decoding="async"
               />

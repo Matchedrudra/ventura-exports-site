@@ -142,7 +142,7 @@ const text = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 function rewrite(html, page) {
   const fullTitle = page.title
     ? `${page.title} — Ventura`
-    : 'Ventura | Packaging Sourcing from India'
+    : 'Ventura Exports | FIBC & Jumbo Bags from India'
   const url = `${SITE}${page.path}`
   const img = page.image ? `${SITE}${page.image}` : `${SITE}/og-image.jpg`
   const desc = page.description

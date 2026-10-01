@@ -205,7 +205,7 @@ export default function ProductDetail() {
 
       {/* FIBC construction types */}
       {product.hasTypes && (
-        <section className="border-t border-line bg-ivory-deep/40 py-16 lg:py-24">
+        <section id="construction-types" className="scroll-mt-24 border-t border-line bg-ivory-deep/40 py-16 lg:py-24">
           <Container>
             <div className="max-w-2xl">
               <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
