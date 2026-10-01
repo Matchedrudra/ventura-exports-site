@@ -46,7 +46,8 @@ export default function About() {
                   <p>
                     Ventura is an India-based packaging sourcing and supply company connecting
                     international buyers with capable Indian manufacturing partners, based in
-                    Ahmedabad, Gujarat.
+                    Ahmedabad, Gujarat. For 5+ years, that has meant one point of contact for the
+                    buyer and a matched manufacturing partner for the order.
                   </p>
                 </Reveal>
                 <Reveal delay={0.05}>

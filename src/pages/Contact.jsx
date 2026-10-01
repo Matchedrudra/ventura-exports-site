@@ -62,8 +62,9 @@ export default function Contact() {
 
               <Reveal>
                 <p className="mt-8 max-w-prose text-[0.88rem] leading-relaxed text-ink/50">
-                  Ventura is an India-based packaging and industrial supply company (legal name Ventura Exports).
-                  Correspondence is by email, phone or WhatsApp.
+                  Ventura is an India-based packaging sourcing and supply company (legal name Ventura
+                  Exports), with 5+ years connecting international buyers with capable Indian
+                  manufacturing partners. Correspondence is by email, phone or WhatsApp.
                 </p>
               </Reveal>
             </div>

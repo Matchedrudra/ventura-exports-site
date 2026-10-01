@@ -7,7 +7,8 @@ export const site = {
   domain: 'venturaexports.in',
   url: 'https://www.venturaexports.in',
   tagline: 'Packaging solutions, sourced from India.',
-  label: 'Indian sourcing · Global supply',
+  label: '5+ years · Indian sourcing · Global supply',
+  experience: '5+ years',
   descriptionShort:
     'Ventura connects international buyers with capable Indian manufacturing partners for BOPP laminated bags, FIBC, woven bags, jute packaging, cartons and customized packaging solutions.',
   positioning: 'Packaging sourcing & supply from India.',
