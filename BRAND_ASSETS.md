@@ -1,30 +1,26 @@
 # Brand assets
 
-## Logo — action required
+## Logo
 
-The site currently renders the Ventura Exports wordmark **typographically** from
-`src/components/ui/Logo.jsx` (a geometric "VE" monogram in the brand navy + gold,
-with "VENTURA / EXPORTS" set in the site fonts). It is clean and consistent, but
-it is **not** the official artwork.
+`src/components/ui/Logo.jsx` renders the official artwork directly from
+`public/brand/ventura-logo.png` (the full lockup: interlocking "VE" monogram in
+navy + gold over "VENTURA / EXPORTS" and the tagline). It is used unmodified.
 
-To drop in the real logo:
+## Favicon & app icons
 
-1. Add the supplied files to `public/brand/`:
-   - `logo.svg` — full lockup for light backgrounds (navy artwork)
-   - `logo-light.svg` — full lockup for dark backgrounds (ivory artwork), used in
-     the footer
-   - `mark.svg` — monogram only (optional)
-2. Replace the body of `src/components/ui/Logo.jsx` with `<img>` tags pointing at
-   those files. The component already receives `variant` (`row` | `stack` |
-   `mark`) and `tone` (`ink` | `light`); map them to the right file and keep the
-   existing height classes (`h-8`/`h-9` in the header, `h-14` stacked).
-3. Replace `public/brand/favicon.svg` with a favicon derived from the real mark.
-   Keep it a square SVG so the existing `<link rel="icon">` in `index.html` keeps
-   working. Optionally add `favicon.ico`, `apple-touch-icon.png` (180×180) and
-   `icon-192.png` / `icon-512.png` (referenced by `site.webmanifest`).
+`public/favicon.ico`, `public/brand/favicon-16.png`, `public/brand/favicon-32.png`,
+`public/brand/apple-touch-icon.png` and `public/brand/icon-192.png` /
+`icon-512.png` are all generated from the same official artwork — a tight crop of
+just the monogram mark (no wordmark/tagline) centered on the brand ivory
+(`#f5f2ea`) field, so the "VE" mark stays legible at 16×16. They are referenced
+from `index.html` (`<link rel="icon">` / `apple-touch-icon`) and
+`site.webmanifest`.
 
-Nothing else in the codebase references logo artwork directly — `Logo.jsx` and
-`favicon.svg` are the only two touch points.
+To regenerate them after an artwork update, crop the monogram's alpha bounding
+box out of the source PNG and re-run the same resize/center logic for each
+size — there is no separate vector source for the mark. Bump the `?v=` query
+string on the `<link>` tags in `index.html` and the `icons` entries in
+`site.webmanifest` so browsers don't keep serving the previously cached icon.
 
 ## Colour palette
 
