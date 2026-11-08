@@ -2,47 +2,47 @@ import { useEffect, useRef, useState } from 'react'
 import { Container } from '../ui/Container'
 import { Reveal } from '../ui/Reveal'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
-import { WORLD_LAND_D } from './worldLand'
+import { VIEWBOXES, POINTS } from './worldMapMeta'
 import { indiaCopy, marketsOfInterest } from '../../data/textiles'
 
 /*
- * "India as Your Textile Sourcing Destination." A world map (Natural Earth
- * 50m land, public domain) in deep navy. When the section scrolls into view,
- * routes draw once from India to each market of interest and stay. Reduced
- * motion shows the finished map immediately.
+ * "India as Your Textile Sourcing Destination."
  *
- * These are markets of interest — not a claim of customers or shipments.
+ * A geographically accurate trade map. Country shapes are Natural Earth 1:50m,
+ * projected with D3's Natural Earth projection at build time
+ * (scripts/build-world-map.mjs); every marker below is that same projection of
+ * a real latitude/longitude, so nothing is positioned by eye. Origin is
+ * Ahmedabad, Gujarat; destinations are national capitals.
+ *
+ * The path data (~160 KB) is loaded only when the section is about to be seen.
+ * When it scrolls into view, routes draw outward from India one after another;
+ * reduced motion shows the finished map immediately.
  */
 
-// Cropped to Europe, Africa, the Middle East and Asia — where the markets of
-// interest sit — so labels and routes stay legible.
-const MAP_VIEWBOX = '395 55 560 250'
+const ORIGIN = POINTS.origin
 
-const px = (lon) => ((lon + 180) / 360) * 1000
-const py = (lat) => ((90 - lat) / 180) * 500
-
-const ORIGIN = { lon: 79, lat: 22 }
-const OX = px(ORIGIN.lon)
-const OY = py(ORIGIN.lat)
-
-// bow = how far the arc bows toward the top of the map, as a fraction of the
-// chord (capped); place = which side of the marker its label sits on.
-const NODES = [
-  { name: 'Germany', lon: 10, lat: 51, place: 'end', bow: 0.22 },
-  { name: 'Turkey', lon: 35, lat: 39, place: 'end', bow: 0.3 },
-  { name: 'Israel', lon: 35, lat: 31.5, place: 'start', bow: 0.34 },
-  { name: 'Egypt', lon: 30, lat: 26, place: 'end', bow: 0.3 },
-  { name: 'Bangladesh', lon: 90, lat: 24, place: 'start', bow: 0.5 },
-  { name: 'Vietnam', lon: 106, lat: 16, place: 'start', bow: 0.34 },
+// Destinations in reveal order. `label` is the offset of the text from its
+// marker in on-screen pixels, `bow` how far the route arcs (fraction of its length).
+const DESTINATIONS = [
+  { key: 'germany', bow: 0.2, label: { dx: -10, dy: 4, anchor: 'end' } },
+  { key: 'turkey', bow: 0.26, label: { dx: -10, dy: 4, anchor: 'end' } },
+  { key: 'israel', bow: 0.34, label: { dx: 9, dy: 17, anchor: 'start' } },
+  { key: 'egypt', bow: 0.3, label: { dx: -10, dy: 13, anchor: 'end' } },
+  { key: 'bangladesh', bow: 0.5, label: { dx: 2, dy: 21, anchor: 'middle' } },
+  { key: 'vietnam', bow: 0.34, label: { dx: 10, dy: 4, anchor: 'start' }, compact: { dx: 4, dy: 32, anchor: 'middle' } },
 ]
 
-function routeD(to) {
-  const x2 = px(to.lon)
-  const y2 = py(to.lat)
-  const mx = (OX + x2) / 2
-  const my = (OY + y2) / 2
-  const dx = x2 - OX
-  const dy = y2 - OY
+const STEP = 0.22 // seconds between routes
+const DRAW = 1.5 // seconds to draw one route
+const LEAD = 0.5
+
+const GOLD = '#d3b982'
+
+function routePath(from, to, bow) {
+  const mx = (from.x + to.x) / 2
+  const my = (from.y + to.y) / 2
+  const dx = to.x - from.x
+  const dy = to.y - from.y
   const dist = Math.hypot(dx, dy) || 1
   let nx = -dy / dist
   let ny = dx / dist
@@ -50,178 +50,290 @@ function routeD(to) {
     nx = -nx
     ny = -ny
   }
-  const off = Math.min(dist * to.bow, 70)
-  return `M${OX} ${OY} Q${mx + nx * off} ${my + ny * off} ${x2} ${y2}`
+  const off = dist * bow
+  return `M${from.x} ${from.y} Q${(mx + nx * off).toFixed(1)} ${(my + ny * off).toFixed(1)} ${to.x} ${to.y}`
 }
 
-const DRAW_MS = 900
-const STEP = 130
-const LEAD = 200
+function vbParts(vb) {
+  const [x, y, w, h] = vb.split(' ').map(Number)
+  return { x, y, w, h }
+}
 
 export function IndiaSourcing() {
   const reduced = usePrefersReducedMotion()
   const sectionRef = useRef(null)
-  const [active, setActive] = useState(reduced)
+  const mapRef = useRef(null)
 
+  const [geo, setGeo] = useState(null) // lazily loaded path data
+  const [seen, setSeen] = useState(false)
+  const [compact, setCompact] = useState(false)
+  const [width, setWidth] = useState(800)
+
+  // load the heavy geometry shortly before the section is reached
   useEffect(() => {
-    if (reduced || typeof IntersectionObserver === 'undefined') {
-      setActive(true)
-      return
-    }
     const el = sectionRef.current
     if (!el) return
+    let cancelled = false
+    const load = () => import('./worldMap.json').then((m) => !cancelled && setGeo(m.default))
+    if (typeof IntersectionObserver === 'undefined') {
+      load()
+      return () => {
+        cancelled = true
+      }
+    }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
-          setActive(true)
+          load()
           io.disconnect()
         }
       },
-      { rootMargin: '0px 0px -15% 0px', threshold: 0.2 },
+      { rootMargin: '900px 0px' },
     )
     io.observe(el)
-    const t = setTimeout(() => setActive(true), 2600)
+    return () => {
+      cancelled = true
+      io.disconnect()
+    }
+  }, [])
+
+  // start the reveal once the map itself is on screen
+  useEffect(() => {
+    const el = mapRef.current
+    if (!el) return
+    if (reduced || typeof IntersectionObserver === 'undefined') {
+      setSeen(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setSeen(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.25 },
+    )
+    io.observe(el)
+    const t = setTimeout(() => setSeen(true), 6000)
     return () => {
       io.disconnect()
       clearTimeout(t)
     }
   }, [reduced])
 
-  const drawTransition = (i) =>
-    reduced ? 'none' : `stroke-dashoffset ${DRAW_MS}ms cubic-bezier(0.4, 0, 0.2, 1) ${LEAD + i * STEP}ms`
+  // tighter crop on phones; track rendered width so text stays a constant size
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const onMq = () => setCompact(mq.matches)
+    onMq()
+    mq.addEventListener('change', onMq)
+    let ro
+    if (mapRef.current && typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width || 800))
+      ro.observe(mapRef.current)
+    }
+    return () => {
+      mq.removeEventListener('change', onMq)
+      ro?.disconnect()
+    }
+  }, [])
+
+  const vbKey = compact ? 'mobile' : 'desktop'
+  const vbStr = VIEWBOXES[vbKey]
+  const vb = vbParts(vbStr)
+  const k = vb.w / Math.max(width, 1) // user units per screen pixel
+  const go = seen && geo
+  const animate = !reduced
+
+  const t = (delay, dur = 0.8) => (animate ? `opacity ${dur}s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s` : 'none')
+  const arrive = (i) => LEAD + i * STEP + DRAW * 0.82
 
   return (
-    <section id="markets" ref={sectionRef} className="scroll-mt-24 bg-ink text-ivory">
-      <Container className="py-16 lg:py-24">
-        <div className="grid items-center gap-x-14 gap-y-10 lg:grid-cols-12">
+    <section id="markets" ref={sectionRef} className="scroll-mt-24 overflow-hidden bg-ink text-ivory">
+      <Container className="py-24 lg:py-32">
+        <div className="grid items-center gap-x-14 gap-y-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Reveal>
-              <p className="mb-4 text-[0.66rem] font-semibold uppercase leading-none tracking-[0.2em] text-gold-soft">
+              <p className="mb-4 flex items-center gap-3 text-[0.66rem] font-semibold uppercase leading-none tracking-[0.2em] text-gold-soft">
+                <span aria-hidden="true" className="h-px w-8 bg-gold-soft/70" />
                 International trade
               </p>
-            </Reveal>
-            <Reveal delay={0.05}>
               <h2 className="font-serif text-[1.85rem] font-medium leading-[1.15] text-ivory sm:text-[2.15rem] lg:text-[2.4rem]">
                 India as Your Textile Sourcing Destination.
               </h2>
             </Reveal>
-            {indiaCopy.map((p, i) => (
-              <Reveal key={p} delay={0.1 + i * 0.05}>
-                <p className="mt-5 max-w-sm text-[0.98rem] leading-[1.7] text-ivory/65">{p}</p>
-              </Reveal>
-            ))}
-            <p className="mt-8 text-[0.72rem] font-semibold uppercase tracking-widelabel text-ivory/50">
-              Markets of interest
-            </p>
-            <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-[0.9rem] text-ivory/80">
-              {marketsOfInterest.map((m, i) => (
-                <li key={m} className="flex items-center gap-2.5">
-                  <span
-                    aria-hidden="true"
-                    className="h-px w-3.5 transition-colors duration-500"
-                    style={{
-                      background: active ? '#a8814a' : 'rgba(255,255,255,0.28)',
-                      transitionDelay: reduced ? '0ms' : `${LEAD + i * STEP}ms`,
-                    }}
-                  />
-                  {m}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 text-[0.78rem] leading-relaxed text-ivory/55">
-              Markets of interest, not a claim of existing customers or shipments in these
-              countries.
-            </p>
+            <Reveal delay={0.06}>
+              <p className="mt-5 max-w-sm text-[0.98rem] leading-[1.8] text-ivory/65">{indiaCopy}</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-8 text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-ivory/45">Markets of interest</p>
+              <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.9rem] text-ivory/80">
+                {marketsOfInterest.map((m, i) => (
+                  <li key={m} className="flex items-center gap-2.5">
+                    <span
+                      aria-hidden="true"
+                      className="h-px w-4 transition-colors duration-700"
+                      style={{
+                        background: go ? GOLD : 'rgba(255,255,255,0.25)',
+                        transitionDelay: animate && i < DESTINATIONS.length ? `${arrive(i)}s` : '0s',
+                      }}
+                    />
+                    {m}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
 
-          <div className="lg:col-span-8">
-            <Reveal delay={0.08}>
-              <figure className="m-0 border border-white/10 bg-[#131d30] p-2 sm:p-3">
-                <svg
-                  viewBox={MAP_VIEWBOX}
-                  className="block w-full"
-                  role="img"
-                  aria-label="World map with routes from India to Germany, Turkey, Israel, Egypt, Bangladesh and Vietnam"
-                >
-                  <path d={WORLD_LAND_D} fill="#26344d" stroke="#3a4a68" strokeWidth="0.5" strokeLinejoin="round" />
+          <div className="lg:col-span-8 lg:-mr-10 xl:-mr-14">
+            <div
+              ref={mapRef}
+              className="relative w-full"
+              style={{
+                aspectRatio: `${vb.w} / ${vb.h}`,
+                WebkitMaskImage: 'radial-gradient(ellipse 72% 78% at 52% 50%, #000 62%, transparent 100%)',
+                maskImage: 'radial-gradient(ellipse 72% 78% at 52% 50%, #000 62%, transparent 100%)',
+              }}
+            >
+              <svg
+                viewBox={vbStr}
+                className="absolute inset-0 h-full w-full"
+                role="img"
+                aria-label="Map showing trade routes from India to Germany, Turkey, Israel, Egypt, Bangladesh and Vietnam"
+              >
+                <defs>
+                  <filter id="route-glow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation={2.2 * k} result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
 
-                  <g fill="none" stroke="#c2a06a" strokeLinecap="round">
-                    {NODES.map((n, i) => (
+                {geo && (
+                  <g>
+                    <path d={geo.GRATICULE_D} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+                    <path
+                      d={geo.BASE_D}
+                      fill="#1f2d49"
+                      stroke="rgba(160,178,212,0.28)"
+                      strokeWidth="0.6"
+                      strokeLinejoin="round"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                    {DESTINATIONS.map((d, i) => (
                       <path
-                        key={n.name}
-                        d={routeD(n)}
-                        strokeWidth="1.1"
-                        opacity="0.82"
-                        pathLength="1"
-                        strokeDasharray="1"
-                        strokeDashoffset={reduced || active ? 0 : 1}
-                        style={{ transition: drawTransition(i) }}
+                        key={d.key}
+                        d={geo.HIGHLIGHT_D[d.key]}
+                        fill={go ? '#28395a' : '#1f2d49'}
+                        stroke={go ? 'rgba(211,185,130,0.6)' : 'rgba(160,178,212,0.28)'}
+                        strokeWidth="0.7"
+                        strokeLinejoin="round"
+                        vectorEffect="non-scaling-stroke"
+                        style={{ transition: animate ? `fill 1.2s ease ${arrive(i)}s, stroke 1.2s ease ${arrive(i)}s` : 'none' }}
                       />
                     ))}
+                    <path
+                      d={geo.HIGHLIGHT_D.india}
+                      fill={go ? '#33476f' : '#1f2d49'}
+                      stroke="rgba(226,205,160,0.95)"
+                      strokeWidth="0.9"
+                      strokeLinejoin="round"
+                      vectorEffect="non-scaling-stroke"
+                      style={{ transition: animate ? 'fill 1.4s ease 0.1s' : 'none' }}
+                    />
                   </g>
+                )}
 
-                  {NODES.map((n, i) => {
-                    const x = px(n.lon)
-                    const y = py(n.lat)
-                    const anchor = n.place === 'end' ? 'end' : 'start'
-                    const dx = n.place === 'end' ? -7 : 7
-                    const ly = y + 3
-                    const w = n.name.length * 5.4 + 8
-                    const lx = x + dx - (anchor === 'end' ? w - 4 : 4)
-                    return (
-                      <g
-                        key={`m-${n.name}`}
-                        style={{
-                          opacity: reduced || active ? 1 : 0,
-                          transition: reduced
-                            ? 'none'
-                            : `opacity 500ms ease ${LEAD + i * STEP + DRAW_MS * 0.5}ms`,
-                        }}
+                {geo && (
+                  <>
+                    {/* routes */}
+                    <g fill="none" stroke={GOLD} strokeLinecap="round" filter="url(#route-glow)">
+                      {DESTINATIONS.map((d, i) => (
+                        <path
+                          key={d.key}
+                          d={routePath(ORIGIN, POINTS[d.key], d.bow)}
+                          strokeWidth={1.2 * k}
+                          pathLength="1"
+                          strokeDasharray="1"
+                          strokeDashoffset={go || !animate ? 0 : 1}
+                          opacity="0.9"
+                          style={{
+                            transition: animate ? `stroke-dashoffset ${DRAW}s cubic-bezier(0.4, 0, 0.2, 1) ${LEAD + i * STEP}s` : 'none',
+                          }}
+                        />
+                      ))}
+                    </g>
+
+                    {/* destination markers + labels */}
+                    {DESTINATIONS.map((d, i) => {
+                      const p = POINTS[d.key]
+                      const lab = compact && d.compact ? d.compact : d.label
+                      return (
+                        <g key={d.key} style={{ opacity: go || !animate ? 1 : 0, transition: t(arrive(i), 0.9) }}>
+                          <circle cx={p.x} cy={p.y} r={5 * k} fill="rgba(211,185,130,0.16)" />
+                          <circle cx={p.x} cy={p.y} r={2.6 * k} fill={GOLD} />
+                          <circle cx={p.x} cy={p.y} r={4.4 * k} fill="none" stroke={GOLD} strokeWidth={0.8 * k} opacity="0.7" />
+                          <text
+                            x={p.x + lab.dx * k}
+                            y={p.y + lab.dy * k}
+                            textAnchor={lab.anchor}
+                            fill="#eef1f7"
+                            fontSize={10 * k}
+                            fontWeight="500"
+                            letterSpacing={1.4 * k}
+                            stroke="#17233a"
+                            strokeWidth={3.2 * k}
+                            strokeLinejoin="round"
+                            paintOrder="stroke"
+                            style={{ textTransform: 'uppercase' }}
+                          >
+                            {p.name}
+                          </text>
+                        </g>
+                      )
+                    })}
+
+                    {/* origin: India */}
+                    <g style={{ opacity: go || !animate ? 1 : 0, transition: t(0, 1) }}>
+                      {animate && (
+                        <circle
+                          cx={ORIGIN.x}
+                          cy={ORIGIN.y}
+                          r={6 * k}
+                          fill="none"
+                          stroke={GOLD}
+                          strokeWidth={1 * k}
+                          className="map-pulse"
+                          style={{ transformOrigin: `${ORIGIN.x}px ${ORIGIN.y}px`, animationPlayState: go ? 'running' : 'paused' }}
+                        />
+                      )}
+                      <circle cx={ORIGIN.x} cy={ORIGIN.y} r={9 * k} fill="rgba(211,185,130,0.18)" />
+                      <circle cx={ORIGIN.x} cy={ORIGIN.y} r={4.2 * k} fill="#f1e3c0" stroke={GOLD} strokeWidth={1.4 * k} />
+                      <text
+                        x={ORIGIN.x + (compact ? -7 : 0) * k}
+                        y={ORIGIN.y + (compact ? 20 : 22) * k}
+                        textAnchor={compact ? 'end' : 'middle'}
+                        fill="#f6efd9"
+                        fontSize={11.5 * k}
+                        fontWeight="600"
+                        letterSpacing={2 * k}
+                        stroke="#17233a"
+                        strokeWidth={3.6 * k}
+                        strokeLinejoin="round"
+                        paintOrder="stroke"
+                        style={{ textTransform: 'uppercase' }}
                       >
-                        <circle cx={x} cy={y} r={2.6} fill="none" stroke="#d8c6a0" strokeWidth="1" />
-                        <circle cx={x} cy={y} r="1.1" fill="#e9dcc0" />
-                        <rect x={lx} y={ly - 8} width={w} height={11} rx="1.5" fill="#0f1826" fillOpacity="0.82" />
-                        <text
-                          x={x + dx}
-                          y={ly}
-                          textAnchor={anchor}
-                          fill="#e7ebf3"
-                          fontSize="8"
-                          fontWeight="500"
-                          letterSpacing="0.1em"
-                          style={{ textTransform: 'uppercase' }}
-                        >
-                          {n.name}
-                        </text>
-                      </g>
-                    )
-                  })}
-
-                  <g
-                    style={{
-                      opacity: reduced || active ? 1 : 0,
-                      transition: reduced ? 'none' : 'opacity 500ms ease 60ms',
-                    }}
-                  >
-                    <circle cx={OX} cy={OY} r="6" fill="#c2a06a" opacity="0.14" />
-                    <circle cx={OX} cy={OY} r="3.6" fill="none" stroke="#d8c6a0" strokeWidth="1.1" />
-                    <circle cx={OX} cy={OY} r="2.1" fill="#e7d6ac" />
-                    <text
-                      x={OX - 3}
-                      y={OY + 17}
-                      textAnchor="end"
-                      fill="#f2e9d6"
-                      fontSize="8.5"
-                      fontWeight="600"
-                      letterSpacing="0.14em"
-                      style={{ textTransform: 'uppercase' }}
-                    >
-                      India
-                    </text>
-                  </g>
-                </svg>
-              </figure>
-            </Reveal>
+                        India
+                      </text>
+                    </g>
+                  </>
+                )}
+              </svg>
+            </div>
           </div>
         </div>
       </Container>

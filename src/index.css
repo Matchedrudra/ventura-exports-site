@@ -115,6 +115,21 @@
 }
 
 @layer utilities {
+  .map-pulse {
+    animation: map-pulse 3.6s ease-out infinite;
+  }
+  @keyframes map-pulse {
+    0% {
+      transform: scale(0.7);
+      opacity: 0.7;
+    }
+    70%,
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+
   .text-balance {
     text-wrap: balance;
   }

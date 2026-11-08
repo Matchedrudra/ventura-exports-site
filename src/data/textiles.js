@@ -241,10 +241,8 @@ export const marketsOfInterest = [
   'Other international markets',
 ]
 
-export const indiaCopy = [
-  'India is one of the world’s major textile-producing countries, with a deep base of spinning, weaving, knitting and processing capacity across the value chain.',
-  'Ventura’s role is to connect international buyers with Indian suppliers — understanding the specification, identifying a suitable manufacturing partner, and coordinating the order through to export.',
-]
+export const indiaCopy =
+  'India is one of the world’s major textile-producing countries. Ventura connects international buyers with Indian suppliers — understanding the specification, identifying a suitable manufacturing partner and coordinating the order through to export.'
 
 /* ─── Textile accessories & weaving solutions ───────────────────────── */
 
