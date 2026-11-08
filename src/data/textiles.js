@@ -245,3 +245,75 @@ export const indiaCopy = [
   'India is one of the world’s major textile-producing countries, with a deep base of spinning, weaving, knitting and processing capacity across the value chain.',
   'Ventura’s role is to connect international buyers with Indian suppliers — understanding the specification, identifying a suitable manufacturing partner, and coordinating the order through to export.',
 ]
+
+/* ─── Textile accessories & weaving solutions ───────────────────────── */
+
+// Descriptions state what each part does in general terms only. No sizes,
+// materials, brands, compatibility or availability are implied — those are
+// confirmed against the buyer's machine and drawing for each enquiry.
+export const weavingProducts = [
+  {
+    slug: 'skew-reeds',
+    name: 'Skew Reeds',
+    image: '/images/textile/weaving-reed.jpg',
+    imageAlt: 'Close view of a weaving reed set in the beater of a loom, with warp threads passing through',
+    body: 'Reeds space the warp threads and beat the weft into the fabric. Sourced to the reed specification your machine and fabric call for.',
+  },
+  {
+    slug: 'textile-healds',
+    name: 'Textile Healds',
+    image: '/images/textile/weaving-healds.jpg',
+    imageAlt: 'Heald shafts with heddle loops carrying warp threads on a loom',
+    body: 'Healds carry individual warp threads and, raised and lowered on the shafts, form the shed. Specified to your loom and warp requirement.',
+  },
+  {
+    slug: 'heald-frames',
+    name: 'Heald Frames & Accessories',
+    image: '/images/textile/loom-heald-frames.jpg',
+    imageAlt: 'A technician working on the heald frames of an industrial weaving machine',
+    body: 'Frames that hold the healds, and related accessories — subject to supplier availability and your machine details.',
+  },
+  {
+    slug: 'drop-wires',
+    name: 'Drop Wires',
+    image: null,
+    imageAlt: '',
+    body: 'Drop wires are used in warp stop-motion systems to stop the machine when a warp end breaks. Sourced against your machine and drawing.',
+  },
+  {
+    slug: 'other-accessories',
+    name: 'Other Weaving Machinery Accessories',
+    image: '/images/textile/weaving-hall.jpg',
+    imageAlt: 'A weaving hall with rows of industrial looms',
+    body: 'Another weaving component or accessory you use? Send the details and we will check it with our supplier network.',
+  },
+]
+
+export const weavingSteps = [
+  {
+    index: '01',
+    title: 'Send the requirement',
+    body: 'Tell us the product, your machine type and, where you have them, dimensions, material and a drawing or specification document.',
+  },
+  {
+    index: '02',
+    title: 'We check with suppliers',
+    body: 'The requirement goes to our manufacturing and supplier network. Availability is confirmed individually, never assumed.',
+  },
+  {
+    index: '03',
+    title: 'Specification confirmed',
+    body: 'The technical specification is agreed with you before quotation, so supply is coordinated against your machinery requirements.',
+  },
+]
+
+export const weavingEnquiryFields = [
+  'Product required',
+  'Machinery type',
+  'Technical specifications',
+  'Dimensions',
+  'Material',
+  'Required quantity',
+  'Destination country',
+  'Additional requirements',
+]

@@ -5,6 +5,7 @@
 export const CATEGORY_YARNS = 'Yarns'
 export const CATEGORY_FABRICS = 'Fabrics'
 export const CATEGORY_FIBC = 'FIBC Bags'
+export const CATEGORY_WEAVING = 'Textile Accessories & Weaving'
 export const CATEGORY_AGRO = 'Spices & Agro Commodities'
 export const CATEGORY_OTHER = 'Other Products'
 
@@ -32,6 +33,13 @@ export const PRODUCT_TYPES = {
     'Knitted Fabric',
     'Woven Fabric',
     'Other Fabric',
+  ],
+  [CATEGORY_WEAVING]: [
+    'Skew Reeds',
+    'Textile Healds',
+    'Heald Frames & Accessories',
+    'Drop Wires',
+    'Other Weaving Machinery Accessories',
   ],
   [CATEGORY_FIBC]: [
     'Standard Bag',

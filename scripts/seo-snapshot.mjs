@@ -107,6 +107,13 @@ const PAGES = [
     image: '/images/textile/fabric-rolls-factory.jpg',
   },
   {
+    path: '/weaving-accessories',
+    title: 'Textile Accessories & Weaving Solutions',
+    description:
+      "Ventura Exports coordinates sourcing of weaving machinery accessories — skew reeds, textile healds, heald frames, drop wires and other components — to the buyer's technical requirements and machinery specifications.",
+    image: '/images/textile/weaving-healds.jpg',
+  },
+  {
     path: '/other-products',
     title: 'Other Products',
     description:

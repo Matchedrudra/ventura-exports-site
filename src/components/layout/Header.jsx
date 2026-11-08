@@ -57,7 +57,7 @@ export function Header() {
             />
           </Link>
 
-          <nav className="hidden items-center gap-5 xl:flex 2xl:gap-7" aria-label="Primary">
+          <nav className="hidden items-center xl:flex xl:gap-[1.05rem] 2xl:gap-7" aria-label="Primary">
             {nav.map((item) => (
               <NavLink
                 key={item.to}
@@ -65,7 +65,7 @@ export function Header() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'relative whitespace-nowrap text-[0.74rem] font-medium uppercase tracking-label transition-colors duration-300 2xl:text-[0.78rem]',
+                    'relative whitespace-nowrap text-[0.72rem] font-medium uppercase tracking-[0.07em] transition-colors duration-300 2xl:text-[0.78rem] 2xl:tracking-label',
                     isActive ? 'text-ink' : 'text-ink/55 hover:text-ink',
                   )
                 }
@@ -88,7 +88,7 @@ export function Header() {
           <div className="hidden items-center xl:flex">
             <Link
               to="/request-a-quote"
-              className="group inline-flex items-center gap-2 whitespace-nowrap bg-ink px-5 py-2.5 text-[0.74rem] font-medium uppercase tracking-label text-ivory transition-colors duration-300 hover:bg-ink-soft"
+              className="group inline-flex items-center gap-2 whitespace-nowrap bg-ink px-4 py-2.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-ivory 2xl:px-5 2xl:tracking-label transition-colors duration-300 hover:bg-ink-soft"
             >
               Request a Quote
               <span

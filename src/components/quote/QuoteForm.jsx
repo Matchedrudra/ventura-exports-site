@@ -10,6 +10,7 @@ import {
   CATEGORY_YARNS,
   CATEGORY_FABRICS,
   CATEGORY_FIBC,
+  CATEGORY_WEAVING,
   CATEGORY_AGRO,
   CATEGORY_OTHER,
   resolveLegacyProduct,
@@ -27,6 +28,8 @@ const EMPTY = {
   product: '',
   specification: '',
   composition: '',
+  machineryType: '',
+  material: '',
   yarnPly: '',
   spinning: '',
   gsm: '',
@@ -53,7 +56,7 @@ const EMPTY = {
 
 // Everything that depends on the chosen category — cleared when it changes.
 const CATEGORY_KEYS = [
-  'product', 'specification', 'composition', 'yarnPly', 'spinning', 'gsm', 'width',
+  'product', 'specification', 'composition', 'machineryType', 'material', 'yarnPly', 'spinning', 'gsm', 'width',
   'construction', 'colour', 'finish', 'quantity', 'packaging', 'dimensions', 'swl',
   'filling', 'discharge', 'liner', 'lamination', 'printing', 'application', 'operatingTemp',
 ]
@@ -81,6 +84,11 @@ const CATEGORY_FIELDS = {
     { name: 'colour', label: 'Colour', placeholder: 'e.g. grey, dyed, printed, reference shade' },
     { name: 'finish', label: 'Finish', placeholder: 'e.g. enzyme wash, peach, none' },
   ],
+  [CATEGORY_WEAVING]: [
+    { name: 'machineryType', label: 'Machinery type', placeholder: 'e.g. loom make and model' },
+    { name: 'dimensions', label: 'Dimensions', placeholder: 'As per your drawing or specification' },
+    { name: 'material', label: 'Material', placeholder: 'Material required' },
+  ],
   [CATEGORY_FIBC]: [
     { name: 'dimensions', label: 'Bag dimensions (mm)', placeholder: 'L x W x H' },
     { name: 'swl', label: 'SWL / capacity', placeholder: 'e.g. 1000 kg / 1.2 m³' },
@@ -99,6 +107,7 @@ const CATEGORY_FIELDS = {
 const TYPE_LABEL = {
   [CATEGORY_YARNS]: 'Yarn type',
   [CATEGORY_FABRICS]: 'Fabric type',
+  [CATEGORY_WEAVING]: 'Product required',
   [CATEGORY_FIBC]: 'FIBC bag type',
   [CATEGORY_AGRO]: 'Product',
   [CATEGORY_OTHER]: 'Product',
@@ -107,6 +116,7 @@ const TYPE_LABEL = {
 const QTY_PLACEHOLDER = {
   [CATEGORY_YARNS]: 'e.g. 10 tonnes, 1 x 20ft container',
   [CATEGORY_FABRICS]: 'e.g. 20,000 metres / 10 tonnes',
+  [CATEGORY_WEAVING]: 'e.g. number of pieces / sets',
   [CATEGORY_FIBC]: 'e.g. 5,000 bags / 1 x 40ft',
   [CATEGORY_AGRO]: 'e.g. 5 tonnes',
   [CATEGORY_OTHER]: 'e.g. 20,000 pieces',
@@ -175,7 +185,9 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
   const category = values.category
   const types = category ? PRODUCT_TYPES[category] : []
   const extraFields = category ? CATEGORY_FIELDS[category] : []
-  const hasSpecArea = category === CATEGORY_AGRO || category === CATEGORY_OTHER || category === CATEGORY_FIBC
+  const isWeaving = category === CATEGORY_WEAVING
+  const hasSpecArea =
+    isWeaving || category === CATEGORY_AGRO || category === CATEGORY_OTHER || category === CATEGORY_FIBC
 
   const onFile = (e) => {
     const f = e.target.files?.[0]
@@ -456,22 +468,28 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
               value={values.quantity}
               onChange={set('quantity')}
             />
-            <TextField
-              name="packaging"
-              label="Preferred packaging"
-              placeholder={PACKAGING_PLACEHOLDER[category]}
-              value={values.packaging}
-              onChange={set('packaging')}
-            />
+            {!isWeaving && (
+              <TextField
+                name="packaging"
+                label="Preferred packaging"
+                placeholder={PACKAGING_PLACEHOLDER[category]}
+                value={values.packaging}
+                onChange={set('packaging')}
+              />
+            )}
           </>
         )}
 
         {hasSpecArea && (
           <TextArea
             name="specification"
-            label="Specification / requirement"
+            label={isWeaving ? 'Technical specifications' : 'Specification / requirement'}
             rows={4}
-            placeholder="Construction, material, grade, standards — as much as you have."
+            placeholder={
+              isWeaving
+                ? 'Technical details of the part you need — as much as you have.'
+                : 'Construction, material, grade, standards — as much as you have.'
+            }
             value={values.specification}
             onChange={set('specification')}
             className="sm:col-span-2"
@@ -486,12 +504,14 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
           value={values.destinationCountry}
           onChange={set('destinationCountry')}
         />
-        <TextField
-          name="destinationPort"
-          label="Destination port"
-          value={values.destinationPort}
-          onChange={set('destinationPort')}
-        />
+        {!isWeaving && (
+          <TextField
+            name="destinationPort"
+            label="Destination port"
+            value={values.destinationPort}
+            onChange={set('destinationPort')}
+          />
+        )}
       </FieldSet>
 
       <FieldSet legend="Additional requirements">
@@ -511,10 +531,13 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
             htmlFor="attachment"
             className="block text-[0.82rem] font-medium uppercase tracking-widelabel text-ink/70"
           >
-            Attachment <span className="normal-case tracking-normal text-ink/50">(optional)</span>
+            {isWeaving ? 'Technical drawing or specification document' : 'Attachment'}{' '}
+            <span className="normal-case tracking-normal text-ink/50">(optional)</span>
           </label>
           <p className="mt-1 text-[0.82rem] leading-relaxed text-ink/50">
-            Spec sheet, sample photo or artwork — PDF, image, Word, Excel or ZIP, up to 3 MB.
+            {isWeaving
+              ? 'Drawing, spec sheet or photo of the part — PDF, image, Word, Excel or ZIP, up to 3 MB.'
+              : 'Spec sheet, sample photo or artwork — PDF, image, Word, Excel or ZIP, up to 3 MB.'}
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <input

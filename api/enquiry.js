@@ -93,6 +93,13 @@ const PRODUCT_TYPES = {
     'Woven Fabric',
     'Other Fabric',
   ],
+  'Textile Accessories & Weaving': [
+    'Skew Reeds',
+    'Textile Healds',
+    'Heald Frames & Accessories',
+    'Drop Wires',
+    'Other Weaving Machinery Accessories',
+  ],
   'FIBC Bags': [
     'Standard Bag',
     'U-Panel Bag',
@@ -159,6 +166,8 @@ const FIELD_LABELS = {
   gsm: 'GSM',
   width: 'Width',
   construction: 'Construction',
+  machineryType: 'Machinery type',
+  material: 'Material',
   colour: 'Colour',
   finish: 'Finish',
   quantity: 'Quantity',
@@ -179,7 +188,7 @@ const FIELD_LABELS = {
 // Fields shown under "Product requirement", in order. Blank ones are skipped.
 const PRODUCT_FIELDS = [
   'category', 'product', 'specification', 'composition', 'yarnPly', 'spinning',
-  'gsm', 'width', 'construction', 'colour', 'finish', 'quantity', 'packaging',
+  'machineryType', 'material', 'gsm', 'width', 'construction', 'colour', 'finish', 'quantity', 'packaging',
   'dimensions', 'swl', 'filling', 'discharge', 'liner', 'lamination', 'printing',
   'application', 'operatingTemp',
 ]

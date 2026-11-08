@@ -60,8 +60,8 @@ export default function About() {
                 <Reveal delay={0.1}>
                   <p>
                     We source and coordinate supply through our Indian manufacturing partners, matching each
-                    order to the partner best suited to it. Alongside textiles, we also source industrial packaging and agro
-                    commodities on enquiry.
+                    order to the partner best suited to it. Alongside yarns and fabrics, we also source textile accessories and weaving
+                    components, industrial packaging and agro commodities on enquiry.
                   </p>
                 </Reveal>
               </div>

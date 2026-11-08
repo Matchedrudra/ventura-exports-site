@@ -8,8 +8,9 @@ import { cn } from '../../lib/cn'
 const DIVISIONS = [
   { index: '01', name: 'Yarns', to: '/yarns', major: true },
   { index: '02', name: 'Fabrics', to: '/fabrics', major: true },
-  { index: '03', name: 'Industrial Packaging', to: '/other-products', major: false },
-  { index: '04', name: 'Agro Commodities', to: '/other-products#agro', major: false },
+  { index: '03', name: 'Weaving Accessories', to: '/weaving-accessories', major: false },
+  { index: '04', name: 'Industrial Packaging', to: '/other-products', major: false },
+  { index: '05', name: 'Agro Commodities', to: '/other-products#agro', major: false },
 ]
 
 export function Hero() {
@@ -76,7 +77,7 @@ export function Hero() {
         </div>
 
         <nav aria-label="Product divisions" className="border-t border-white/15">
-          <ul className="grid grid-cols-2 lg:grid-cols-4">
+          <ul className="grid grid-cols-2 lg:grid-cols-5">
             {DIVISIONS.map((d) => (
               <li key={d.to} className="border-b border-white/10 last:border-b-0 lg:border-b-0 lg:border-r lg:border-white/10 lg:last:border-r-0">
                 <Link

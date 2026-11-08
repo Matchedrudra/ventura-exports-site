@@ -14,7 +14,7 @@ const rows = [
   { label: 'Website', value: site.domain, href: site.url },
 ]
 
-const categories = ['Yarns', 'Fabrics', 'FIBC Bags', 'Spices & Agro Commodities', 'Other Products']
+const categories = ['Yarns', 'Fabrics', 'Textile Accessories & Weaving', 'FIBC Bags', 'Spices & Agro Commodities', 'Other Products']
 
 export default function Contact() {
   return (

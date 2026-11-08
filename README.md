@@ -59,7 +59,7 @@ src/
                            ProductDetail, QualityPackaging, Quote, Contact, NotFound
 ```
 
-Routes: `/`, `/about`, `/yarns`, `/fabrics`, `/other-products`,
+Routes: `/`, `/about`, `/yarns`, `/fabrics`, `/weaving-accessories`, `/other-products`,
 `/products/:slug` (packaging detail pages), `/quality-packaging`,
 `/request-a-quote`, `/contact`. Legacy `/products`, `/quality`, `/how-we-work`
 and `/markets` redirect.

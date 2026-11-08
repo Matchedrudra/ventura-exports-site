@@ -6,6 +6,7 @@ const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
 const Yarns = lazy(() => import('./pages/Yarns'))
 const Fabrics = lazy(() => import('./pages/Fabrics'))
+const WeavingAccessories = lazy(() => import('./pages/WeavingAccessories'))
 const OtherProducts = lazy(() => import('./pages/OtherProducts'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const QualityPackaging = lazy(() => import('./pages/QualityPackaging'))
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="about" element={<About />} />
           <Route path="yarns" element={<Yarns />} />
           <Route path="fabrics" element={<Fabrics />} />
+          <Route path="weaving-accessories" element={<WeavingAccessories />} />
           <Route path="other-products" element={<OtherProducts />} />
           <Route path="products" element={<Navigate to="/other-products" replace />} />
           <Route path="products/:slug" element={<ProductDetail />} />

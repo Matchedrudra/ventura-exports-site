@@ -4,6 +4,7 @@ import { Hero } from '../components/home/Hero'
 import { AboutIntro } from '../components/home/AboutIntro'
 import { YarnDivision } from '../components/home/YarnDivision'
 import { FabricsDivision } from '../components/home/FabricsDivision'
+import { AccessoriesDivision } from '../components/home/AccessoriesDivision'
 import { AdditionalCapabilities } from '../components/home/AdditionalCapabilities'
 import { IndiaSourcing } from '../components/home/IndiaSourcing'
 import { ConePackaging } from '../components/textile/ConePackaging'
@@ -15,13 +16,14 @@ export default function Home() {
       <Seo
         path="/"
         title={null}
-        description="Ventura Exports is an India-based export and sourcing company supplying cotton, polyester and blended yarns and fabrics to international buyers — with customised cone and export packaging, and coordination with Indian manufacturing partners."
+        description="Ventura Exports is an India-based export and sourcing company supplying cotton, polyester and blended yarns and fabrics to international buyers — with customised cone and export packaging, plus textile accessories and weaving components, coordinated with Indian manufacturing partners."
       />
       <Hero />
       <AboutIntro />
       <YarnDivision />
       <ConePackaging variant="summary" />
       <FabricsDivision />
+      <AccessoriesDivision />
       <AdditionalCapabilities />
       <Approach />
       <IndiaSourcing />
