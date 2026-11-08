@@ -3,8 +3,8 @@ import { Button } from './Button'
 import { Reveal } from './Reveal'
 
 export function CtaBand({
-  title = 'Send us a specification.',
-  body = 'Share the product, the construction and the destination. We will come back with a considered quotation and the right manufacturing partner.',
+  title = 'Send us your requirement.',
+  body = 'Share the product, the specification and the destination. We will come back with a considered response and the right manufacturing partner.',
   primaryLabel = 'Request a Quote',
   primaryTo = '/request-a-quote',
   secondaryLabel = 'Contact',
@@ -16,7 +16,7 @@ export function CtaBand({
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
           <div className="lg:col-span-7">
             <Reveal>
-              <h2 className="text-[1.9rem] leading-[1.15] text-ivory sm:text-[2.4rem]">{title}</h2>
+              <h2 className="font-serif text-[1.9rem] font-normal leading-[1.15] tracking-[-0.015em] text-ivory sm:text-[2.5rem]">{title}</h2>
             </Reveal>
             <Reveal delay={0.06}>
               <p className="mt-5 max-w-xl text-[1.02rem] leading-[1.7] text-ivory/65">{body}</p>

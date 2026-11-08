@@ -1,12 +1,13 @@
 import { Seo } from '../components/ui/Seo'
+import { CtaBand } from '../components/ui/CtaBand'
 import { Hero } from '../components/home/Hero'
-import { FibcShowcase } from '../components/home/FibcShowcase'
-import { ProductIndex } from '../components/home/ProductIndex'
-import { ContainerConcept } from '../components/home/ContainerConcept'
-import { FromSpecToSupply } from '../components/home/FromSpecToSupply'
-import { GlobalReach } from '../components/home/GlobalReach'
-import { EnquiryInvite } from '../components/home/EnquiryInvite'
-import { CertificationsCompliance } from '../components/ui/CertificationsCompliance'
+import { AboutIntro } from '../components/home/AboutIntro'
+import { YarnDivision } from '../components/home/YarnDivision'
+import { FabricsDivision } from '../components/home/FabricsDivision'
+import { AdditionalCapabilities } from '../components/home/AdditionalCapabilities'
+import { IndiaSourcing } from '../components/home/IndiaSourcing'
+import { ConePackaging } from '../components/textile/ConePackaging'
+import { Approach } from '../components/textile/Approach'
 
 export default function Home() {
   return (
@@ -14,16 +15,22 @@ export default function Home() {
       <Seo
         path="/"
         title={null}
-        description="Ventura supplies FIBC and jumbo bags sourced from capable Indian manufacturing partners, for international buyers — plus PP & HDPE woven bags, BOPP laminated bags, jute bags, packaging tapes and corrugated cartons as complementary packaging from India."
+        description="Ventura Exports is an India-based export and sourcing company supplying cotton, polyester and blended yarns and fabrics to international buyers — with customised cone and export packaging, and coordination with Indian manufacturing partners."
       />
       <Hero />
-      <FibcShowcase />
-      <FromSpecToSupply />
-      <ProductIndex />
-      <ContainerConcept />
-      <GlobalReach />
-      <CertificationsCompliance />
-      <EnquiryInvite />
+      <AboutIntro />
+      <YarnDivision />
+      <ConePackaging variant="summary" />
+      <FabricsDivision />
+      <AdditionalCapabilities />
+      <Approach />
+      <IndiaSourcing />
+      <CtaBand
+        title="Let’s discuss your sourcing requirement."
+        body="Send the product, specification and destination. We will respond with a considered answer and the right manufacturing partner."
+        primaryLabel="Request a Quote"
+        secondaryLabel="Contact"
+      />
     </>
   )
 }

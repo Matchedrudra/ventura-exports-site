@@ -4,7 +4,7 @@
 // Required environment variables (see .env.example):
 //   RESEND_API_KEY   — Resend API key
 //   ENQUIRY_FROM     — verified sender, e.g. "Ventura Exports <enquiries@venturaexports.in>"
-//   ENQUIRY_TO       — destination, e.g. rudra@venturaexports.in
+//   ENQUIRY_TO       — destination, e.g. info@venturaexports.in
 // Optional:
 //   ENQUIRY_CC       — comma-separated extra recipients
 //   ENQUIRY_TOKEN    — shared secret for server-to-server callers; if set, a
@@ -69,18 +69,60 @@ function normalizeAttachment(a) {
 // Validation is intentionally inlined (not imported from src/) so this
 // function is fully self-contained for the Vercel Node runtime. It mirrors
 // src/lib/validation.js — keep the two in sync.
-const PRODUCT_OPTIONS = [
-  'BOPP Laminated Bags',
-  'PP & HDPE Woven Bags',
-  'FIBC / Jumbo Bags',
-  'Customized Woven Packaging',
-  'Corrugated Boxes & Cartons',
-  'Packaging Tapes',
-  'Jute Bags',
-  'Industrial Filter Bags',
-  'Industrial & Specialized Packaging',
-  'Other Packaging Requirement',
-]
+const PRODUCT_TYPES = {
+  Yarns: [
+    '100% Cotton Yarn',
+    'Combed Cotton Yarn',
+    'Carded Cotton Yarn',
+    'Ring Spun Cotton Yarn',
+    'Open End Cotton Yarn',
+    'Compact Cotton Yarn',
+    'Polyester Spun Yarn',
+    'Polyester Filament Yarn',
+    'Textured Polyester Yarn',
+    'Polyester Cotton Yarn',
+    'Cotton Viscose Blend Yarn',
+    'Other Blended Yarn',
+    'Other Yarn',
+  ],
+  Fabrics: [
+    'Cotton Fabric',
+    'Polyester Fabric',
+    'Cotton-Polyester Blended Fabric',
+    'Knitted Fabric',
+    'Woven Fabric',
+    'Other Fabric',
+  ],
+  'FIBC Bags': [
+    'Standard Bag',
+    'U-Panel Bag',
+    'Circular Bag',
+    'Baffle Bag (Q-Bag)',
+    'Tunnel Lift Bag',
+    'Full Loop Bag',
+    'Conductive Bag (Type-C)',
+    'Dissipative Bag (Type-D)',
+    'Other / not sure yet',
+  ],
+  'Spices & Agro Commodities': [
+    'Indian Spices',
+    'Dehydrated Onion',
+    'Dehydrated Garlic',
+    'Other Agricultural Commodity',
+  ],
+  'Other Products': [
+    'PP & HDPE Woven Bags',
+    'BOPP Laminated Bags',
+    'Jute Bags',
+    'Packaging Tapes',
+    'Corrugated Boxes & Cartons',
+    'Customized Woven Packaging',
+    'Industrial Filter Bags',
+    'Industrial & Specialized Packaging',
+    'Other Product',
+  ],
+}
+const CATEGORY_OPTIONS = Object.keys(PRODUCT_TYPES)
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const blank = (v) => String(v || '').trim().length === 0
 
@@ -92,9 +134,11 @@ function validateEnquiry(data = {}) {
   else if (!EMAIL_RE.test(String(data.email).trim()))
     errors.email = 'Please enter a valid email address.'
   if (blank(data.country)) errors.country = 'Please enter your country.'
-  if (blank(data.product)) errors.product = 'Please select a product.'
-  else if (!PRODUCT_OPTIONS.includes(data.product))
-    errors.product = 'Please select a valid product.'
+  if (blank(data.category)) errors.category = 'Please select a product category.'
+  else if (!CATEGORY_OPTIONS.includes(data.category))
+    errors.category = 'Please select a valid category.'
+  else if (!blank(data.product) && !PRODUCT_TYPES[data.category].includes(data.product))
+    errors.product = 'Please select a valid product type.'
   if (String(data.message || '').length > 4000)
     errors.message = 'Please keep the message under 4000 characters.'
   return errors
@@ -106,23 +150,39 @@ const FIELD_LABELS = {
   email: 'Email',
   country: 'Country',
   phone: 'Phone / WhatsApp',
-  product: 'Product',
+  category: 'Product category',
+  product: 'Product type',
+  specification: 'Specification (yarn count / fabric / requirement)',
+  composition: 'Composition',
+  yarnPly: 'Single / double',
+  spinning: 'Ring spun / open end / compact',
+  gsm: 'GSM',
+  width: 'Width',
+  construction: 'Construction',
+  colour: 'Colour',
+  finish: 'Finish',
   quantity: 'Quantity',
+  packaging: 'Preferred packaging',
   dimensions: 'Dimensions',
   swl: 'SWL / Capacity',
-  construction: 'Construction',
   filling: 'Filling',
   discharge: 'Discharge',
   liner: 'Liner',
-  gsm: 'Fabric weight (GSM)',
   lamination: 'Lamination',
   printing: 'Printing',
   application: 'Application',
   operatingTemp: 'Operating temperature',
-  specification: 'Specification / requirement',
   destinationCountry: 'Destination country',
   destinationPort: 'Destination port / city',
 }
+
+// Fields shown under "Product requirement", in order. Blank ones are skipped.
+const PRODUCT_FIELDS = [
+  'category', 'product', 'specification', 'composition', 'yarnPly', 'spinning',
+  'gsm', 'width', 'construction', 'colour', 'finish', 'quantity', 'packaging',
+  'dimensions', 'swl', 'filling', 'discharge', 'liner', 'lamination', 'printing',
+  'application', 'operatingTemp',
+]
 
 const clean = (v) => String(v ?? '').trim()
 const esc = (s) =>
@@ -160,22 +220,7 @@ function buildHtml(d, meta) {
         [FIELD_LABELS.country, d.country],
         [FIELD_LABELS.phone, d.phone],
       ])}
-      ${section('Product requirement', [
-        [FIELD_LABELS.product, d.product],
-        [FIELD_LABELS.quantity, d.quantity],
-        [FIELD_LABELS.dimensions, d.dimensions],
-        [FIELD_LABELS.swl, d.swl],
-        [FIELD_LABELS.construction, d.construction],
-        [FIELD_LABELS.filling, d.filling],
-        [FIELD_LABELS.discharge, d.discharge],
-        [FIELD_LABELS.liner, d.liner],
-        [FIELD_LABELS.gsm, d.gsm],
-        [FIELD_LABELS.lamination, d.lamination],
-        [FIELD_LABELS.printing, d.printing],
-        [FIELD_LABELS.application, d.application],
-        [FIELD_LABELS.operatingTemp, d.operatingTemp],
-        [FIELD_LABELS.specification, d.specification],
-      ])}
+      ${section('Product requirement', PRODUCT_FIELDS.map((k) => [FIELD_LABELS[k], d[k]]))}
       ${section('Destination', [
         [FIELD_LABELS.destinationCountry, d.destinationCountry],
         [FIELD_LABELS.destinationPort, d.destinationPort],
@@ -210,20 +255,7 @@ function buildText(d, meta) {
     line('Country', d.country) +
     line('Phone', d.phone) +
     `\nPRODUCT REQUIREMENT\n` +
-    line('Product', d.product) +
-    line('Quantity', d.quantity) +
-    line('Dimensions', d.dimensions) +
-    line('SWL / Capacity', d.swl) +
-    line('Construction', d.construction) +
-    line('Filling', d.filling) +
-    line('Discharge', d.discharge) +
-    line('Liner', d.liner) +
-    line('Fabric weight (GSM)', d.gsm) +
-    line('Lamination', d.lamination) +
-    line('Printing', d.printing) +
-    line('Application', d.application) +
-    line('Operating temperature', d.operatingTemp) +
-    line('Specification / requirement', d.specification) +
+    PRODUCT_FIELDS.map((k) => line(FIELD_LABELS[k], d[k])).join('') +
     `\nDESTINATION\n` +
     line('Country', d.destinationCountry) +
     line('Port / City', d.destinationPort) +
@@ -287,9 +319,8 @@ export default async function handler(req, res) {
 
   const data = {}
   for (const key of [
-    'fullName', 'company', 'email', 'country', 'phone', 'product', 'quantity',
-    'dimensions', 'swl', 'construction', 'filling', 'discharge', 'liner', 'gsm',
-    'lamination', 'printing', 'application', 'operatingTemp', 'specification',
+    'fullName', 'company', 'email', 'country', 'phone', 'category', 'product',
+    ...PRODUCT_FIELDS.filter((k) => k !== 'category' && k !== 'product'),
     'destinationCountry', 'destinationPort', 'message',
   ]) {
     const long = key === 'message' || key === 'specification'
@@ -303,7 +334,7 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.RESEND_API_KEY
   const from = process.env.ENQUIRY_FROM || 'Ventura Exports <onboarding@resend.dev>'
-  const to = process.env.ENQUIRY_TO || 'rudra@venturaexports.in'
+  const to = process.env.ENQUIRY_TO || 'info@venturaexports.in'
   const cc = (process.env.ENQUIRY_CC || '')
     .split(',')
     .map((s) => s.trim())
@@ -326,7 +357,7 @@ export default async function handler(req, res) {
     ip,
   }
 
-  const subject = `Enquiry — ${data.product}${data.company ? ` — ${data.company}` : ''}`
+  const subject = `Enquiry — ${data.category}${data.product ? ` / ${data.product}` : ''}${data.company ? ` — ${data.company}` : ''}`
 
   // Staging / QA escape hatch: render the email but do not send it.
   if (apiKey === 'TEST_MODE') {

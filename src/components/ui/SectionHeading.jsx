@@ -39,7 +39,7 @@ export function SectionHeading({
       <Reveal delay={0.05}>
         <TitleTag
           className={cn(
-            'text-[1.7rem] leading-[1.15] sm:text-[2.1rem] lg:text-[2.5rem]',
+            'font-serif text-[1.8rem] font-normal leading-[1.14] tracking-[-0.015em] sm:text-[2.2rem] lg:text-[2.65rem]',
             light ? 'text-ivory' : 'text-ink',
           )}
         >

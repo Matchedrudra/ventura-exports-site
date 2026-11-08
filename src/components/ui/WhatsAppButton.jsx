@@ -7,7 +7,7 @@ import { contact } from '../../data/site'
  */
 export function WhatsAppButton() {
   const href = `${contact.whatsappHref}?text=${encodeURIComponent(
-    "Hello Ventura — I'd like to discuss a packaging requirement.",
+    "Hello Ventura — I'd like to discuss a textile sourcing requirement.",
   )}`
   return (
     <a

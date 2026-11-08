@@ -4,11 +4,11 @@ import { Layout } from './components/layout/Layout'
 
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
-const Products = lazy(() => import('./pages/Products'))
+const Yarns = lazy(() => import('./pages/Yarns'))
+const Fabrics = lazy(() => import('./pages/Fabrics'))
+const OtherProducts = lazy(() => import('./pages/OtherProducts'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
-const Sourcing = lazy(() => import('./pages/Sourcing'))
-const Markets = lazy(() => import('./pages/Markets'))
-const Quality = lazy(() => import('./pages/Quality'))
+const QualityPackaging = lazy(() => import('./pages/QualityPackaging'))
 const Quote = lazy(() => import('./pages/Quote'))
 const Contact = lazy(() => import('./pages/Contact'))
 const NotFound = lazy(() => import('./pages/NotFound'))
@@ -24,12 +24,16 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="products" element={<Products />} />
+          <Route path="yarns" element={<Yarns />} />
+          <Route path="fabrics" element={<Fabrics />} />
+          <Route path="other-products" element={<OtherProducts />} />
+          <Route path="products" element={<Navigate to="/other-products" replace />} />
           <Route path="products/:slug" element={<ProductDetail />} />
-          <Route path="how-we-work" element={<Sourcing />} />
-          <Route path="sourcing" element={<Navigate to="/how-we-work" replace />} />
-          <Route path="markets" element={<Markets />} />
-          <Route path="quality" element={<Quality />} />
+          <Route path="quality-packaging" element={<QualityPackaging />} />
+          <Route path="quality" element={<Navigate to="/quality-packaging" replace />} />
+          <Route path="how-we-work" element={<Navigate to="/quality-packaging#approach" replace />} />
+          <Route path="sourcing" element={<Navigate to="/quality-packaging#approach" replace />} />
+          <Route path="markets" element={<Navigate to="/#markets" replace />} />
           <Route path="request-a-quote" element={<Quote />} />
           <Route path="contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />

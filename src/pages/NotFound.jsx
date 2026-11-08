@@ -13,14 +13,14 @@ export default function NotFound() {
             This page could not be found.
           </h1>
           <p className="mt-5 max-w-md text-[1.02rem] leading-relaxed text-ink/65">
-            The link may be out of date. Head back to the homepage or the product index.
+            The link may be out of date. Head back to the homepage or browse our yarns.
           </p>
           <div className="mt-9 flex flex-wrap gap-x-3 gap-y-3">
             <Button to="/" variant="solid">
               Home
             </Button>
-            <Button to="/products" variant="link">
-              Products
+            <Button to="/yarns" variant="link">
+              Yarns
             </Button>
           </div>
         </Container>

@@ -6,61 +6,54 @@ export const site = {
   legalName: 'Ventura Exports',
   domain: 'venturaexports.in',
   url: 'https://www.venturaexports.in',
-  tagline: 'Packaging solutions, sourced from India.',
+  tagline: 'Your Trusted Partner in Global Textile Sourcing.',
+  taglineAlt: 'Indian Textile Excellence. Global Trade Partnerships.',
   label: '5+ years · Indian sourcing · Global supply',
   experience: '5+ years',
   descriptionShort:
-    'Ventura connects international buyers with capable Indian manufacturing partners for BOPP laminated bags, FIBC, woven bags, jute packaging, cartons and customized packaging solutions.',
-  positioning: 'Packaging sourcing & supply from India.',
+    'Ventura Exports connects international buyers with reliable Indian manufacturing partners for cotton, polyester and blended yarns, fabrics and textile solutions — with customised specifications, export packaging and shipment coordination.',
+  positioning: 'Textile sourcing & export from India.',
 }
 
 export const contact = {
-  email: 'rudra@venturaexports.in',
+  email: 'info@venturaexports.in',
   phone: '8160959023',
   phoneDisplay: '+91 81609 59023',
   phoneHref: 'tel:+918160959023',
   whatsappHref: 'https://wa.me/918160959023',
-  location: 'Ahmedabad, Gujarat, India',
+  location: 'Gujarat, India',
   website: 'venturaexports.in',
   hours: 'Monday–Saturday, 10:00–19:00 IST',
 }
 
 export const nav = [
-  { label: 'Products', to: '/products' },
-  { label: 'How We Work', to: '/how-we-work' },
-  { label: 'Quality', to: '/quality' },
-  { label: 'Markets', to: '/markets' },
-  { label: 'About', to: '/about' },
+  { label: 'Home', to: '/', end: true },
+  { label: 'About Us', to: '/about' },
+  { label: 'Yarns', to: '/yarns' },
+  { label: 'Fabrics', to: '/fabrics' },
+  { label: 'Other Products', to: '/other-products' },
+  { label: 'Quality & Packaging', to: '/quality-packaging' },
   { label: 'Contact', to: '/contact' },
 ]
 
 export const footerNav = [
   {
-    heading: 'Company',
-    links: [
-      { label: 'About', to: '/about' },
-      { label: 'How We Work', to: '/how-we-work' },
-      { label: 'Quality', to: '/quality' },
-      { label: 'Markets', to: '/markets' },
-    ],
-  },
-  {
     heading: 'Products',
     links: [
-      { label: 'BOPP Laminated Bags', to: '/products/bopp-laminated-bags' },
-      { label: 'PP & HDPE Woven Bags', to: '/products/pp-hdpe-woven-bags' },
-      { label: 'FIBC / Jumbo Bags', to: '/products/fibc-jumbo-bags' },
-      { label: 'Customized Woven Packaging', to: '/products/customized-woven-packaging' },
-      { label: 'Corrugated Boxes & Cartons', to: '/products/corrugated-boxes-cartons' },
-      { label: 'Packaging Tapes', to: '/products/packaging-tapes' },
-      { label: 'Jute Bags', to: '/products/jute-bags' },
-      { label: 'Industrial Filter Bags', to: '/products/industrial-filter-bags' },
+      { label: 'Cotton Yarn', to: '/yarns#cotton-yarn' },
+      { label: 'Polyester Yarn', to: '/yarns#polyester-yarn' },
+      { label: 'Blended Yarn', to: '/yarns#blended-yarn' },
+      { label: 'Speciality Yarns', to: '/yarns#other-yarns' },
+      { label: 'Fabrics', to: '/fabrics' },
+      { label: 'FIBC Bags', to: '/products/fibc-jumbo-bags' },
+      { label: 'Spices', to: '/other-products#agro' },
     ],
   },
   {
-    heading: 'Enquiries',
+    heading: 'Company',
     links: [
-      { label: 'Request a Quote', to: '/request-a-quote' },
+      { label: 'About Us', to: '/about' },
+      { label: 'Our Approach', to: '/quality-packaging#approach' },
       { label: 'Contact', to: '/contact' },
     ],
   },

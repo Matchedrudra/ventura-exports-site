@@ -88,45 +88,48 @@ const PRODUCTS = [
 const PAGES = [
   {
     path: '/about',
-    title: 'About',
+    title: 'About Us',
     description:
-      'Ventura is an India-based packaging sourcing and supply company connecting international buyers with capable Indian manufacturing partners across flexible, woven, paper and commercial packaging.',
+      'Ventura Exports is an India-based export and sourcing company, headquartered in Gujarat, supplying yarns and fabrics to international buyers through reliable Indian manufacturing partners.',
   },
   {
-    path: '/products',
-    title: 'Products',
+    path: '/yarns',
+    title: 'Yarns',
     description:
-      "Ventura's packaging portfolio: BOPP laminated bags, PP & HDPE woven bags, FIBC and jumbo bags, customized woven packaging, corrugated boxes and cartons, packaging tapes, jute bags and specialized packaging — sourced from Indian manufacturing partners to specification.",
+      'Cotton, polyester and blended yarns sourced from Indian manufacturing partners — combed, carded, ring spun, open end and compact cotton; spun, filament and textured polyester; and blends. Specify count, composition and cone packaging.',
+    image: '/images/textile/spinning-line-india.jpg',
   },
   {
-    path: '/how-we-work',
-    title: 'How We Work',
+    path: '/fabrics',
+    title: 'Fabrics',
     description:
-      'How Ventura works: understand, source, validate, supply — the coordination process between international buyers and capable Indian manufacturing partners.',
+      "Cotton, polyester and cotton-polyester blended fabrics, knitted and woven, sourced through Ventura Exports' Indian manufacturing network. Specify GSM, width, construction, colour and finish.",
+    image: '/images/textile/fabric-rolls-factory.jpg',
   },
   {
-    path: '/quality',
-    title: 'Quality',
+    path: '/other-products',
+    title: 'Other Products',
     description:
-      'Every Ventura order is built around an agreed specification — from the buyer’s requirements and manufacturing through to the batch documentation that accompanies each shipment.',
+      'Additional sourcing capabilities from Ventura Exports: FIBC jumbo bags, PP woven bags and industrial packaging, plus Indian spices, dehydrated onion, dehydrated garlic and other agricultural commodities.',
   },
   {
-    path: '/markets',
-    title: 'Markets',
+    path: '/quality-packaging',
+    title: 'Quality & Packaging',
     description:
-      'Ventura supports international buyers sourcing packaging from India — BOPP and woven bags, FIBC, cartons and customized solutions. Europe, the Middle East, North America, Africa and Asia & Oceania are among the key market regions.',
+      'How Ventura Exports works: understanding buyer specifications, matching Indian manufacturing partners, and coordinating cone configuration, export packaging, documentation and shipment for yarns and fabrics.',
+    image: '/images/textile/white-cones-winder.jpg',
   },
   {
     path: '/contact',
     title: 'Contact',
     description:
-      'Contact Ventura — Ahmedabad, Gujarat, India. Send a packaging enquiry through the quote form, or reach us by email, phone or WhatsApp.',
+      'Contact Ventura Exports — Gujarat, India. Email info@venturaexports.in, call or WhatsApp, or send a product enquiry for yarns, fabrics and other products.',
   },
   {
     path: '/request-a-quote',
     title: 'Request a Quote',
     description:
-      'Send Ventura a B2B enquiry for FIBC, PP & HDPE woven, BOPP laminated, jute bags, packaging tapes, corrugated or industrial filter bags. The form reaches us with the specification structured.',
+      'Send Ventura Exports a B2B enquiry for yarns, fabrics, FIBC bags, spices and other products. The form reaches us with your specification, packaging preference and destination structured.',
   },
   ...PRODUCTS.map((p) => ({
     path: `/products/${p.slug}`,
@@ -142,7 +145,7 @@ const text = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 function rewrite(html, page) {
   const fullTitle = page.title
     ? `${page.title} — Ventura`
-    : 'Ventura Exports | FIBC & Jumbo Bags from India'
+    : 'Ventura Exports | Yarns & Fabrics from India'
   const url = `${SITE}${page.path}`
   const img = page.image ? `${SITE}${page.image}` : `${SITE}/og-image.jpg`
   const desc = page.description

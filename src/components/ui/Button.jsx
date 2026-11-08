@@ -24,6 +24,8 @@ const variants = {
     'bg-ink text-ivory px-7 py-3.5 text-sm hover:bg-ink-soft',
   outline:
     'border border-ink/25 text-ink px-7 py-3.5 text-sm hover:border-ink hover:bg-ink hover:text-ivory',
+  light:
+    'bg-ivory text-ink px-7 py-3.5 text-sm hover:bg-white',
   outlineLight:
     'border border-white/25 text-ivory px-7 py-3.5 text-sm hover:border-white hover:bg-white hover:text-ink',
   link: 'text-sm text-ink hover:text-gold px-0 py-1',

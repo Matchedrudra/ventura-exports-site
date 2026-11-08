@@ -22,7 +22,7 @@ export function PageHeader({ label, title, lead, aside, className }) {
               </Reveal>
             )}
             <Reveal delay={0.05}>
-              <h1 className="text-[2.1rem] leading-[1.08] text-ivory sm:text-[2.9rem] lg:text-[3.4rem]">
+              <h1 className="font-serif text-[2.2rem] font-normal leading-[1.08] tracking-[-0.015em] text-ivory sm:text-[3rem] lg:text-[3.5rem]">
                 {title}
               </h1>
             </Reveal>

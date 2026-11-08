@@ -5,10 +5,10 @@ import { QuoteForm } from '../components/quote/QuoteForm'
 import { contact } from '../data/site'
 
 const checklist = [
-  'Product and construction',
-  'Quantity and target timeline',
-  'Dimensions and capacity',
-  'Printing, lamination and liner',
+  'Product category and type',
+  'Yarn count or fabric specification',
+  'Composition and quantity',
+  'Preferred packaging',
   'Destination port and documentation',
 ]
 
@@ -18,7 +18,7 @@ export default function Quote() {
       <Seo
         path="/request-a-quote"
         title="Request a Quote"
-        description="Send Ventura a B2B enquiry for FIBC, PP & HDPE woven, BOPP laminated, jute bags, packaging tapes, corrugated or industrial filter bags. The form reaches us with the specification structured."
+        description="Send Ventura Exports a B2B enquiry for yarns, fabrics, FIBC bags, spices and other products. The form reaches us with your specification, packaging preference and destination structured."
       />
 
       <header className="bg-ink text-ivory pt-16 pb-14 sm:pt-24 sm:pb-16">
@@ -32,16 +32,16 @@ export default function Quote() {
               </Reveal>
               <Reveal delay={0.05}>
                 <h1 className="text-[2.1rem] leading-[1.08] text-ivory sm:text-[2.8rem] lg:text-[3.2rem]">
-                  Send us a specification.
+                  Request a Quote.
                 </h1>
               </Reveal>
             </div>
             <div className="lg:col-span-5 lg:pt-2">
               <Reveal delay={0.1}>
                 <p className="text-[1.02rem] leading-[1.75] text-ivory/65">
-                  The more detail you provide, the more precise the quotation. If you are still
-                  scoping the requirement, send what you have — we will follow up with the open
-                  questions.
+                  The more detail you provide, the more precise the response. Specifications and
+                  availability are confirmed individually — if you are still scoping, send what
+                  you have and we will follow up with the open questions.
                 </p>
               </Reveal>
             </div>

@@ -1,9 +1,9 @@
 # Ventura Exports
 
-Marketing and enquiry website for **Ventura Exports** — a B2B sourcing and
-export‑coordination business connecting international buyers with selected Indian
-manufacturing partners for FIBC, PP woven bags, HDPE woven bags and customized
-woven packaging.
+Marketing and enquiry website for **Ventura Exports** — an India-based export and
+sourcing company connecting international buyers with reliable Indian
+manufacturing partners. Primary business: **yarns and fabrics**. Secondary:
+industrial packaging (FIBC, woven bags and others) and agro commodities.
 
 **Stack:** React 18 · Vite 5 · Tailwind CSS 3 · React Router 6 · a Vercel
 serverless function for the enquiry email (Resend). No CSS/animation frameworks —
@@ -46,18 +46,25 @@ src/
     layout/               Header, Footer, Layout
     ui/                    Button, Container, Reveal, SectionHeading, Figure,
                            PageHeader, CtaBand, Logo, Seo
-    home/                  Hero, ProductIndex, PositioningBlock, Interlude,
-                           ProcessStrip, MarketsPreview
+    home/                  Hero, AboutIntro, YarnDivision, FabricsDivision,
+                           AdditionalCapabilities, IndiaSourcing (map)
+    textile/               ConePackaging, ConeDiagrams, Approach
     products/             SpecTable, OptionGroup, FibcTypeCard
-    quote/                QuoteForm, Field
-  data/                    products · site · process · markets · quality
-  hooks/                   usePrefersReducedMotion · useScrollTop
+    quote/                QuoteForm (category-driven), Field
+  data/                    textiles (yarns/fabrics/packaging/approach) · products
+                           (packaging) · site
+  hooks/                   usePrefersReducedMotion · useScrollTop (hash-aware)
   lib/                     cn · validation  (shared by form + API)
-  pages/                   Home, About, Products, ProductDetail, Sourcing,
-                           Markets, Quality, Quote, Contact, NotFound
+  pages/                   Home, About, Yarns, Fabrics, OtherProducts,
+                           ProductDetail, QualityPackaging, Quote, Contact, NotFound
 ```
 
-Product content in `src/data/products.js` is the single source of truth. FIBC
+Routes: `/`, `/about`, `/yarns`, `/fabrics`, `/other-products`,
+`/products/:slug` (packaging detail pages), `/quality-packaging`,
+`/request-a-quote`, `/contact`. Legacy `/products`, `/quality`, `/how-we-work`
+and `/markets` redirect.
+
+Packaging product content in `src/data/products.js` is the single source of truth for the detail pages. Textile content lives in `src/data/textiles.js`; nothing there claims stock, certifications or facilities. The packaging notes: FIBC
 construction types, safe working loads, safety factors and technical options come
 from the manufacturing partner's reference catalogue; woven‑sack specifications
 are intentionally left as "confirmed per specification" and agreed per enquiry.
@@ -72,7 +79,7 @@ The handler (`api/enquiry.js`):
 
 1. rejects non‑POST, checks an optional shared‑secret header,
 2. drops honeypot submissions silently (`200`),
-3. validates the payload (rules mirror `src/lib/validation.js`),
+3. validates the payload (rules mirror `src/lib/validation.js` — keep the category/type lists in both in sync),
 4. builds a structured HTML + plain‑text email,
 5. sends it via **Resend** with `Reply‑To` set to the buyer's address,
 6. returns `200 { ok: true }` on success; the form only shows the success
@@ -84,7 +91,7 @@ The handler (`api/enquiry.js`):
 |-------------------|----------|-------|
 | `RESEND_API_KEY`  | yes      | from <https://resend.com/api-keys>. `TEST_MODE` renders without sending. |
 | `ENQUIRY_FROM`    | yes      | e.g. `Ventura Exports <enquiries@venturaexports.in>` — the domain must be verified in Resend. |
-| `ENQUIRY_TO`      | yes      | `rudra@venturaexports.in` |
+| `ENQUIRY_TO`      | yes      | `info@venturaexports.in` |
 | `ENQUIRY_CC`      | no       | comma‑separated extra recipients |
 | `ENQUIRY_TOKEN`   | no       | if set, the client must send it as the `x-ventura-token` header |
 

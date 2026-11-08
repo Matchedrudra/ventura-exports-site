@@ -40,7 +40,7 @@ export default function ProductDetail() {
   if (SLUG_ALIASES[slug]) return <Navigate to={`/products/${SLUG_ALIASES[slug]}`} replace />
 
   const product = getProduct(slug)
-  if (!product) return <Navigate to="/products" replace />
+  if (!product) return <Navigate to="/other-products" replace />
 
   const gallery = productGalleries[slug] || []
   const galleryImages = gallery.map((g) => ({ src: g.src, alt: g.caption }))
@@ -71,7 +71,7 @@ export default function ProductDetail() {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
-        { '@type': 'ListItem', position: 2, name: 'Products', item: `${siteUrl}/products` },
+        { '@type': 'ListItem', position: 2, name: 'Other Products', item: `${siteUrl}/other-products` },
         { '@type': 'ListItem', position: 3, name: product.name, item: canonical },
       ],
     },
@@ -91,8 +91,8 @@ export default function ProductDetail() {
       <header className="bg-ink text-ivory pt-12 pb-14 sm:pt-16 sm:pb-16">
         <Container>
           <nav className="text-[0.78rem] uppercase tracking-widelabel text-ivory/65" aria-label="Breadcrumb">
-            <Link to="/products" className="transition-colors hover:text-ivory">
-              Products
+            <Link to="/other-products" className="transition-colors hover:text-ivory">
+              Other Products
             </Link>
             <span className="mx-2 text-ivory/25">/</span>
             <span className="text-ivory/75">{product.shortName}</span>
@@ -107,7 +107,7 @@ export default function ProductDetail() {
                 </span>
               </div>
               <Reveal delay={0.04}>
-                <h1 className="mt-4 text-[2.1rem] leading-[1.08] text-ivory sm:text-[2.8rem] lg:text-[3.1rem]">
+                <h1 className="mt-4 font-serif text-[2.2rem] font-normal leading-[1.08] tracking-[-0.015em] text-ivory sm:text-[2.9rem] lg:text-[3.2rem]">
                   {product.name}
                 </h1>
               </Reveal>
