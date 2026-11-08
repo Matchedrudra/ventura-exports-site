@@ -21,14 +21,14 @@ const base =
 
 const variants = {
   solid:
-    'bg-ink text-ivory px-7 py-3.5 text-sm hover:bg-ink-soft',
+    'bg-ink text-ivory px-6 py-3 text-[0.8rem] tracking-[0.04em] hover:bg-ink-soft',
   outline:
-    'border border-ink/25 text-ink px-7 py-3.5 text-sm hover:border-ink hover:bg-ink hover:text-ivory',
+    'border border-ink/25 text-ink px-6 py-3 text-[0.8rem] tracking-[0.04em] hover:border-ink hover:bg-ink hover:text-ivory',
   light:
-    'bg-ivory text-ink px-7 py-3.5 text-sm hover:bg-white',
+    'bg-ivory text-ink px-6 py-3 text-[0.8rem] tracking-[0.04em] hover:bg-white',
   outlineLight:
-    'border border-white/25 text-ivory px-7 py-3.5 text-sm hover:border-white hover:bg-white hover:text-ink',
-  link: 'text-sm text-ink hover:text-gold px-0 py-1',
+    'border border-white/30 text-ivory px-6 py-3 text-[0.8rem] tracking-[0.04em] hover:border-white hover:bg-white hover:text-ink',
+  link: 'text-[0.82rem] tracking-[0.02em] text-ink hover:text-gold px-0 py-1',
 }
 
 export function Button({

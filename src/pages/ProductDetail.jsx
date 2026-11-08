@@ -107,7 +107,7 @@ export default function ProductDetail() {
                 </span>
               </div>
               <Reveal delay={0.04}>
-                <h1 className="mt-4 font-serif text-[2.2rem] font-normal leading-[1.08] tracking-[-0.015em] text-ivory sm:text-[2.9rem] lg:text-[3.2rem]">
+                <h1 className="mt-4 font-serif text-[2.2rem] font-medium leading-[1.08] tracking-[-0.015em] text-ivory sm:text-[2.6rem] lg:text-[2.9rem]">
                   {product.name}
                 </h1>
               </Reveal>
@@ -126,7 +126,7 @@ export default function ProductDetail() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
-              <div className="max-w-prose space-y-5 text-[1.02rem] leading-[1.8] text-ink/75">
+              <div className="max-w-prose space-y-5 text-[1.02rem] leading-[1.8] text-charcoal">
                 {product.intro.map((p, i) => (
                   <Reveal key={i} delay={i * 0.05}>
                     <p>{p}</p>
@@ -135,7 +135,7 @@ export default function ProductDetail() {
               </div>
               {product.catalogueBacked && (
                 <Reveal delay={0.16}>
-                  <p className="mt-8 border-l-2 border-gold/50 pl-4 text-[0.86rem] leading-relaxed text-ink/55">
+                  <p className="mt-8 border-l-2 border-gold/50 pl-4 text-[0.86rem] leading-relaxed text-charcoal/75">
                     Construction types, safe working loads, safety factors and technical options on
                     this page follow the manufacturing partner’s reference product catalogue
                     ({catalogueYear}). Dimensions and any value shown as “confirmed per specification”
@@ -175,7 +175,7 @@ export default function ProductDetail() {
                     className="flex items-center justify-center overflow-hidden bg-gradient-to-br from-ivory-deep to-line/60"
                     style={{ aspectRatio: product.heroRatio || '4 / 3' }}
                   >
-                    <span className="px-8 text-center font-serif text-[1.5rem] leading-snug text-ink/55">
+                    <span className="px-8 text-center font-serif text-[1.5rem] leading-snug text-charcoal/75">
                       {product.name}
                     </span>
                   </div>
@@ -192,7 +192,7 @@ export default function ProductDetail() {
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-4">
               <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.8rem]">Specification</h2>
-              <p className="mt-4 text-[0.92rem] leading-relaxed text-ink/55">
+              <p className="mt-4 text-[0.92rem] leading-relaxed text-charcoal/75">
                 A working summary. The full sheet is confirmed with the partner before production.
               </p>
             </div>
@@ -211,7 +211,7 @@ export default function ProductDetail() {
               <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
                 Construction types
               </h2>
-              <p className="mt-4 text-[0.98rem] leading-relaxed text-ink/60">
+              <p className="mt-4 text-[0.98rem] leading-relaxed text-charcoal/75">
                 Eight FIBC constructions. All are rated 500–2000 kg SWL at a 5:1 or 6:1 safety
                 factor; the construction is chosen for the product and the handling method, and the
                 final specification is configured to your requirement.
@@ -232,7 +232,7 @@ export default function ProductDetail() {
               <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
                 Technical options
               </h2>
-              <p className="mt-4 text-[0.98rem] leading-relaxed text-ink/60">
+              <p className="mt-4 text-[0.98rem] leading-relaxed text-charcoal/75">
                 Loop, filling, discharge, closure, liner, fabric and print options are combined into
                 one build specification per order.
               </p>
@@ -253,7 +253,7 @@ export default function ProductDetail() {
                 <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
                   Operating requirements
                 </h2>
-                <p className="mt-4 text-[0.92rem] leading-relaxed text-ink/55">
+                <p className="mt-4 text-[0.92rem] leading-relaxed text-charcoal/75">
                   Filter bag specifications are developed around the operating conditions and
                   filtration requirements of the application.
                 </p>
@@ -261,7 +261,7 @@ export default function ProductDetail() {
               <div className="lg:col-span-8">
                 <ul className="grid gap-x-8 gap-y-3 border-t border-line pt-6 sm:grid-cols-2">
                   {product.filterOperating.map((item) => (
-                    <li key={item} className="flex gap-3 text-[0.95rem] text-ink/75">
+                    <li key={item} className="flex gap-3 text-[0.95rem] text-charcoal">
                       <span aria-hidden="true" className="mt-2.5 h-px w-3 shrink-0 bg-gold" />
                       {item}
                     </li>
@@ -282,14 +282,14 @@ export default function ProductDetail() {
                 <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
                   What to put in the brief
                 </h2>
-                <p className="mt-4 text-[0.92rem] leading-relaxed text-ink/55">
+                <p className="mt-4 text-[0.92rem] leading-relaxed text-charcoal/75">
                   The more of this you can supply, the tighter the quotation and the first sample.
                 </p>
               </div>
               <div className="lg:col-span-8">
                 <ul className="grid gap-x-8 gap-y-3 border-t border-line pt-6 sm:grid-cols-2">
                   {product.specBrief.map((item) => (
-                    <li key={item} className="flex gap-3 text-[0.95rem] text-ink/75">
+                    <li key={item} className="flex gap-3 text-[0.95rem] text-charcoal">
                       <span aria-hidden="true" className="mt-2.5 h-px w-3 shrink-0 bg-gold" />
                       {item}
                     </li>
@@ -313,7 +313,7 @@ export default function ProductDetail() {
                 {product.applications.map((a) => (
                   <li
                     key={a}
-                    className="border-b border-line py-3.5 text-[0.98rem] text-ink/75"
+                    className="border-b border-line py-3.5 text-[0.98rem] text-charcoal"
                   >
                     {a}
                   </li>
@@ -332,7 +332,7 @@ export default function ProductDetail() {
               <h2 className="text-[1.5rem] leading-tight text-ink sm:text-[1.9rem]">
                 Packaging examples
               </h2>
-              <p className="mt-4 text-[0.98rem] leading-relaxed text-ink/60">
+              <p className="mt-4 text-[0.98rem] leading-relaxed text-charcoal/75">
                 Selected examples of available formats, constructions and finishes.
               </p>
             </div>
@@ -363,7 +363,7 @@ export default function ProductDetail() {
                         </svg>
                       </span>
                     </button>
-                    <figcaption className="mt-3 text-[0.82rem] leading-relaxed text-ink/55">
+                    <figcaption className="mt-3 text-[0.82rem] leading-relaxed text-charcoal/75">
                       {g.caption}
                     </figcaption>
                   </figure>
@@ -392,7 +392,7 @@ export default function ProductDetail() {
       <nav className="border-t border-line" aria-label="More products">
         <Container className="grid divide-y divide-line sm:grid-cols-2 sm:divide-x sm:divide-y-0">
           <Link to={`/products/${prev.slug}`} className="group flex flex-col gap-1 py-8 pr-4">
-            <span className="text-[0.72rem] uppercase tracking-widelabel text-ink/55">Previous</span>
+            <span className="text-[0.72rem] uppercase tracking-widelabel text-charcoal/75">Previous</span>
             <span className="text-[1.05rem] text-ink transition-colors group-hover:text-gold">
               ← {prev.name}
             </span>
@@ -401,7 +401,7 @@ export default function ProductDetail() {
             to={`/products/${next.slug}`}
             className="group flex flex-col gap-1 py-8 sm:items-end sm:pl-4"
           >
-            <span className="text-[0.72rem] uppercase tracking-widelabel text-ink/55">Next</span>
+            <span className="text-[0.72rem] uppercase tracking-widelabel text-charcoal/75">Next</span>
             <span className="text-[1.05rem] text-ink transition-colors group-hover:text-gold">
               {next.name} →
             </span>

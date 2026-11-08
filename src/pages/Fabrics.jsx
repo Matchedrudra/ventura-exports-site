@@ -41,12 +41,14 @@ export default function Fabrics() {
       <section className="py-16 lg:py-24">
         <Container>
           <SectionHeading label="Fabric categories" title="Six starting points for a fabric requirement." />
-          <RevealGroup className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+          <RevealGroup className="mt-12 grid gap-x-14 md:grid-cols-2">
             {fabricCategories.map((f, i) => (
-              <RevealGroup.Item key={f.slug} className="flex flex-col bg-ivory p-7 lg:p-8">
-                <span className="font-serif text-[0.95rem] text-gold">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="mt-3 text-[1.15rem] font-medium leading-snug tracking-[-0.01em] text-ink">{f.name}</h3>
-                <p className="mt-3 text-[0.92rem] leading-relaxed text-ink/60">{f.note}</p>
+              <RevealGroup.Item key={f.slug} className="border-t border-ink/15 py-6">
+                <div className="flex items-baseline gap-4">
+                  <span className="font-serif text-[1.05rem] text-gold">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="text-[1.05rem] font-medium tracking-[-0.005em] text-ink">{f.name}</h3>
+                </div>
+                <p className="mt-2 pl-9 text-[0.92rem] leading-[1.7] text-charcoal/80">{f.note}</p>
               </RevealGroup.Item>
             ))}
           </RevealGroup>
@@ -66,7 +68,7 @@ export default function Fabrics() {
                 {fabricSpecTerms.map((t) => (
                   <div key={t.term} className="grid gap-1 py-4 sm:grid-cols-[7rem_1fr] sm:gap-6">
                     <dt className="text-[0.82rem] font-semibold uppercase tracking-label text-ink">{t.term}</dt>
-                    <dd className="text-[0.93rem] leading-relaxed text-ink/65">{t.body}</dd>
+                    <dd className="text-[0.93rem] leading-relaxed text-charcoal">{t.body}</dd>
                   </div>
                 ))}
               </dl>

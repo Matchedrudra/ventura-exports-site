@@ -16,6 +16,7 @@ export default {
     extend: {
       colors: {
         paper: '#ffffff',
+        charcoal: '#3a3f48',
         ivory: {
           DEFAULT: '#f5f2ea',
           deep: '#efeadd',
@@ -31,13 +32,13 @@ export default {
         },
         gold: {
           DEFAULT: '#a8814a',
-          soft: '#c2a06a',
+          soft: '#c9ae7e',
           deep: '#8a6a3b',
         },
       },
       fontFamily: {
-        sans: ['Archivo', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        serif: ['Newsreader', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        serif: ['Cormorant Garamond', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
       fontSize: {
         'label': ['0.6875rem', { lineHeight: '1', letterSpacing: '0.14em' }],

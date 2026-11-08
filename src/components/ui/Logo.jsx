@@ -11,7 +11,7 @@ import { cn } from '../../lib/cn'
  */
 
 const SIZES = {
-  row: 'h-[54px] w-auto sm:h-16 xl:h-[72px]',
+  row: 'h-[42px] w-auto sm:h-[48px] xl:h-[52px]',
   compact: 'h-11 w-auto sm:h-12',
   stack: 'h-28 w-auto sm:h-32',
   mark: 'h-12 w-auto',

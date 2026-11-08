@@ -58,7 +58,7 @@ export default function WeavingAccessories() {
                         <span className="font-serif text-[1.15rem] text-gold">{s.index}</span>
                         <div>
                           <h3 className="text-[1.1rem] font-medium tracking-[-0.01em] text-ink">{s.title}</h3>
-                          <p className="mt-1.5 max-w-prose text-[0.95rem] leading-relaxed text-ink/65">{s.body}</p>
+                          <p className="mt-1.5 max-w-prose text-[0.95rem] leading-relaxed text-charcoal">{s.body}</p>
                         </div>
                       </div>
                     </Reveal>
@@ -81,7 +81,7 @@ export default function WeavingAccessories() {
                   <span className="font-serif text-[0.85rem] text-gold">{String(i + 1).padStart(2, '0')}</span>
                   <h3 className="text-[1.1rem] font-medium tracking-[-0.01em] text-ink">{p.name}</h3>
                 </div>
-                <p className="mt-2 text-[0.92rem] leading-relaxed text-ink/60">{p.body}</p>
+                <p className="mt-2 text-[0.92rem] leading-relaxed text-charcoal/75">{p.body}</p>
               </RevealGroup.Item>
             ))}
           </RevealGroup>
@@ -105,7 +105,7 @@ export default function WeavingAccessories() {
                 />
                 <ul className="mt-8 space-y-2.5 border-t border-line pt-5">
                   {weavingEnquiryFields.map((f) => (
-                    <li key={f} className="flex gap-3 text-[0.9rem] text-ink/70">
+                    <li key={f} className="flex gap-3 text-[0.9rem] text-charcoal">
                       <span aria-hidden="true" className="mt-[0.7em] h-px w-3 shrink-0 bg-gold" />
                       {f}
                     </li>

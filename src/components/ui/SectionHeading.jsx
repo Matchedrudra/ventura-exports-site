@@ -28,7 +28,7 @@ export function SectionHeading({
         <Reveal>
           <p
             className={cn(
-              'mb-5 text-label font-semibold uppercase tracking-label',
+              'mb-4 text-[0.66rem] font-semibold uppercase leading-none tracking-[0.2em]',
               light ? 'text-gold-soft' : 'text-gold',
             )}
           >
@@ -39,7 +39,7 @@ export function SectionHeading({
       <Reveal delay={0.05}>
         <TitleTag
           className={cn(
-            'font-serif text-[1.8rem] font-normal leading-[1.14] tracking-[-0.015em] sm:text-[2.2rem] lg:text-[2.65rem]',
+            'font-serif text-[1.85rem] font-medium leading-[1.15] tracking-[-0.005em] sm:text-[2.15rem] lg:text-[2.4rem]',
             light ? 'text-ivory' : 'text-ink',
           )}
         >
@@ -50,8 +50,8 @@ export function SectionHeading({
         <Reveal delay={0.1}>
           <p
             className={cn(
-              'mt-5 text-[1.0625rem] leading-[1.7]',
-              light ? 'text-ivory/70' : 'text-ink/70',
+              'mt-4 text-[0.98rem] leading-[1.75]',
+              light ? 'text-ivory/70' : 'text-charcoal',
             )}
           >
             {lead}

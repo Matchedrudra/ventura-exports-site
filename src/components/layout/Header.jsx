@@ -44,7 +44,7 @@ export function Header() {
         <Container
           className={cn(
             'flex items-center justify-between gap-4 transition-[height] duration-300 ease-editorial lg:gap-6',
-            scrolled ? 'h-[68px] sm:h-[76px]' : 'h-[84px] sm:h-[100px] xl:h-[108px]',
+            scrolled ? 'h-[58px] sm:h-[62px]' : 'h-[64px] sm:h-[74px]',
           )}
         >
           <Link to="/" aria-label="Ventura Exports — home" className="shrink-0">
@@ -52,12 +52,12 @@ export function Header() {
               variant="row"
               className={cn(
                 'transition-[height] duration-300 ease-editorial',
-                scrolled && '!h-[48px] sm:!h-[56px]',
+                scrolled && '!h-[38px] sm:!h-[42px]',
               )}
             />
           </Link>
 
-          <nav className="hidden items-center xl:flex xl:gap-[1.05rem] 2xl:gap-7" aria-label="Primary">
+          <nav className="hidden items-center xl:flex xl:gap-[1.35rem] 2xl:gap-8" aria-label="Primary">
             {nav.map((item) => (
               <NavLink
                 key={item.to}
@@ -65,8 +65,8 @@ export function Header() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'relative whitespace-nowrap text-[0.72rem] font-medium uppercase tracking-[0.07em] transition-colors duration-300 2xl:text-[0.78rem] 2xl:tracking-label',
-                    isActive ? 'text-ink' : 'text-ink/55 hover:text-ink',
+                    'relative whitespace-nowrap text-[0.68rem] font-medium uppercase tracking-[0.09em] transition-colors duration-300 2xl:text-[0.72rem] 2xl:tracking-[0.11em]',
+                    isActive ? 'text-ink' : 'text-charcoal/75 hover:text-ink',
                   )
                 }
               >
@@ -75,7 +75,7 @@ export function Header() {
                     {item.label}
                     <span
                       className={cn(
-                        'absolute -bottom-1.5 left-0 h-px bg-gold transition-all duration-300 ease-editorial',
+                        'absolute -bottom-[7px] left-0 h-px bg-gold transition-all duration-300 ease-editorial',
                         isActive ? 'w-full' : 'w-0',
                       )}
                     />
@@ -88,7 +88,7 @@ export function Header() {
           <div className="hidden items-center xl:flex">
             <Link
               to="/request-a-quote"
-              className="group inline-flex items-center gap-2 whitespace-nowrap bg-ink px-4 py-2.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-ivory 2xl:px-5 2xl:tracking-label transition-colors duration-300 hover:bg-ink-soft"
+              className="group inline-flex items-center gap-2 whitespace-nowrap border border-ink/30 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.09em] text-ink transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-ivory 2xl:px-5 2xl:text-[0.72rem]"
             >
               Request a Quote
               <span
@@ -139,7 +139,7 @@ export function Header() {
         id="mobile-menu"
         className={cn('fixed inset-0 z-40 bg-ivory xl:hidden', open ? 'block' : 'hidden')}
       >
-        <div className="flex h-full flex-col overflow-y-auto px-6 pb-10 pt-[100px]">
+        <div className="flex h-full flex-col overflow-y-auto px-6 pb-10 pt-[84px]">
           <nav
             className="flex flex-col divide-y divide-line border-y border-line"
             aria-label="Mobile"

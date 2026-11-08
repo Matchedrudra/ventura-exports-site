@@ -2,47 +2,46 @@ import { Container } from '../ui/Container'
 import { Reveal, RevealGroup } from '../ui/Reveal'
 import { approachSteps, approachHighlights } from '../../data/textiles'
 
-/** "Every Requirement Deserves Attention." — six-stage sourcing approach. */
+/** "Every Requirement Deserves Attention." — six-stage sourcing approach, as an editorial numbered list. */
 export function Approach({ id = 'approach' }) {
   return (
-    <section id={id} className="scroll-mt-24 bg-ink text-ivory">
-      <Container className="py-20 lg:py-28">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
+    <section id={id} className="scroll-mt-24 border-y border-line bg-ivory-deep/60 py-20 lg:py-28">
+      <Container>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
             <Reveal>
-              <p className="text-label font-semibold uppercase tracking-label text-gold-soft">
+              <p className="mb-4 text-[0.66rem] font-semibold uppercase leading-none tracking-[0.2em] text-gold">
                 Quality &amp; sourcing approach
               </p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="mt-5 font-serif text-[1.9rem] font-normal leading-[1.14] tracking-[-0.015em] text-ivory sm:text-[2.5rem]">
+              <h2 className="font-serif text-[1.85rem] font-medium leading-[1.15] text-ink sm:text-[2.15rem] lg:text-[2.4rem]">
                 Every Requirement Deserves Attention.
               </h2>
             </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-5 max-w-md text-[1rem] leading-[1.7] text-ivory/65">
-                From the first specification to the shipment, the order is coordinated around what
+            <Reveal delay={0.08}>
+              <p className="mt-4 max-w-sm text-[0.98rem] leading-[1.75] text-charcoal">
+                From the first specification to the shipment, each order is coordinated around what
                 the buyer has asked for.
               </p>
+              <ul className="mt-7 grid grid-cols-2 gap-x-6 gap-y-2.5 text-[0.84rem] text-ink/75">
+                {approachHighlights.map((h) => (
+                  <li key={h} className="flex items-center gap-2.5">
+                    <span aria-hidden="true" className="h-px w-3 shrink-0 bg-gold" />
+                    {h}
+                  </li>
+                ))}
+              </ul>
             </Reveal>
-            <ul className="mt-8 flex flex-wrap gap-2">
-              {approachHighlights.map((h) => (
-                <li key={h} className="border border-white/15 px-3 py-1.5 text-[0.8rem] text-ivory/70">
-                  {h}
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <div className="lg:col-span-7">
-            <RevealGroup className="grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2">
+          <div className="lg:col-span-8">
+            <RevealGroup className="grid gap-x-12 sm:grid-cols-2">
               {approachSteps.map((s) => (
-                <RevealGroup.Item key={s.index} className="bg-ink p-6">
-                  <span className="font-serif text-[1.1rem] text-gold-soft">{s.index}</span>
-                  <h3 className="mt-3 text-[1.02rem] font-medium leading-snug tracking-[-0.01em] text-ivory">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2.5 text-[0.88rem] leading-relaxed text-ivory/60">{s.body}</p>
+                <RevealGroup.Item key={s.index} className="border-t border-ink/15 py-6">
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-serif text-[1.15rem] text-gold">{s.index}</span>
+                    <h3 className="text-[0.98rem] font-medium leading-snug tracking-[-0.005em] text-ink">{s.title}</h3>
+                  </div>
+                  <p className="mt-2.5 pl-9 text-[0.88rem] leading-[1.7] text-charcoal/80">{s.body}</p>
                 </RevealGroup.Item>
               ))}
             </RevealGroup>

@@ -92,16 +92,16 @@ export function IndiaSourcing() {
 
   return (
     <section id="markets" ref={sectionRef} className="scroll-mt-24 bg-ink text-ivory">
-      <Container className="py-20 lg:py-28">
+      <Container className="py-16 lg:py-24">
         <div className="grid items-center gap-x-14 gap-y-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Reveal>
-              <p className="text-label font-semibold uppercase tracking-label text-gold-soft">
+              <p className="mb-4 text-[0.66rem] font-semibold uppercase leading-none tracking-[0.2em] text-gold-soft">
                 International trade
               </p>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 font-serif text-[1.9rem] font-normal leading-[1.14] tracking-[-0.015em] text-ivory sm:text-[2.4rem]">
+              <h2 className="font-serif text-[1.85rem] font-medium leading-[1.15] text-ivory sm:text-[2.15rem] lg:text-[2.4rem]">
                 India as Your Textile Sourcing Destination.
               </h2>
             </Reveal>

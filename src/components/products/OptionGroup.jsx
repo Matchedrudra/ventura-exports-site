@@ -8,14 +8,14 @@ export function OptionGroup({ group }) {
         <div className="lg:col-span-4">
           <h3 className="text-[1.02rem] font-medium text-ink">{group.title}</h3>
           {group.note && (
-            <p className="mt-2 text-[0.86rem] leading-relaxed text-ink/55">{group.note}</p>
+            <p className="mt-2 text-[0.86rem] leading-relaxed text-charcoal/75">{group.note}</p>
           )}
         </div>
         <ul className="flex flex-wrap gap-x-2 gap-y-2 lg:col-span-8">
           {group.items.map((item) => (
             <li
               key={item}
-              className="border border-line px-3 py-1.5 text-[0.85rem] text-ink/75"
+              className="border border-line px-3 py-1.5 text-[0.85rem] text-charcoal"
             >
               {item}
             </li>

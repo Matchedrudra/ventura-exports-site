@@ -59,13 +59,13 @@ export default function Quote() {
                 </p>
                 <ul className="mt-5 space-y-3 border-t border-line pt-5">
                   {checklist.map((item) => (
-                    <li key={item} className="flex gap-3 text-[0.92rem] leading-relaxed text-ink/70">
+                    <li key={item} className="flex gap-3 text-[0.92rem] leading-relaxed text-charcoal">
                       <span aria-hidden="true" className="mt-2 h-px w-3 shrink-0 bg-gold" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <p className="mt-8 border-t border-line pt-5 text-[0.86rem] leading-relaxed text-ink/55">
+                <p className="mt-8 border-t border-line pt-5 text-[0.86rem] leading-relaxed text-charcoal/75">
                   Prefer email? Write to{' '}
                   <a
                     href={`mailto:${contact.email}`}

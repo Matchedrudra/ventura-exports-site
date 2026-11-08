@@ -12,7 +12,7 @@ export function SpecTable({ rows = [], className }) {
           <dt className="text-label font-semibold uppercase tracking-label text-ink/45 sm:pt-1">
             {row.label}
           </dt>
-          <dd className="text-[0.98rem] leading-relaxed text-ink/80">{row.value}</dd>
+          <dd className="text-[0.98rem] leading-relaxed text-charcoal">{row.value}</dd>
         </div>
       ))}
     </dl>

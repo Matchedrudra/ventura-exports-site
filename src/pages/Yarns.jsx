@@ -64,24 +64,24 @@ export default function Yarns() {
                   <div className="lg:col-span-7">
                     <Reveal>
                       <p className="font-serif text-sm text-gold">{c.index}</p>
-                      <h3 className="mt-2 font-serif text-[1.8rem] font-normal leading-tight tracking-[-0.01em] text-ink sm:text-[2.2rem]">
+                      <h3 className="mt-2 font-serif text-[1.65rem] font-medium leading-tight text-ink sm:text-[1.95rem]">
                         {c.name}
                       </h3>
                     </Reveal>
                     <Reveal delay={0.06}>
-                      <p className="mt-4 max-w-prose text-[1.02rem] leading-[1.75] text-ink/70">{c.summary}</p>
+                      <p className="mt-4 max-w-prose text-[1.02rem] leading-[1.75] text-charcoal">{c.summary}</p>
                     </Reveal>
                     <Reveal delay={0.1}>
                       <ul className="mt-6 grid gap-x-8 sm:grid-cols-2">
                         {c.variants.map((v) => (
-                          <li key={v} className="border-t border-line py-2.5 text-[0.95rem] leading-snug text-ink/80">
+                          <li key={v} className="border-t border-line py-2.5 text-[0.95rem] leading-snug text-charcoal">
                             {v}
                           </li>
                         ))}
                       </ul>
                     </Reveal>
                     <Reveal delay={0.14}>
-                      <p className="mt-5 max-w-prose text-[0.9rem] leading-relaxed text-ink/55">{c.note}</p>
+                      <p className="mt-5 max-w-prose text-[0.9rem] leading-relaxed text-charcoal/75">{c.note}</p>
                       <div className="mt-6">
                         <Link
                           to={`/request-a-quote?category=Yarns`}
@@ -112,7 +112,7 @@ export default function Yarns() {
                 {yarnCountExplainer.map((e) => (
                   <div key={e.term} className="border-t border-line pt-4">
                     <dt className="text-[0.82rem] font-semibold uppercase tracking-label text-ink">{e.term}</dt>
-                    <dd className="mt-1.5 text-[0.93rem] leading-relaxed text-ink/65">{e.body}</dd>
+                    <dd className="mt-1.5 text-[0.93rem] leading-relaxed text-charcoal">{e.body}</dd>
                   </div>
                 ))}
               </dl>
@@ -122,7 +122,7 @@ export default function Yarns() {
               <Reveal>
                 <div className="border border-line bg-paper">
                   <table className="w-full text-left">
-                    <caption className="border-b border-line px-5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-label text-ink/55">
+                    <caption className="border-b border-line px-5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-label text-charcoal/75">
                       Examples of count notation
                     </caption>
                     <thead className="sr-only">
@@ -137,7 +137,7 @@ export default function Yarns() {
                         <tr key={e.count} className="border-b border-line last:border-b-0">
                           <td className="whitespace-nowrap px-5 py-4 font-serif text-[1.3rem] text-ink">{e.count}</td>
                           <td className="px-3 py-4 text-[0.78rem] uppercase tracking-label text-gold-deep">{e.ply}</td>
-                          <td className="hidden px-5 py-4 text-[0.9rem] leading-snug text-ink/60 sm:table-cell">{e.note}</td>
+                          <td className="hidden px-5 py-4 text-[0.9rem] leading-snug text-charcoal/75 sm:table-cell">{e.note}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -193,7 +193,7 @@ export default function Yarns() {
                 />
                 <ul className="mt-8 space-y-2.5 border-t border-line pt-5">
                   {yarnSpecFields.map((f) => (
-                    <li key={f} className="flex gap-3 text-[0.9rem] text-ink/70">
+                    <li key={f} className="flex gap-3 text-[0.9rem] text-charcoal">
                       <span aria-hidden="true" className="mt-[0.7em] h-px w-3 shrink-0 bg-gold" />
                       {f}
                     </li>

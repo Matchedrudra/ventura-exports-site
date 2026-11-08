@@ -7,7 +7,7 @@ function Label({ htmlFor, children, required }) {
   return (
     <label
       htmlFor={htmlFor}
-      className="text-label font-semibold uppercase tracking-label text-ink/55"
+      className="text-label font-semibold uppercase tracking-label text-charcoal/75"
     >
       {children}
       {required && <span className="ml-1 text-gold">*</span>}

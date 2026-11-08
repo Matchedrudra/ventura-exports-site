@@ -9,7 +9,7 @@ export function Footer() {
       <Container className="py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <Logo variant="row" tone="light" />
+            <Logo variant="row" tone="light" className="!h-[54px]" />
             <p className="mt-6 max-w-xs font-serif text-[1.15rem] leading-snug text-ivory/80">
               {site.tagline}
             </p>

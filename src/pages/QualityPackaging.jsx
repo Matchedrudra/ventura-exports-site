@@ -46,7 +46,7 @@ export default function QualityPackaging() {
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
               <SectionHeading label="What we coordinate" title="Specification, expectations, documentation, communication." />
-              <p className="mt-6 max-w-prose text-[0.95rem] leading-relaxed text-ink/55">
+              <p className="mt-6 max-w-prose text-[0.95rem] leading-relaxed text-charcoal/75">
                 Ventura works through Indian manufacturing partners, and our role is to coordinate the
                 requirement and the order — from specification and packing through to documentation
                 and shipment.
@@ -63,12 +63,14 @@ export default function QualityPackaging() {
             </div>
           </div>
 
-          <div className="mt-14 grid gap-px border border-line bg-line md:grid-cols-2">
+          <div className="mt-14 grid gap-x-14 md:grid-cols-2">
             {COORDINATED.map((c, i) => (
-              <Reveal key={c.title} className="flex flex-col bg-ivory p-8 lg:p-10">
-                <span className="font-serif text-[1.2rem] text-gold">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="mt-4 text-[1.25rem] font-medium tracking-[-0.01em] text-ink">{c.title}</h3>
-                <p className="mt-3 text-[0.96rem] leading-[1.7] text-ink/70">{c.body}</p>
+              <Reveal key={c.title} className="border-t border-ink/15 py-7">
+                <div className="flex items-baseline gap-4">
+                  <span className="font-serif text-[1.05rem] text-gold">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="text-[1.1rem] font-medium tracking-[-0.005em] text-ink">{c.title}</h3>
+                </div>
+                <p className="mt-3 pl-9 text-[0.95rem] leading-[1.75] text-charcoal">{c.body}</p>
               </Reveal>
             ))}
           </div>

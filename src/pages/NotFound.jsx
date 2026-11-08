@@ -9,10 +9,10 @@ export default function NotFound() {
       <section className="py-28 lg:py-40">
         <Container>
           <p className="text-label font-semibold uppercase tracking-label text-gold">Error 404</p>
-          <h1 className="mt-6 font-serif text-[2.4rem] leading-tight text-ink sm:text-[3rem]">
+          <h1 className="mt-6 font-serif text-[2.1rem] font-medium leading-tight text-ink sm:text-[2.6rem]">
             This page could not be found.
           </h1>
-          <p className="mt-5 max-w-md text-[1.02rem] leading-relaxed text-ink/65">
+          <p className="mt-5 max-w-md text-[1.02rem] leading-relaxed text-charcoal">
             The link may be out of date. Head back to the homepage or browse our yarns.
           </p>
           <div className="mt-9 flex flex-wrap gap-x-3 gap-y-3">

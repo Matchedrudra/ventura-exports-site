@@ -317,3 +317,50 @@ export const weavingEnquiryFields = [
   'Destination country',
   'Additional requirements',
 ]
+
+/* ─── Homepage lists ────────────────────────────────────────────────── */
+
+export const yarnTypeList = [
+  { name: '100% Cotton Yarn', to: '/yarns#cotton-yarn' },
+  { name: 'Combed Cotton Yarn', to: '/yarns#cotton-yarn' },
+  { name: 'Carded Cotton Yarn', to: '/yarns#cotton-yarn' },
+  { name: 'Polyester Yarn', to: '/yarns#polyester-yarn' },
+  { name: 'Blended Yarn', to: '/yarns#blended-yarn' },
+  { name: 'Ring Spun Yarn', to: '/yarns#cotton-yarn' },
+  { name: 'Open End Yarn', to: '/yarns#cotton-yarn' },
+  { name: 'Compact Yarn', to: '/yarns#cotton-yarn' },
+]
+
+export const homeYarnCounts = ['20/1', '24/1', '30/1', '40/1', '20/2', '30/2']
+
+export const fabricTypeList = [
+  'Cotton Fabrics',
+  'Polyester Fabrics',
+  'Blended Fabrics',
+  'Knitted Fabrics',
+  'Woven Fabrics',
+]
+
+export const weavingTypeList = [
+  { name: 'Skew Reeds', to: '/weaving-accessories#skew-reeds' },
+  { name: 'Textile Healds', to: '/weaving-accessories#textile-healds' },
+  { name: 'Heald Frames', to: '/weaving-accessories#heald-frames' },
+  { name: 'Drop Wires', to: '/weaving-accessories#drop-wires' },
+  { name: 'Other Weaving Components', to: '/weaving-accessories#other-accessories' },
+]
+
+export const tailoredCapabilities = [
+  'Different yarn counts',
+  'Different cone configurations',
+  'Cone weights',
+  'Winding specifications',
+  'Individual cone packaging',
+  'Multiple cones per carton',
+  'Custom carton quantities',
+  'Export-grade cartons',
+  'Custom carton labelling',
+  'Palletised shipment arrangements',
+]
+
+export const tailoredLead =
+  'No two buyers work to the same specification. Ventura coordinates yarn counts, cone configurations and export packaging to yours, with the same attention from the first enquiry to the final shipment.'

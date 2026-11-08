@@ -28,15 +28,20 @@
   }
 
   body {
-    @apply bg-ivory text-ink font-sans;
+    @apply bg-ivory text-charcoal font-sans;
     font-synthesis-weight: none;
+  }
+
+  .font-serif {
+    font-variant-numeric: lining-nums;
+    font-feature-settings: 'lnum' 1;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-sans font-semibold tracking-[-0.02em] text-ink;
+    @apply font-sans font-semibold tracking-[-0.015em] text-ink;
     text-wrap: balance;
   }
 

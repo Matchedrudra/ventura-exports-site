@@ -42,7 +42,7 @@ export default function About() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7">
-              <div className="max-w-prose space-y-6 text-[1.05rem] leading-[1.8] text-ink/75">
+              <div className="max-w-prose space-y-6 text-[1.05rem] leading-[1.8] text-charcoal">
                 <Reveal>
                   <p>
                     With a primary focus on yarns and fabrics, we work with manufacturing partners to
@@ -83,12 +83,12 @@ export default function About() {
       <section className="border-y border-line bg-ivory-deep/50 py-16 lg:py-24">
         <Container>
           <p className="text-label font-semibold uppercase tracking-label text-gold">How we operate</p>
-          <div className="mt-10 grid gap-px border border-line bg-line sm:grid-cols-3">
+          <div className="mt-8 grid gap-x-12 sm:grid-cols-3">
             {principles.map((p) => (
-              <Reveal key={p.index} className="flex flex-col bg-ivory p-7 lg:p-8">
-                <span className="font-serif text-sm text-gold">{p.index}</span>
-                <h3 className="mt-3 text-[1.1rem] font-medium text-ink">{p.title}</h3>
-                <p className="mt-3 text-[0.92rem] leading-relaxed text-ink/65">{p.body}</p>
+              <Reveal key={p.index} className="border-t border-ink/15 py-6">
+                <span className="font-serif text-[1.05rem] text-gold">{p.index}</span>
+                <h3 className="mt-2 text-[1.05rem] font-medium text-ink">{p.title}</h3>
+                <p className="mt-2.5 text-[0.92rem] leading-[1.75] text-charcoal/85">{p.body}</p>
               </Reveal>
             ))}
           </div>

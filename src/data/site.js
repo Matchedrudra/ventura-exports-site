@@ -6,7 +6,7 @@ export const site = {
   legalName: 'Ventura Exports',
   domain: 'venturaexports.in',
   url: 'https://www.venturaexports.in',
-  tagline: 'Your Trusted Partner in Global Textile Sourcing.',
+  tagline: 'Your Global Textile Partner.',
   taglineAlt: 'Indian Textile Excellence. Global Trade Partnerships.',
   label: '5+ years · Indian sourcing · Global supply',
   experience: '5+ years',

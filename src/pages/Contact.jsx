@@ -38,7 +38,7 @@ export default function Contact() {
                 {rows.map((row) => (
                   <div key={row.label} className="grid grid-cols-1 gap-1 border-b border-line py-4">
                     <dt className="text-label font-semibold uppercase tracking-label text-ink/45">{row.label}</dt>
-                    <dd className="text-[1.02rem] text-ink/85">
+                    <dd className="text-[1.02rem] text-charcoal">
                       {row.href ? (
                         <a
                           href={row.href}
@@ -60,7 +60,7 @@ export default function Contact() {
                   <p className="text-label font-semibold uppercase tracking-label text-gold">Product categories</p>
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {categories.map((c) => (
-                      <li key={c} className="border border-line px-3 py-1.5 text-[0.82rem] text-ink/70">
+                      <li key={c} className="border border-line px-3 py-1.5 text-[0.82rem] text-charcoal">
                         {c}
                       </li>
                     ))}
@@ -75,7 +75,7 @@ export default function Contact() {
             </div>
 
             <div className="lg:col-span-8">
-              <h2 className="mb-8 font-serif text-[1.6rem] font-normal leading-snug text-ink">Send a business enquiry</h2>
+              <h2 className="mb-8 font-serif text-[1.6rem] font-medium leading-snug text-ink">Send a business enquiry</h2>
               <QuoteForm source="website-contact-form" />
             </div>
           </div>

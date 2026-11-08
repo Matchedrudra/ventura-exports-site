@@ -63,7 +63,7 @@ export default function OtherProducts() {
                   <h3 className="mt-4 text-[1.05rem] font-medium tracking-[-0.01em] text-ink transition-colors group-hover:text-gold-deep">
                     {p.name}
                   </h3>
-                  <p className="mt-1.5 text-[0.88rem] leading-relaxed text-ink/55">{p.tagline}</p>
+                  <p className="mt-1.5 text-[0.88rem] leading-relaxed text-charcoal/75">{p.tagline}</p>
                   <span className="mt-3 inline-flex items-center gap-1.5 text-[0.76rem] font-medium uppercase tracking-widelabel text-ink/40 transition-colors group-hover:text-gold-deep">
                     View product
                     <span aria-hidden="true" className="transition-transform duration-300 ease-editorial group-hover:translate-x-1">→</span>
@@ -98,7 +98,7 @@ export default function OtherProducts() {
                       <div className="flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
                         <div>
                           <h3 className="text-[1.15rem] font-medium tracking-[-0.01em] text-ink">{a.name}</h3>
-                          <p className="mt-1.5 max-w-md text-[0.92rem] leading-relaxed text-ink/60">{a.note}</p>
+                          <p className="mt-1.5 max-w-md text-[0.92rem] leading-relaxed text-charcoal/75">{a.note}</p>
                         </div>
                         <Link
                           to={agroHref(a.name)}

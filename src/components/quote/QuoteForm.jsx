@@ -314,10 +314,10 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
         <p className="text-label font-semibold uppercase tracking-label text-gold">
           Enquiry received
         </p>
-        <h2 className="mt-4 font-serif text-[1.7rem] font-normal leading-snug text-ink sm:text-[2rem]">
+        <h2 className="mt-4 font-serif text-[1.7rem] font-medium leading-snug text-ink sm:text-[2rem]">
           Thank you for sharing your requirements.
         </h2>
-        <p className="mt-4 max-w-prose text-[1rem] leading-[1.7] text-ink/70">
+        <p className="mt-4 max-w-prose text-[1rem] leading-[1.7] text-charcoal">
           We will review your enquiry and get back to you. If it is urgent, you can also reach us by
           email at {contact.email} or on WhatsApp.
         </p>
@@ -529,7 +529,7 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
         <div className="sm:col-span-2">
           <label
             htmlFor="attachment"
-            className="block text-[0.82rem] font-medium uppercase tracking-widelabel text-ink/70"
+            className="block text-[0.82rem] font-medium uppercase tracking-widelabel text-charcoal"
           >
             {isWeaving ? 'Technical drawing or specification document' : 'Attachment'}{' '}
             <span className="normal-case tracking-normal text-ink/50">(optional)</span>
@@ -547,7 +547,7 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
               type="file"
               accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx,.zip,application/pdf,image/*"
               onChange={onFile}
-              className="block max-w-full text-[0.85rem] text-ink/70 file:mr-3 file:cursor-pointer file:border file:border-ink/20 file:bg-ivory-deep file:px-4 file:py-2 file:text-[0.78rem] file:font-medium file:uppercase file:tracking-widelabel file:text-ink hover:file:bg-line/50"
+              className="block max-w-full text-[0.85rem] text-charcoal file:mr-3 file:cursor-pointer file:border file:border-ink/20 file:bg-ivory-deep file:px-4 file:py-2 file:text-[0.78rem] file:font-medium file:uppercase file:tracking-widelabel file:text-ink hover:file:bg-line/50"
             />
             {file && (
               <button
@@ -560,7 +560,7 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
             )}
           </div>
           {file && (
-            <p className="mt-2 text-[0.82rem] text-ink/60">
+            <p className="mt-2 text-[0.82rem] text-charcoal/75">
               Attached: {file.name} ({(file.size / 1024 / 1024).toFixed(1)} MB)
             </p>
           )}

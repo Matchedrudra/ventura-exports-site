@@ -36,7 +36,7 @@ export function ProductThumb({
     >
       <span
         className={cn(
-          'px-6 text-center font-serif leading-snug text-ink/55',
+          'px-6 text-center font-serif leading-snug text-charcoal/75',
           labelClassName || 'text-[1.1rem]',
         )}
       >
