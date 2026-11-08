@@ -8,7 +8,11 @@ import { Reveal, RevealGroup } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 import { CtaBand } from '../components/ui/CtaBand'
 import { QuoteForm } from '../components/quote/QuoteForm'
+import { PrecisionComponents } from '../components/weaving/PrecisionComponents'
 import { weavingProducts, weavingSteps, weavingEnquiryFields } from '../data/textiles'
+
+const OTHER_SLUGS = ['skew-reeds', 'heald-frames', 'other-accessories']
+const otherComponents = weavingProducts.filter((p) => OTHER_SLUGS.includes(p.slug))
 import { CATEGORY_WEAVING } from '../lib/validation'
 
 export default function WeavingAccessories() {
@@ -17,7 +21,7 @@ export default function WeavingAccessories() {
       <Seo
         path="/weaving-accessories"
         title="Textile Accessories & Weaving Solutions"
-        description="Ventura Exports coordinates sourcing of weaving machinery accessories — skew reeds, textile healds, heald frames, drop wires and other components — to the buyer's technical requirements and machinery specifications."
+        description="Weaving accessories from Ventura Exports: precision heald wires (O, C and J types), leno healds, drop wires and ridderless healds manufactured by SKEW Heald Industries, plus reeds, heald frames and other components sourced to your machinery specification."
       />
       <PageHeader
         label="Textile accessories"
@@ -70,25 +74,31 @@ export default function WeavingAccessories() {
         </Container>
       </section>
 
-      <section id="products" className="scroll-mt-24 border-y border-line bg-ivory-deep/50 py-16 lg:py-24">
+      <PrecisionComponents />
+
+      <section id="products" className="scroll-mt-24 border-y border-line bg-ivory-deep/50 py-20 lg:py-28">
         <Container>
-          <SectionHeading label="Products" title="Weaving components we can source." />
-          <RevealGroup className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {weavingProducts.map((p, i) => (
+          <SectionHeading
+            label="Also sourced"
+            title="Other weaving components."
+            lead="Alongside the SKEW range, Ventura sources further components through its supplier network, to your machine and drawing."
+          />
+          <RevealGroup className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {otherComponents.map((p, i) => (
               <RevealGroup.Item key={p.slug} id={p.slug} className="scroll-mt-28">
                 <ProductThumb image={p.image} alt={p.imageAlt} label={p.name} ratio="4 / 3" />
                 <div className="mt-4 flex items-baseline gap-3">
-                  <span className="font-serif text-[0.85rem] text-gold">{String(i + 1).padStart(2, '0')}</span>
-                  <h3 className="text-[1.1rem] font-medium tracking-[-0.01em] text-ink">{p.name}</h3>
+                  <span className="font-serif text-[0.9rem] text-gold">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="font-serif text-[1.3rem] font-medium text-ink">{p.name}</h3>
                 </div>
-                <p className="mt-2 text-[0.92rem] leading-relaxed text-charcoal/75">{p.body}</p>
+                <p className="mt-2 text-[0.92rem] leading-relaxed text-charcoal">{p.body}</p>
               </RevealGroup.Item>
             ))}
           </RevealGroup>
-          <p className="mt-12 max-w-prose border-t border-line pt-5 text-[0.84rem] leading-relaxed text-ink/50">
-            Photography is illustrative of weaving components in general and does not represent a
-            specific product. Dimensions, materials, compatibility and availability are confirmed
-            individually against your machine and drawing.
+          <p className="mt-10 max-w-prose border-t border-line pt-5 text-[0.82rem] leading-relaxed text-charcoal/65">
+            Photography of reeds and heald frames is illustrative of weaving components in general
+            and does not represent a specific product. Dimensions, materials, compatibility and
+            availability are confirmed individually against your machine and drawing.
           </p>
         </Container>
       </section>

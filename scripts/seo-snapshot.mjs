@@ -110,7 +110,7 @@ const PAGES = [
     path: '/weaving-accessories',
     title: 'Textile Accessories & Weaving Solutions',
     description:
-      "Ventura Exports coordinates sourcing of weaving machinery accessories — skew reeds, textile healds, heald frames, drop wires and other components — to the buyer's technical requirements and machinery specifications.",
+      "Weaving accessories from Ventura Exports: precision heald wires (O, C and J types), leno healds, drop wires and ridderless healds manufactured by SKEW Heald Industries, plus reeds, heald frames and other components sourced to your machinery specification.",
     image: '/images/textile/weaving-healds.jpg',
   },
   {

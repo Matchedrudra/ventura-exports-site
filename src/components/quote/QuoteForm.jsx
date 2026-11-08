@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { TextField, SelectField, TextArea, FieldSet } from './Field'
 import { Turnstile, turnstileEnabled } from './Turnstile'
@@ -181,6 +181,15 @@ export function QuoteForm({ lockedCategory = null, submitLabel = 'Send enquiry',
   const fileInputRef = useRef(null)
   const mountedAt = useRef(Date.now())
   const onTurnstile = useCallback((t) => setTurnstileToken(t), [])
+
+  // A product button elsewhere on the page can change ?type= without remounting the form.
+  const typeParam = params.get('type') || ''
+  useEffect(() => {
+    if (!lockedCategory || !typeParam) return
+    if (PRODUCT_TYPES[lockedCategory].includes(typeParam)) {
+      setValues((v) => (v.product === typeParam ? v : { ...v, product: typeParam }))
+    }
+  }, [typeParam, lockedCategory])
 
   const category = values.category
   const types = category ? PRODUCT_TYPES[category] : []

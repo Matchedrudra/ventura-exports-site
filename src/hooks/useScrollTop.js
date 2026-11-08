@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom'
  * the new page rather than keeping focus on the link they just followed.
  */
 export function useScrollTop() {
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, search } = useLocation()
   const firstRender = useRef(true)
   const prevPath = useRef(pathname)
 
@@ -59,5 +59,5 @@ export function useScrollTop() {
       cancelled = true
       window.clearTimeout(timer)
     }
-  }, [pathname, hash])
+  }, [pathname, hash, search])
 }

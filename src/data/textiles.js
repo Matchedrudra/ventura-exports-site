@@ -298,7 +298,7 @@ export const weavingSteps = [
   {
     index: '02',
     title: 'We check with suppliers',
-    body: 'The requirement goes to our manufacturing and supplier network. Availability is confirmed individually, never assumed.',
+    body: 'The requirement goes to the manufacturer or supplier best placed to make it. Availability is confirmed individually, never assumed.',
   },
   {
     index: '03',
