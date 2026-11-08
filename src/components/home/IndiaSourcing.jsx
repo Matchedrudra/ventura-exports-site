@@ -8,8 +8,9 @@ import { indiaCopy, marketsOfInterest } from '../../data/textiles'
 /*
  * "India as Your Textile Sourcing Destination."
  *
- * A geographically accurate trade map. Country shapes are Natural Earth 1:50m,
- * projected with D3's Natural Earth projection at build time
+ * A geographically accurate trade map. Country shapes are Natural Earth 1:10m
+ * (India point-of-view edition, so India appears with its officially depicted
+ * boundary), projected with D3's Natural Earth projection at build time
  * (scripts/build-world-map.mjs); every marker below is that same projection of
  * a real latitude/longitude, so nothing is positioned by eye. Origin is
  * Ahmedabad, Gujarat; destinations are national capitals.
@@ -200,9 +201,12 @@ export function IndiaSourcing() {
                 viewBox={vbStr}
                 className="absolute inset-0 h-full w-full"
                 role="img"
-                aria-label="Map showing trade routes from India to Germany, Turkey, Israel, Egypt, Bangladesh and Vietnam"
+                aria-label="Map showing trade routes from Ahmedabad, India to Germany, Turkey, Israel, Egypt, Bangladesh and Vietnam"
               >
                 <defs>
+                  <filter id="india-glow" x="-10%" y="-10%" width="120%" height="120%">
+                    <feGaussianBlur stdDeviation={2.4 * k} />
+                  </filter>
                   <filter id="route-glow" x="-30%" y="-30%" width="160%" height="160%">
                     <feGaussianBlur stdDeviation={2.2 * k} result="blur" />
                     <feMerge>
@@ -238,12 +242,30 @@ export function IndiaSourcing() {
                     ))}
                     <path
                       d={geo.HIGHLIGHT_D.india}
-                      fill={go ? '#33476f' : '#1f2d49'}
+                      fill={go ? '#2c3c5f' : '#1f2d49'}
+                      style={{ transition: animate ? 'fill 1.4s ease 0.1s' : 'none' }}
+                    />
+                    <path
+                      d={geo.HIGHLIGHT_D.india}
+                      fill="rgba(214,186,128,0.21)"
+                      style={{ opacity: go || !animate ? 1 : 0, transition: animate ? 'opacity 1.4s ease 0.1s' : 'none' }}
+                    />
+                    <path
+                      d={geo.HIGHLIGHT_D.india}
+                      fill="none"
+                      stroke={GOLD}
+                      strokeWidth={2.2 * k}
+                      strokeLinejoin="round"
+                      filter="url(#india-glow)"
+                      style={{ opacity: go || !animate ? 0.4 : 0, transition: animate ? 'opacity 1.6s ease 0.1s' : 'none' }}
+                    />
+                    <path
+                      d={geo.HIGHLIGHT_D.india}
+                      fill="none"
                       stroke="rgba(226,205,160,0.95)"
-                      strokeWidth="0.9"
+                      strokeWidth="0.8"
                       strokeLinejoin="round"
                       vectorEffect="non-scaling-stroke"
-                      style={{ transition: animate ? 'fill 1.4s ease 0.1s' : 'none' }}
                     />
                   </g>
                 )}
@@ -314,20 +336,20 @@ export function IndiaSourcing() {
                       <circle cx={ORIGIN.x} cy={ORIGIN.y} r={9 * k} fill="rgba(211,185,130,0.18)" />
                       <circle cx={ORIGIN.x} cy={ORIGIN.y} r={4.2 * k} fill="#f1e3c0" stroke={GOLD} strokeWidth={1.4 * k} />
                       <text
-                        x={ORIGIN.x + (compact ? -7 : 0) * k}
-                        y={ORIGIN.y + (compact ? 20 : 22) * k}
-                        textAnchor={compact ? 'end' : 'middle'}
+                        x={ORIGIN.x - 10 * k}
+                        y={ORIGIN.y + 19 * k}
+                        textAnchor="end"
                         fill="#f6efd9"
-                        fontSize={11.5 * k}
+                        fontSize={10.5 * k}
                         fontWeight="600"
-                        letterSpacing={2 * k}
+                        letterSpacing={1.6 * k}
                         stroke="#17233a"
                         strokeWidth={3.6 * k}
                         strokeLinejoin="round"
                         paintOrder="stroke"
                         style={{ textTransform: 'uppercase' }}
                       >
-                        India
+                        {ORIGIN.name}
                       </text>
                     </g>
                   </>

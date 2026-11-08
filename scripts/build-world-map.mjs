@@ -1,42 +1,64 @@
 /**
- * Generates src/components/home/worldMap.json and worldMapMeta.js — static SVG path data for the
- * homepage trade map.
+ * Generates src/components/home/worldMap.json and worldMapMeta.js — static SVG
+ * path data and marker positions for the homepage trade map.
  *
- * Geography comes from Natural Earth (via world-atlas, 1:50m countries) and is
- * projected with D3's Natural Earth projection. Every marker is computed from
- * real latitude/longitude with the same projection, so nothing is placed by
- * eye. Output is plain strings: no mapping library ships to the browser.
+ * Geography: Natural Earth 1:10m countries, India point-of-view edition (India
+ * shown with its officially depicted boundary), via scripts/data/. Everything
+ * — land, highlighted countries, graticule and every marker — is projected
+ * with the same D3 Natural Earth projection, so markers are computed from real
+ * latitude/longitude and align exactly with the geometry. Output is plain
+ * strings; no mapping library ships to the browser.
  *
  * Run: node scripts/build-world-map.mjs   (only when the map needs changing)
  */
 import { readFileSync, writeFileSync } from 'node:fs'
-import { geoNaturalEarth1, geoPath, geoGraticule } from 'd3-geo'
+import { geoNaturalEarth1, geoPath, geoGraticule, geoArea } from 'd3-geo'
 import { feature } from 'topojson-client'
 import { presimplify, quantile, simplify } from 'topojson-simplify'
 
-const raw = JSON.parse(readFileSync('node_modules/world-atlas/countries-50m.json', 'utf8'))
-// Visvalingam simplification: drops the least significant vertices, so
-// coastlines keep their character while the path data stays light.
-const QUALITY = Number(process.env.MAP_QUALITY || 0.8)
-const pre = presimplify(raw)
-const topo = simplify(pre, quantile(pre, 1 - QUALITY))
-const features = feature(topo, topo.objects.countries).features
+const raw = JSON.parse(readFileSync('scripts/data/countries-10m-ind.topo.json', 'utf8'))
 
-// ISO 3166-1 numeric codes used by world-atlas.
+// ── simplification ──────────────────────────────────────────────────────────
+// Visvalingam: drops the least significant vertices. Arcs belonging to India
+// get their weights boosted so its coastline and boundary stay finely detailed
+// while the rest of the world stays light.
+// Q = fraction of vertices (by significance) to keep for the world; India keeps far more.
+const Q = Number(process.env.MAP_Q || 0.02)
+const INDIA_BOOST = Number(process.env.INDIA_BOOST || 14)
+const pre = presimplify(raw)
+const india = pre.objects.countries.geometries.find((g) => g.properties.a3 === 'IND')
+const arcIds = new Set()
+const collect = (a) => (Array.isArray(a) ? a.forEach(collect) : arcIds.add(a < 0 ? ~a : a))
+collect(india.arcs)
+for (const i of arcIds) for (const pt of pre.arcs[i]) pt[2] *= INDIA_BOOST
+const topo = simplify(pre, quantile(pre, Q))
+
+// ── features, wound the way D3's spherical geometry expects ────────────────
+const rewind = (f) => {
+  if (geoArea(f) <= 2 * Math.PI) return f
+  const flip = (poly) => poly.map((ring) => ring.slice().reverse())
+  const g = f.geometry
+  const geometry =
+    g.type === 'Polygon' ? { ...g, coordinates: flip(g.coordinates) } : { ...g, coordinates: g.coordinates.map(flip) }
+  return { ...f, geometry }
+}
+const features = feature(topo, topo.objects.countries).features.map(rewind)
+
+// ISO 3166-1 alpha-3 codes of the highlighted countries.
 const HIGHLIGHT = {
-  india: '356',
-  israel: '376',
-  bangladesh: '050',
-  turkey: '792',
-  egypt: '818',
-  vietnam: '704',
-  germany: '276',
+  india: 'IND',
+  israel: 'ISR',
+  bangladesh: 'BGD',
+  turkey: 'TUR',
+  egypt: 'EGY',
+  vietnam: 'VNM',
+  germany: 'DEU',
 }
 
-// Marker locations [longitude, latitude]. India's origin is Ahmedabad, Gujarat
-// (Ventura's base); destinations are national capitals.
+// Marker locations [longitude, latitude]. Origin is Ahmedabad, Gujarat (where
+// Ventura is based); destinations are national capitals.
 const PLACES = {
-  origin: { name: 'India', lonlat: [72.5714, 23.0225] }, // Ahmedabad
+  origin: { name: 'Ahmedabad, India', lonlat: [72.5714, 23.0225] },
   germany: { name: 'Germany', lonlat: [13.405, 52.52] }, // Berlin
   turkey: { name: 'Turkey', lonlat: [32.8597, 39.9334] }, // Ankara
   israel: { name: 'Israel', lonlat: [35.2137, 31.7683] }, // Jerusalem
@@ -80,19 +102,19 @@ projection.clipExtent([
 ])
 const path = geoPath(projection).digits(1)
 
-const idOf = (f) => String(f.id).padStart(3, '0')
-const hlIds = new Set(Object.values(HIGHLIGHT))
+const a3Of = (f) => f.properties.a3
+const hl = new Set(Object.values(HIGHLIGHT))
 
 const base = features
-  .filter((f) => !hlIds.has(idOf(f)))
+  .filter((f) => !hl.has(a3Of(f)))
   .map((f) => path(f))
   .filter(Boolean)
   .join('')
 
 const highlights = {}
-for (const [key, id] of Object.entries(HIGHLIGHT)) {
-  const f = features.find((x) => idOf(x) === id)
-  if (!f) throw new Error(`country ${key} (${id}) not found`)
+for (const [key, a3] of Object.entries(HIGHLIGHT)) {
+  const f = features.find((x) => a3Of(x) === a3)
+  if (!f) throw new Error(`country ${key} (${a3}) not found`)
   highlights[key] = path(f)
 }
 
@@ -104,7 +126,7 @@ for (const [key, p] of Object.entries(PLACES)) {
   points[key] = { name: p.name, x: r1(x), y: r1(y), lon: p.lonlat[0], lat: p.lonlat[1] }
 }
 
-const header = '// GENERATED by scripts/build-world-map.mjs — do not edit by hand.\n// Natural Earth 1:50m countries, Natural Earth projection. Public domain.\n\n'
+const header = '// GENERATED by scripts/build-world-map.mjs — do not edit by hand.\n// Natural Earth 1:10m countries (India point-of-view), Natural Earth projection. Public domain.\n\n'
 const viewBoxes = Object.fromEntries(Object.entries(boxes).map(([k, b]) => [k, viewBox(b)]))
 
 // Small: loaded with the page (viewBoxes for layout, projected marker positions).
@@ -114,8 +136,8 @@ writeFileSync(
 )
 
 // Large: path data as JSON, imported lazily when the map is about to be seen.
-// (JSON keeps the bundler fast — a 160 KB JS string literal does not.)
+// (JSON keeps the bundler fast — a large JS string literal does not.)
 const heavy = JSON.stringify({ BASE_D: base, GRATICULE_D: graticule, HIGHLIGHT_D: highlights })
 writeFileSync('src/components/home/worldMap.json', heavy)
-console.log('worldMap.json', Math.round(heavy.length / 1024) + ' KB', viewBoxes)
+console.log('worldMap.json', Math.round(heavy.length / 1024) + ' KB', '| india path', Math.round(highlights.india.length / 1024) + ' KB', viewBoxes)
 for (const [k, p] of Object.entries(points)) console.log(k.padEnd(10), p.x, p.y, `(${p.lat}, ${p.lon})`)
