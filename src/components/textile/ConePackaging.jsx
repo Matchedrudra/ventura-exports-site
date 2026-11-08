@@ -37,10 +37,10 @@ function Full() {
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
-            <SectionHeading label="Cones & export packaging" title="Tailored to Your Specifications." lead={tailoredLead} />
+            <SectionHeading label="Cones & export packaging" title="Made to Meet Your Specifications." lead={tailoredLead} />
           </div>
           <div className="lg:col-span-6 lg:pt-8">
-            <HairlineList items={tailoredCapabilities} columns={2} />
+            <HairlineList items={tailoredCapabilities.map((c) => c.title)} columns={2} />
             <div className="border-t border-line" />
           </div>
         </div>

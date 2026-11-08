@@ -1,56 +1,49 @@
+import { Link } from 'react-router-dom'
 import { Container } from '../ui/Container'
-import { SectionHeading } from '../ui/SectionHeading'
-import { Button } from '../ui/Button'
-import { Figure } from '../ui/Figure'
 import { Reveal } from '../ui/Reveal'
-import { HairlineList } from '../ui/HairlineList'
 
-const GROUPS = [
-  {
-    key: 'packaging',
-    label: '04 — Industrial packaging',
-    image: '/images/product-fibc.jpg',
-    alt: 'An FIBC jumbo bag being lifted at a packing facility',
-    items: [
-      { name: 'FIBC Bags', to: '/products/fibc-jumbo-bags' },
-      { name: 'PP Woven Bags', to: '/products/pp-hdpe-woven-bags' },
-      { name: 'Customised Packaging', to: '/products/customized-woven-packaging' },
-    ],
-  },
-  {
-    key: 'agro',
-    label: '05 — Agro products',
-    image: '/images/textile/spices-assorted.jpg',
-    alt: 'An assortment of Indian spices',
-    items: [
-      { name: 'Indian Spices', to: '/other-products#agro' },
-      { name: 'Dehydrated Onion', to: '/other-products#agro' },
-      { name: 'Dehydrated Garlic', to: '/other-products#agro' },
-    ],
-  },
+const ITEMS = [
+  { name: 'FIBC Jumbo Bags', to: '/products/fibc-jumbo-bags' },
+  { name: 'PP Woven Bags', to: '/products/pp-hdpe-woven-bags' },
+  { name: 'Indian Spices', to: '/other-products#agro' },
+  { name: 'Dehydrated Onion and Garlic', to: '/other-products#agro' },
 ]
 
+/* Deliberately quiet: text only, no images, small type. */
 export function AdditionalCapabilities() {
   return (
-    <section className="py-16 lg:py-24">
+    <section className="border-t border-line py-16 lg:py-20">
       <Container>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeading label="Additional capabilities" title="Beyond Textiles." />
-          <Button to="/other-products" variant="link" className="shrink-0">
-            All other products
-          </Button>
-        </div>
-
-        <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16">
-          {GROUPS.map((g) => (
-            <Reveal key={g.key}>
-              <Figure src={g.image} alt={g.alt} ratio="16 / 7" />
-              <p className="mt-6 text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-gold">{g.label}</p>
-              <HairlineList items={g.items} className="mt-4" />
-              <div className="border-t border-line" />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-16">
+            <div className="lg:col-span-5">
+              <h2 className="font-serif text-[1.35rem] font-medium leading-snug text-ink sm:text-[1.5rem]">
+                Additional Sourcing Capabilities
+              </h2>
+              <p className="mt-3 max-w-md text-[0.88rem] leading-[1.75] text-charcoal/80">
+                Beyond our core textile portfolio, Ventura Exports also serves selected requirements
+                across industrial packaging and agricultural commodities.
+              </p>
+            </div>
+            <div className="lg:col-span-7">
+              <ul className="flex flex-wrap gap-x-8 gap-y-3 text-[0.9rem] text-ink/85">
+                {ITEMS.map((i) => (
+                  <li key={i.name}>
+                    <Link
+                      to={i.to}
+                      className="group relative inline-flex items-center gap-2 transition-colors duration-300 hover:text-gold-deep after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-gold after:transition-[width] after:duration-500 hover:after:w-full"
+                    >
+                      {i.name}
+                      <span aria-hidden="true" className="text-gold transition-transform duration-300 ease-editorial group-hover:translate-x-1">
+                        →
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Reveal>
       </Container>
     </section>
   )

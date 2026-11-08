@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router-dom'
+import { Suspense } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import { Header } from './Header'
 import { Footer } from './Footer'
@@ -9,6 +10,7 @@ import { useSmoothScroll } from '../../hooks/useSmoothScroll'
 export function Layout() {
   useSmoothScroll()
   useScrollTop()
+  const { pathname } = useLocation()
   return (
     <div className="flex min-h-screen flex-col">
       <a
@@ -19,7 +21,11 @@ export function Layout() {
       </a>
       <Header />
       <main id="main" className="flex-1">
-        <Outlet />
+        <div key={pathname} className="motion-safe:animate-page-in">
+          <Suspense fallback={<div className="min-h-[60vh]" aria-hidden="true" />}>
+            <Outlet />
+          </Suspense>
+        </div>
       </main>
       <Footer />
       <WhatsAppButton />

@@ -32,8 +32,6 @@ export const nav = [
   { label: 'Yarns', to: '/yarns' },
   { label: 'Fabrics', to: '/fabrics' },
   { label: 'Weaving Accessories', to: '/weaving-accessories' },
-  { label: 'Other Products', to: '/other-products' },
-  { label: 'Quality & Packaging', to: '/quality-packaging' },
   { label: 'Contact', to: '/contact' },
 ]
 
@@ -49,12 +47,14 @@ export const footerNav = [
       { label: 'Weaving Accessories', to: '/weaving-accessories' },
       { label: 'FIBC Bags', to: '/products/fibc-jumbo-bags' },
       { label: 'Spices', to: '/other-products#agro' },
+      { label: 'Other Products', to: '/other-products' },
     ],
   },
   {
     heading: 'Company',
     links: [
       { label: 'About Us', to: '/about' },
+      { label: 'Quality & Packaging', to: '/quality-packaging' },
       { label: 'Our Approach', to: '/quality-packaging#approach' },
       { label: 'Contact', to: '/contact' },
     ],

@@ -324,11 +324,11 @@ export const yarnTypeList = [
   { name: '100% Cotton Yarn', to: '/yarns#cotton-yarn' },
   { name: 'Combed Cotton Yarn', to: '/yarns#cotton-yarn' },
   { name: 'Carded Cotton Yarn', to: '/yarns#cotton-yarn' },
-  { name: 'Polyester Yarn', to: '/yarns#polyester-yarn' },
-  { name: 'Blended Yarn', to: '/yarns#blended-yarn' },
   { name: 'Ring Spun Yarn', to: '/yarns#cotton-yarn' },
   { name: 'Open End Yarn', to: '/yarns#cotton-yarn' },
   { name: 'Compact Yarn', to: '/yarns#cotton-yarn' },
+  { name: 'Polyester Yarn', to: '/yarns#polyester-yarn' },
+  { name: 'Blended Yarn', to: '/yarns#blended-yarn' },
 ]
 
 export const homeYarnCounts = ['20/1', '24/1', '30/1', '40/1', '20/2', '30/2']
@@ -350,17 +350,17 @@ export const weavingTypeList = [
 ]
 
 export const tailoredCapabilities = [
-  'Different yarn counts',
-  'Different cone configurations',
-  'Cone weights',
-  'Winding specifications',
-  'Individual cone packaging',
-  'Multiple cones per carton',
-  'Custom carton quantities',
-  'Export-grade cartons',
-  'Custom carton labelling',
-  'Palletised shipment arrangements',
+  { title: 'Different yarn counts', note: 'Written in your count system, e.g. 20/1 or 30/2.' },
+  { title: 'Different cone configurations', note: 'Cone size and format to suit your machines.' },
+  { title: 'Different cone weights', note: 'Net weight per cone as you specify it.' },
+  { title: 'Different winding requirements', note: 'Parallel or tapered, for the next process.' },
+  { title: 'Individual cone packaging', note: 'Cones wrapped and packed one by one.' },
+  { title: 'Multiple cones per carton', note: 'Carton layouts agreed for each order.' },
+  { title: 'Custom carton quantities', note: 'Cones per carton set to your instruction.' },
+  { title: 'Export cartons', note: 'Cartons packed for international shipment.' },
+  { title: 'Buyer-specific carton labelling', note: 'Marking and labels to your requirements.' },
+  { title: 'Palletised shipments', note: 'Palletised arrangements where applicable.' },
 ]
 
 export const tailoredLead =
-  'No two buyers work to the same specification. Ventura coordinates yarn counts, cone configurations and export packaging to yours, with the same attention from the first enquiry to the final shipment.'
+  'Every buyer works to a different specification. Ventura coordinates yarn counts, cone configurations and export packaging to yours — with the same attention from the first enquiry to the final shipment.'

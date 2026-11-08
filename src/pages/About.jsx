@@ -34,8 +34,8 @@ export default function About() {
       />
       <PageHeader
         label="About us"
-        title="Built Around Quality. Connected Through Global Trade."
-        lead="Ventura Exports is an India-based export and sourcing company, headquartered in Gujarat, focused on supplying quality textile products to international markets."
+        title="Driven by Textile Expertise."
+        lead="Ventura Exports is a textile-focused company, headquartered in Gujarat, specialising in yarns, fabrics and weaving accessories for international buyers."
       />
 
       <section className="py-16 lg:py-24">

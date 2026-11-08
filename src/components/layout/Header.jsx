@@ -35,10 +35,10 @@ export function Header() {
     <>
       <header
         className={cn(
-          'sticky top-0 z-50 bg-ivory/95 backdrop-blur transition-[box-shadow,border-color] duration-300',
+          'sticky top-0 z-50 backdrop-blur-md transition-[box-shadow,border-color,background-color] duration-500 ease-editorial',
           scrolled
-            ? 'border-b border-line shadow-[0_1px_0_rgba(23,35,58,0.05)]'
-            : 'border-b border-transparent',
+            ? 'border-b border-line bg-ivory/95 shadow-[0_8px_24px_-18px_rgba(23,35,58,0.35)]'
+            : 'border-b border-transparent bg-ivory/80',
         )}
       >
         <Container
@@ -57,7 +57,7 @@ export function Header() {
             />
           </Link>
 
-          <nav className="hidden items-center xl:flex xl:gap-[1.35rem] 2xl:gap-8" aria-label="Primary">
+          <nav className="hidden items-center xl:flex xl:gap-8 2xl:gap-10" aria-label="Primary">
             {nav.map((item) => (
               <NavLink
                 key={item.to}
@@ -65,7 +65,7 @@ export function Header() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'relative whitespace-nowrap text-[0.68rem] font-medium uppercase tracking-[0.09em] transition-colors duration-300 2xl:text-[0.72rem] 2xl:tracking-[0.11em]',
+                    'group relative whitespace-nowrap text-[0.68rem] font-medium uppercase tracking-[0.09em] transition-colors duration-300 2xl:text-[0.72rem] 2xl:tracking-[0.11em]',
                     isActive ? 'text-ink' : 'text-charcoal/75 hover:text-ink',
                   )
                 }
@@ -75,8 +75,8 @@ export function Header() {
                     {item.label}
                     <span
                       className={cn(
-                        'absolute -bottom-[7px] left-0 h-px bg-gold transition-all duration-300 ease-editorial',
-                        isActive ? 'w-full' : 'w-0',
+                        'absolute -bottom-[7px] left-0 h-px bg-gold transition-[width] duration-500 ease-editorial',
+                        isActive ? 'w-full' : 'w-0 group-hover:w-full',
                       )}
                     />
                   </>

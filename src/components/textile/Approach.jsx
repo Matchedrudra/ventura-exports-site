@@ -5,13 +5,13 @@ import { approachSteps, approachHighlights } from '../../data/textiles'
 /** "Every Requirement Deserves Attention." — six-stage sourcing approach, as an editorial numbered list. */
 export function Approach({ id = 'approach' }) {
   return (
-    <section id={id} className="scroll-mt-24 border-y border-line bg-ivory-deep/60 py-20 lg:py-28">
+    <section id={id} className="scroll-mt-24 border-y border-line py-28 lg:py-36">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
             <Reveal>
               <p className="mb-4 text-[0.66rem] font-semibold uppercase leading-none tracking-[0.2em] text-gold">
-                Quality &amp; sourcing approach
+                Working with Ventura
               </p>
               <h2 className="font-serif text-[1.85rem] font-medium leading-[1.15] text-ink sm:text-[2.15rem] lg:text-[2.4rem]">
                 Every Requirement Deserves Attention.

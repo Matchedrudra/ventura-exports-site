@@ -3,17 +3,21 @@ import { useLocation } from 'react-router-dom'
 
 /**
  * On route change: scroll to top, or — when the URL carries a hash — to that
- * element (retrying briefly, since routes are lazy-loaded). Keyboard focus
+ * element (retrying briefly, since routes are lazy-loaded). Hash jumps within
+ * the same page glide; arriving on a new page lands in place. Keyboard focus
  * moves to <main> on navigations so screen-reader and keyboard users land on
  * the new page rather than keeping focus on the link they just followed.
  */
 export function useScrollTop() {
   const { pathname, hash } = useLocation()
   const firstRender = useRef(true)
+  const prevPath = useRef(pathname)
 
   useEffect(() => {
     let cancelled = false
     let timer = 0
+    const samePage = prevPath.current === pathname && !firstRender.current
+    prevPath.current = pathname
 
     if (hash) {
       const id = decodeURIComponent(hash.slice(1))
@@ -22,9 +26,12 @@ export function useScrollTop() {
         if (cancelled) return
         const el = document.getElementById(id)
         if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY - 96
-          if (window.__lenis) window.__lenis.scrollTo(Math.max(0, top), { immediate: true, force: true })
-          else window.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'auto' })
+          const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 84)
+          if (window.__lenis) {
+            window.__lenis.scrollTo(top, samePage ? { duration: 1.2 } : { immediate: true, force: true })
+          } else {
+            window.scrollTo({ top, left: 0, behavior: samePage ? 'smooth' : 'auto' })
+          }
         } else if (tries < 25) {
           tries += 1
           timer = window.setTimeout(go, 80)
@@ -37,7 +44,6 @@ export function useScrollTop() {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
     }
 
-    // Skip focus juggling on the initial load — only on navigations.
     if (firstRender.current) {
       firstRender.current = false
     } else {
