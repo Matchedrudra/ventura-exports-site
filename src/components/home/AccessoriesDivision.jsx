@@ -74,11 +74,9 @@ export function AccessoriesDivision() {
         </RevealGroup>
 
         <Reveal>
-          <p className="mx-auto mt-10 max-w-xl text-center text-[0.86rem] leading-relaxed text-charcoal/80">
-            Heald wires, leno healds and drop wires are manufactured by SKEW Heald Industries and
-            supplied internationally through Ventura Exports.{' '}
+          <p className="mt-10 text-center text-[0.88rem] text-charcoal/80">
             <Link to="/weaving-accessories#precision" className="whitespace-nowrap text-ink underline decoration-gold underline-offset-4 transition-colors hover:text-gold-deep">
-              Precision Weaving Components →
+              Precision heald wires, leno healds and drop wires →
             </Link>
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3">

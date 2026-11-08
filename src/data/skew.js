@@ -5,17 +5,7 @@
 
 export const skew = {
   name: 'SKEW Heald Industries',
-  logo: '/images/skew/skew-logo.png',
-  address: [
-    '82, Adarsh Industrial Estate',
-    'Chakudiya Mahadev Road, Rakhial',
-    'Ahmedabad – 380023, Gujarat, India',
-  ],
 }
-
-// Statements as published in the catalogue (Heald Wires page).
-export const skewIntro =
-  'Skew heald wires are produced in India using specially developed German-imported stainless steel, engineered for durability, precision and stable weaving performance up to 1300 RPM.'
 
 export const skewFeatures = [
   {

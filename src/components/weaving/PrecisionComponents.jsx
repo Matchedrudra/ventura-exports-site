@@ -4,9 +4,9 @@ import { Container } from '../ui/Container'
 import { Button } from '../ui/Button'
 import { Figure } from '../ui/Figure'
 import { Reveal, RevealGroup } from '../ui/Reveal'
+import { useInView } from '../../hooks/useInView'
 import {
   skew,
-  skewIntro,
   skewFeatures,
   skewProducts,
   healdWireDimensions,
@@ -44,30 +44,77 @@ const Pill = ({ children }) => (
   </span>
 )
 
-/* ───────────────────────── A. Manufacturer introduction ───────────────────────── */
+/* ───────────────────────── A. Introduction ───────────────────────── */
+
+/** A hairline that draws itself across the width when it scrolls into view. */
+function DrawRule({ className }) {
+  const { ref, shown, reduced } = useInView()
+  return (
+    <div ref={ref} className={cn('h-px w-full bg-ink/10', className)}>
+      <div
+        className="h-px origin-left bg-gold"
+        style={{
+          width: '100%',
+          transform: shown || reduced ? 'scaleX(1)' : 'scaleX(0)',
+          transition: reduced ? 'none' : 'transform 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
+        }}
+      />
+    </div>
+  )
+}
+
+const LINEUP = [
+  {
+    name: 'Heald Wires',
+    type: 'Skew Heald Wires',
+    src: '/images/skew/skew-heald-wires-panel.jpg',
+    alt: 'Heald wires of several profiles',
+  },
+  {
+    name: 'Leno Healds & Doup',
+    type: 'Leno Healds',
+    src: '/images/skew/skew-leno-healds.jpg',
+    alt: 'A set of leno healds and a leno doup in several lengths',
+  },
+  {
+    name: 'Drop Wires',
+    type: 'Drop Wires',
+    src: '/images/skew/skew-drop-wires.jpg',
+    alt: 'Four drop wire profiles',
+  },
+]
 
 function Intro() {
   return (
-    <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-      <div className="lg:col-span-7">
-        <Reveal>
-          <Eyebrow>Manufactured by {skew.name}</Eyebrow>
-          <h2 className="font-serif text-[2.1rem] font-medium leading-[1.08] text-ink sm:text-[2.6rem] lg:text-[3rem]">
+    <div>
+      <Reveal>
+        <Eyebrow>Weaving Accessories</Eyebrow>
+      </Reveal>
+      <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-16">
+        <Reveal delay={0.05} className="lg:col-span-8">
+          <h2 className="font-serif text-[2.4rem] font-medium leading-[1.04] tracking-[-0.01em] text-ink sm:text-[3.2rem] lg:text-[4rem]">
             Precision Weaving Components.
           </h2>
-          <p className="mt-4 font-serif text-[1.35rem] italic leading-snug text-gold-deep sm:text-[1.6rem]">
+        </Reveal>
+        <Reveal delay={0.12} className="lg:col-span-4 lg:pb-2">
+          <p className="font-serif text-[1.3rem] italic leading-snug text-gold-deep sm:text-[1.5rem]">
             Engineered for Precision. Built for Performance.
           </p>
         </Reveal>
-        <Reveal delay={0.08}>
-          <p className="mt-6 max-w-[34rem] text-[0.98rem] leading-[1.85] text-charcoal">{skewIntro}</p>
-          <p className="mt-4 max-w-[34rem] text-[0.98rem] leading-[1.85] text-charcoal">
-            Ventura Exports supplies {skew.name} products to international buyers, coordinating the
-            enquiry, the specification and the shipment.
+      </div>
+
+      <DrawRule className="mt-10 lg:mt-14" />
+
+      <div className="mt-10 grid gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal delay={0.05} className="lg:col-span-6">
+          <p className="text-[1.02rem] leading-[1.9] text-charcoal">
+            Discover precision-engineered weaving components designed for reliable performance across
+            modern textile manufacturing operations. Our range includes specialised heald wires,
+            leno healds and drop wires, manufactured to meet diverse weaving requirements.
           </p>
         </Reveal>
-        <Reveal delay={0.14}>
-          <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <Reveal delay={0.12} className="lg:col-span-5 lg:col-start-8">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <Button to={enquiryLink(CATALOGUE)} variant="solid">
               Request Technical Catalogue
             </Button>
@@ -75,34 +122,32 @@ function Intro() {
               Enquire About a Product
             </Button>
           </div>
+          <p className="mt-6 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-charcoal/55">
+            Manufacturing Partner: {skew.name}
+          </p>
         </Reveal>
       </div>
 
-      <div className="lg:col-span-5">
-        <Reveal delay={0.1}>
-          <div className="border border-line bg-paper p-7 sm:p-9">
-            <p className="text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-charcoal/60">Manufacturer</p>
-            <img
-              src={skew.logo}
-              alt="SKEW Heald Industries"
-              width="900"
-              height="254"
-              loading="lazy"
-              decoding="async"
-              className="mt-5 h-auto w-full max-w-[18rem]"
-            />
-            <div className="mt-7 border-t border-line pt-5 text-[0.9rem] leading-relaxed text-charcoal">
-              {skew.address.map((l) => (
-                <p key={l}>{l}</p>
-              ))}
-            </div>
-            <p className="mt-5 border-t border-line pt-4 text-[0.78rem] leading-relaxed text-charcoal/70">
-              Product information on this page is taken from the {skew.name} catalogue. Supplied
-              internationally through Ventura Exports.
-            </p>
-          </div>
-        </Reveal>
-      </div>
+      <RevealGroup className="mt-16 grid gap-5 sm:grid-cols-3 lg:mt-20 lg:gap-8" stagger={0.1}>
+        {LINEUP.map((p) => (
+          <RevealGroup.Item key={p.name}>
+            <Link to={enquiryLink(p.type)} className="group block">
+              <Figure src={p.src} alt={p.alt} ratio="4 / 5" fit="contain" zoom className="[&>div]:!bg-[#ececec]" />
+              <span className="mt-4 flex items-baseline justify-between gap-4 border-t border-ink/15 pt-3">
+                <span className="font-serif text-[1.25rem] font-medium text-ink transition-transform duration-500 ease-editorial group-hover:translate-x-1">
+                  {p.name}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="-translate-x-2 text-gold opacity-0 transition-all duration-500 ease-editorial group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                  →
+                </span>
+              </span>
+            </Link>
+          </RevealGroup.Item>
+        ))}
+      </RevealGroup>
     </div>
   )
 }
@@ -113,44 +158,23 @@ function Features() {
   return (
     <div className="bg-ink text-ivory">
       <Container className="py-20 lg:py-28">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <Reveal>
-              <div className="bg-paper p-4 sm:p-6">
-                <Figure
-                  src="/images/skew/skew-heald-wires.jpg"
-                  alt="Skew heald wires of several profiles, shown from the manufacturer's catalogue"
-                  ratio="1 / 1"
-                  fit="contain"
-                  zoom
-                />
+        <Reveal>
+          <Eyebrow light>Heald wires</Eyebrow>
+          <h3 className="max-w-xl font-serif text-[1.8rem] font-medium leading-[1.12] text-ivory sm:text-[2.2rem]">
+            Designed for demanding weaving conditions.
+          </h3>
+        </Reveal>
+        <RevealGroup className="mt-12 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
+          {skewFeatures.map((f, i) => (
+            <RevealGroup.Item key={f.title} className="border-t border-white/15 py-6">
+              <div className="flex items-baseline gap-3">
+                <span className="font-serif text-[1rem] text-gold-soft">{String(i + 1).padStart(2, '0')}</span>
+                <h4 className="text-[1rem] font-medium leading-snug text-ivory">{f.title}</h4>
               </div>
-              <p className="mt-3 text-[0.74rem] text-ivory/50">Illustration: {skew.name} catalogue.</p>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-7">
-            <Reveal>
-              <Eyebrow light>Heald wires</Eyebrow>
-              <h3 className="font-serif text-[1.7rem] font-medium leading-[1.12] text-ivory sm:text-[2rem]">
-                Designed for demanding weaving conditions.
-              </h3>
-            </Reveal>
-            <RevealGroup className="mt-8 grid gap-x-10 sm:grid-cols-2" stagger={0.06}>
-              {skewFeatures.map((f, i) => (
-                <RevealGroup.Item key={f.title} className="border-t border-white/15 py-5">
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-serif text-[0.95rem] text-gold-soft">{String(i + 1).padStart(2, '0')}</span>
-                    <h4 className="text-[0.95rem] font-medium leading-snug text-ivory">{f.title}</h4>
-                  </div>
-                  <p className="mt-2 pl-8 text-[0.86rem] leading-[1.7] text-ivory/65">{f.body}</p>
-                </RevealGroup.Item>
-              ))}
-            </RevealGroup>
-            <p className="mt-5 text-[0.76rem] text-ivory/45">
-              Statements as published by {skew.name} in its product catalogue.
-            </p>
-          </div>
-        </div>
+              <p className="mt-3 pl-9 text-[0.88rem] leading-[1.75] text-ivory/65">{f.body}</p>
+            </RevealGroup.Item>
+          ))}
+        </RevealGroup>
       </Container>
     </div>
   )
@@ -164,7 +188,7 @@ function Range() {
       <Reveal>
         <Eyebrow>The range</Eyebrow>
         <h3 className="font-serif text-[1.7rem] font-medium leading-[1.12] text-ink sm:text-[2rem]">
-          Eight products. One manufacturer.
+          The complete range.
         </h3>
       </Reveal>
       <RevealGroup className="mt-10" stagger={0.05}>
@@ -303,7 +327,7 @@ function DimensionTables() {
       </div>
 
       <p className="mt-4 text-[0.78rem] text-charcoal/65">
-        Source: {skew.name} catalogue, &ldquo;Heald wire dimensions&rdquo;. Heald wires are also manufactured as per customer requirements.
+        Heald wires are also manufactured as per customer requirements.
       </p>
     </div>
   )
@@ -366,7 +390,6 @@ function EyeSizeTable() {
         <span className="inline-flex items-center gap-2">
           <span aria-hidden="true" className="inline-block h-2.5 w-2.5 bg-ink" /> Recommended eye size (mm) for that yarn size
         </span>
-        <span>Source: {skew.name} catalogue.</span>
       </p>
     </div>
   )
@@ -426,8 +449,7 @@ function Compatibility() {
               ))}
             </ul>
             <p className="mt-3 text-[0.74rem] leading-relaxed text-charcoal/60">
-              Machine manufacturers are named only to indicate compatibility as stated in the {skew.name}{' '}
-              catalogue. Ventura Exports and {skew.name} are not affiliated with them.
+              Machine manufacturer names are used only to indicate compatibility.
             </p>
           </Reveal>
         </div>
@@ -444,7 +466,7 @@ function OtherProducts() {
       id: 'leno-healds',
       title: 'Leno Healds & Magnetic Leno Heald Doup',
       img: '/images/skew/skew-leno-healds.jpg',
-      alt: 'A set of leno healds and a leno doup in several lengths, from the manufacturer catalogue',
+      alt: 'A set of leno healds and a leno doup in several lengths',
       body: 'Manufactured for smooth yarn control, accurate crossing motion and consistent weaving performance. Precision forming and fine surface finishing ensure reduced friction, stable running and dependable operation in demanding weaving conditions.',
       types: ['Leno Healds', 'Magnetic Leno Heald Doup'],
     },
@@ -452,7 +474,7 @@ function OtherProducts() {
       id: 'drop-wires',
       title: 'Drop Wires',
       img: '/images/skew/skew-drop-wires.jpg',
-      alt: 'Four drop wire profiles, from the manufacturer catalogue',
+      alt: 'Four drop wire profiles',
       body: 'Produced with strict dimensional control and durable finishing to ensure reliable performance, long service life and smooth operation across modern weaving applications.',
       types: ['Drop Wires'],
     },
@@ -503,8 +525,8 @@ function CatalogueBand() {
                 Request the technical catalogue.
               </h3>
               <p className="mt-4 max-w-lg text-[0.95rem] leading-[1.8] text-ivory/70">
-                Tell us who you are and which machines you run. We will send the {skew.name} product
-                catalogue and respond to your machinery requirements.
+                Tell us who you are and which machines you run. We will send the technical catalogue and
+                respond to your machinery requirements.
               </p>
             </Reveal>
           </div>
