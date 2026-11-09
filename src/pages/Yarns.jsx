@@ -11,15 +11,14 @@ import { QuoteForm } from '../components/quote/QuoteForm'
 import { yarnCategories, yarnCountExamples, yarnCountExplainer, yarnSpecFields } from '../data/textiles'
 import { CATEGORY_YARNS } from '../lib/validation'
 import { cn } from '../lib/cn'
+import { pageSeo } from '../data/seo'
+
+const seo = pageSeo('/yarns')
 
 export default function Yarns() {
   return (
     <>
-      <Seo
-        path="/yarns"
-        title="Yarns"
-        description="Cotton, polyester and blended yarns sourced from Indian manufacturing partners — combed, carded, ring spun, open end and compact cotton; spun, filament and textured polyester; and blends. Specify count, composition and cone packaging."
-      />
+      <Seo {...seo} />
       <PageHeader
         label="Yarns"
         title="Yarns — Sourced to Your Specifications."

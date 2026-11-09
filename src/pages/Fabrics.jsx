@@ -9,15 +9,14 @@ import { CtaBand } from '../components/ui/CtaBand'
 import { QuoteForm } from '../components/quote/QuoteForm'
 import { fabricCategories, fabricSpecTerms } from '../data/textiles'
 import { CATEGORY_FABRICS } from '../lib/validation'
+import { pageSeo } from '../data/seo'
+
+const seo = pageSeo('/fabrics')
 
 export default function Fabrics() {
   return (
     <>
-      <Seo
-        path="/fabrics"
-        title="Fabrics"
-        description="Cotton, polyester and cotton-polyester blended fabrics, knitted and woven, sourced through Ventura Exports' Indian manufacturing network. Specify GSM, width, construction, colour and finish."
-      />
+      <Seo {...seo} />
       <PageHeader
         label="Fabrics"
         title="Fabrics — Sourced for Diverse Applications."

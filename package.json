@@ -3,12 +3,14 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Ventura Exports — industrial packaging sourced from India.",
+  "description": "Ventura Exports \u2014 Indian textile yarns, fabrics and weaving accessories supplier.",
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/seo-snapshot.mjs",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "seo:sitemap": "node scripts/generate-sitemap.mjs",
+    "seo:audit": "node scripts/seo-audit.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",

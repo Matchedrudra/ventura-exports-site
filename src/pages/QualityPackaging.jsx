@@ -7,6 +7,7 @@ import { Reveal } from '../components/ui/Reveal'
 import { CtaBand } from '../components/ui/CtaBand'
 import { Approach } from '../components/textile/Approach'
 import { ConePackaging } from '../components/textile/ConePackaging'
+import { pageSeo } from '../data/seo'
 
 const COORDINATED = [
   {
@@ -27,14 +28,12 @@ const COORDINATED = [
   },
 ]
 
+const seo = pageSeo('/quality-packaging')
+
 export default function QualityPackaging() {
   return (
     <>
-      <Seo
-        path="/quality-packaging"
-        title="Quality & Packaging"
-        description="How Ventura Exports works: understanding buyer specifications, matching Indian manufacturing partners, and coordinating cone configuration, export packaging, documentation and shipment for yarns and fabrics."
-      />
+      <Seo {...seo} />
       <PageHeader
         label="Quality & packaging"
         title="Quality Starts With the Specification."

@@ -3,6 +3,7 @@ import { Container } from '../components/ui/Container'
 import { Reveal } from '../components/ui/Reveal'
 import { QuoteForm } from '../components/quote/QuoteForm'
 import { contact } from '../data/site'
+import { pageSeo } from '../data/seo'
 
 const checklist = [
   'Product category and type',
@@ -12,14 +13,12 @@ const checklist = [
   'Destination port and documentation',
 ]
 
+const seo = pageSeo('/request-a-quote')
+
 export default function Quote() {
   return (
     <>
-      <Seo
-        path="/request-a-quote"
-        title="Request a Quote"
-        description="Send Ventura Exports a B2B enquiry for yarns, fabrics, FIBC bags, spices and other products. The form reaches us with your specification, packaging preference and destination structured."
-      />
+      <Seo {...seo} />
 
       <header className="bg-ink text-ivory pt-16 pb-14 sm:pt-24 sm:pb-16">
         <Container>

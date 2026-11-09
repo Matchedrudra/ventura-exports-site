@@ -9,15 +9,14 @@ import { ClosingContact } from '../components/home/ClosingContact'
 import { IndiaSourcing } from '../components/home/IndiaSourcing'
 import { TailoredSpecs } from '../components/home/TailoredSpecs'
 import { Approach } from '../components/textile/Approach'
+import { pageSeo } from '../data/seo'
+
+const seo = pageSeo('/')
 
 export default function Home() {
   return (
     <>
-      <Seo
-        path="/"
-        title={null}
-        description="Ventura Exports is an India-based export and sourcing company supplying cotton, polyester and blended yarns and fabrics to international buyers — with customised cone and export packaging, and weaving accessories, coordinated through Indian manufacturing partners."
-      />
+      <Seo {...seo} />
       <Hero />
       <AboutIntro />
       <YarnDivision />

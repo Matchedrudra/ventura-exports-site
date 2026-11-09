@@ -14,15 +14,14 @@ import { weavingProducts, weavingSteps, weavingEnquiryFields } from '../data/tex
 const OTHER_SLUGS = ['skew-reeds', 'heald-frames', 'other-accessories']
 const otherComponents = weavingProducts.filter((p) => OTHER_SLUGS.includes(p.slug))
 import { CATEGORY_WEAVING } from '../lib/validation'
+import { pageSeo } from '../data/seo'
+
+const seo = pageSeo('/weaving-accessories')
 
 export default function WeavingAccessories() {
   return (
     <>
-      <Seo
-        path="/weaving-accessories"
-        title="Textile Accessories & Weaving Solutions"
-        description="Weaving accessories from Ventura Exports: precision heald wires (O, C and J types), leno healds, drop wires and ridderless healds manufactured by SKEW Heald Industries, plus reeds, heald frames and other components sourced to your machinery specification."
-      />
+      <Seo {...seo} />
       <PageHeader
         label="Textile accessories"
         title="Textile Accessories & Weaving Solutions."

@@ -9,6 +9,7 @@ import { Reveal, RevealGroup } from '../components/ui/Reveal'
 import { CtaBand } from '../components/ui/CtaBand'
 import { products } from '../data/products'
 import { CATEGORY_AGRO } from '../lib/validation'
+import { pageSeo } from '../data/seo'
 
 const AGRO_ITEMS = [
   { name: 'Indian Spices', note: 'Whole and ground spices, sourced to the grade and pack size you specify.' },
@@ -25,14 +26,12 @@ const ordered = [
 
 const agroHref = (type) => `/request-a-quote?${new URLSearchParams({ category: CATEGORY_AGRO, type })}`
 
+const seo = pageSeo('/other-products')
+
 export default function OtherProducts() {
   return (
     <>
-      <Seo
-        path="/other-products"
-        title="Other Products"
-        description="Additional sourcing capabilities from Ventura Exports: FIBC jumbo bags, PP woven bags and industrial packaging, plus Indian spices, dehydrated onion, dehydrated garlic and other agricultural commodities."
-      />
+      <Seo {...seo} />
       <PageHeader
         label="Other products"
         title="Additional Sourcing Capabilities."

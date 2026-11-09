@@ -61,7 +61,7 @@ export function Hero() {
             style={rise(0.3).style}
           >
             <span aria-hidden="true" className="h-px w-8 bg-gold-soft/80" />
-            {site.tagline.replace(/\.$/, '')}
+            {site.positioning}
           </p>
 
           <h1

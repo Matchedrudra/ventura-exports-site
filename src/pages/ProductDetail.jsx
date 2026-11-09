@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { Seo } from '../components/ui/Seo'
+import { productSeo } from '../data/seo'
 import { Container } from '../components/ui/Container'
 import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
@@ -11,9 +12,7 @@ import { OptionGroups } from '../components/products/OptionGroup'
 import { FibcTypeGrid } from '../components/products/FibcTypeCard'
 import { CtaBand } from '../components/ui/CtaBand'
 import { products, getProduct, fibcTypes, fibcOptions, catalogueYear, productGalleries } from '../data/products'
-import { site } from '../data/site'
 
-const siteUrl = site.url
 import { RevealGroup } from '../components/ui/Reveal'
 
 const QUOTE_PRODUCT = {
@@ -54,38 +53,11 @@ export default function ProductDetail() {
   )}`
   const quoteLabel = product.quoteCta || 'Request specification & quote'
 
-  const canonical = `${siteUrl}/products/${slug}`
-  const jsonLd = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: product.name,
-      description: product.summary,
-      category: product.group,
-      ...(product.image ? { image: `${siteUrl}${product.image}` } : {}),
-      brand: { '@type': 'Brand', name: 'Ventura' },
-      url: canonical,
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
-        { '@type': 'ListItem', position: 2, name: 'Other Products', item: `${siteUrl}/other-products` },
-        { '@type': 'ListItem', position: 3, name: product.name, item: canonical },
-      ],
-    },
-  ]
+  const seo = productSeo(product)
 
   return (
     <>
-      <Seo
-        path={`/products/${slug}`}
-        title={product.name}
-        description={product.summary}
-        image={product.image || undefined}
-        jsonLd={jsonLd}
-      />
+      <Seo {...seo} />
 
       {/* Header */}
       <header className="bg-ink text-ivory pt-12 pb-14 sm:pt-16 sm:pb-16">

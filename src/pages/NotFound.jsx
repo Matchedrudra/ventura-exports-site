@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button'
 export default function NotFound() {
   return (
     <>
-      <Seo path="/404" title="Page not found" />
+      <Seo path="/404" title="Page not found | Ventura Exports" description="This page could not be found. Browse Ventura Exports yarns, fabrics and weaving accessories." noindex />
       <section className="py-28 lg:py-40">
         <Container>
           <p className="text-label font-semibold uppercase tracking-label text-gold">Error 404</p>

@@ -4,6 +4,7 @@ import { Container } from '../components/ui/Container'
 import { Reveal } from '../components/ui/Reveal'
 import { QuoteForm } from '../components/quote/QuoteForm'
 import { contact, site } from '../data/site'
+import { pageSeo } from '../data/seo'
 
 const rows = [
   { label: 'Business email', value: contact.email, href: `mailto:${contact.email}` },
@@ -16,14 +17,12 @@ const rows = [
 
 const categories = ['Yarns', 'Fabrics', 'Textile Accessories & Weaving', 'FIBC Bags', 'Spices & Agro Commodities', 'Other Products']
 
+const seo = pageSeo('/contact')
+
 export default function Contact() {
   return (
     <>
-      <Seo
-        path="/contact"
-        title="Contact"
-        description="Contact Ventura Exports — Gujarat, India. Email info@venturaexports.in, call or WhatsApp, or send a product enquiry for yarns, fabrics and other products."
-      />
+      <Seo {...seo} />
       <PageHeader
         label="Contact"
         title="Let’s Discuss Your Next Sourcing Requirement."

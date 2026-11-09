@@ -2,8 +2,9 @@
 
 Marketing and enquiry website for **Ventura Exports** — an India-based export and
 sourcing company connecting international buyers with reliable Indian
-manufacturing partners. Primary business: **yarns and fabrics**. Secondary:
-industrial packaging (FIBC, woven bags and others) and agro commodities.
+manufacturing partners. Core business: **cotton, polyester and blended yarns,
+fabrics and precision weaving accessories**. Secondary only: FIBC and woven bags,
+and agro products (spices, dehydrated onion and garlic).
 
 **Stack:** React 18 · Vite 5 · Tailwind CSS 3 · React Router 6 · a Vercel
 serverless function for the enquiry email (Resend). No CSS/animation frameworks —
@@ -68,6 +69,26 @@ Packaging product content in `src/data/products.js` is the single source of trut
 construction types, safe working loads, safety factors and technical options come
 from the manufacturing partner's reference catalogue; woven‑sack specifications
 are intentionally left as "confirmed per specification" and agreed per enquiry.
+
+---
+
+## SEO
+
+Page titles, descriptions, images and breadcrumbs for every route live in one
+place: `src/data/seo.js`. That file feeds the runtime `<Seo>` component, the
+static per-route HTML written after each build (`scripts/seo-snapshot.mjs`, so
+crawlers and link previews see correct tags) and the sitemap.
+
+```bash
+npm run seo:sitemap   # regenerate public/sitemap.xml (bump LAST_MODIFIED in seo.js first)
+npm run build && npm run seo:audit   # checks titles, descriptions, canonicals, robots,
+                                     # Open Graph, JSON-LD, domain and textile-first identity
+```
+
+Organization and WebSite JSON-LD live in `index.html`; BreadcrumbList is added
+per route. Legacy URLs (`/products`, `/quality`, `/how-we-work`, `/markets`)
+301-redirect in `vercel.json`. Textiles (yarns, fabrics, weaving accessories)
+lead every title and description; FIBC, woven bags and spices stay secondary.
 
 ---
 

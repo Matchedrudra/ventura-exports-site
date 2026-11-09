@@ -11,8 +11,8 @@ export const site = {
   label: '5+ years · Indian sourcing · Global supply',
   experience: '5+ years',
   descriptionShort:
-    'Ventura Exports connects international buyers with reliable Indian manufacturing partners for cotton, polyester and blended yarns, fabrics and textile solutions — with customised specifications, export packaging and shipment coordination.',
-  positioning: 'Textile sourcing & export from India.',
+    'Ventura Exports is an India-based textile supply and export company specialising in cotton yarn, polyester yarn, blended yarn, fabrics and precision weaving accessories for international markets.',
+  positioning: 'Indian Textile Yarn, Fabrics & Weaving Accessories Supplier',
 }
 
 export const contact = {

@@ -5,6 +5,7 @@ import { Figure } from '../components/ui/Figure'
 import { Reveal } from '../components/ui/Reveal'
 import { CtaBand } from '../components/ui/CtaBand'
 import { site } from '../data/site'
+import { pageSeo } from '../data/seo'
 
 const principles = [
   {
@@ -24,14 +25,12 @@ const principles = [
   },
 ]
 
+const seo = pageSeo('/about')
+
 export default function About() {
   return (
     <>
-      <Seo
-        path="/about"
-        title="About Us"
-        description="Ventura Exports is an India-based export and sourcing company, headquartered in Gujarat, supplying yarns and fabrics to international buyers through reliable Indian manufacturing partners."
-      />
+      <Seo {...seo} />
       <PageHeader
         label="About us"
         title="Driven by Textile Expertise."

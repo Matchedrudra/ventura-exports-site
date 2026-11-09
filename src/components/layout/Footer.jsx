@@ -14,7 +14,7 @@ export function Footer() {
               {site.tagline}
             </p>
             <p className="mt-4 max-w-xs text-[0.88rem] leading-relaxed text-ivory/55">
-              Yarns and fabrics sourced from Indian manufacturing partners, with customised
+              Indian textile yarn, fabrics and weaving accessories supplier — customised
               specifications and export coordination.
             </p>
           </div>
